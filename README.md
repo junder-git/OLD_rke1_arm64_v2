@@ -80,7 +80,8 @@ sudo apt-get dist-upgrade
 lsb_release -a  
 ##########
 jnginx conf  
-https://docs.nginx.com/nginx/admin-guide/load-balancer/http-load-balancer/ See NGINX PLUS features
+NGINX PLUS FOR max_conns=3;  
+https://docs.nginx.com/nginx/admin-guide/load-balancer/http-load-balancer/ See NGINX PLUS features  
         queue 100 timeout=70; NGINX PLUS FOR LIMMITING QUEUE
         sticky learn  NGINX PLUS FOR SESSIONS
             create=$upstream_cookie_examplecookie
