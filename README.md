@@ -1,16 +1,14 @@
-# rke  - rerunzzz
-k3s - /boot/cmdline.txt cgroup_memory=1 cgroup_enable=memory ip=192.168.3.11::192.168.3.1:255.255.255.0:pi-1:eth0:off
+# rke  
+- raspberry pi imager flash 32gb-fat san disk sd && 32gb-fat san disk usb-3.0 speeds type with raspOS(64-bit)lite
+- 
+- (k3s tip) /boot/cmdline.txt cgroup_memory=1 cgroup_enable=memory ip=LOCAL_IP_ADDRESS::LOCAL_IP_GATEWAY:NET_MASK_255:HOSTNAME:NIC_eth0:off
 ==========
-jmux connect pi@192.168.3.11 pi@192.168.3.12 pi@192.168.3.13 pi@192.168.3.14
+jmux connect pi@pi-1.jabl3s.home pi@pi-2.jabl3s.home pi@pi-3.jabl3s.home pi@pi-4.jabl3s.home
 sudo apt update
 sudo apt full-upgrade
-apt-get source linux-image-$(uname -r)
 sudo apt install apt-transport-https ca-certificates curl software-properties-common
-sudo add-apt-repository "deb [arch=arm64] https://download.docker.com/linux/ubuntu focal stable"
-  
-https://www.suse.com/suse-rke1/support-matrix/all-supported-versions/rke1-v1-24/  
-  
-sudo apt-get install docker-ce=5:20.10.24~3-0~debian-bullseye docker-ce=5:20.10.24~3-0~debian-bullseye
+DOCKER INSTALL VERSION => https://www.suse.com/suse-rke1/support-matrix/all-supported-versions/rke1-v1-24/  
+rke 1.25 => sudo apt-get install docker-ce=5:20.10.24~3-0~debian-bullseye docker-ce=5:20.10.24~3-0~debian-bullseye  
 sudo usermod -aG docker pi  
 su - pi  
 exit  
