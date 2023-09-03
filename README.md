@@ -23,44 +23,42 @@ ssh-copy-id pi@pi-3.jabl3s.home
 ssh-copy-id pi@pi-4.jabl3s.home  
 mv rke_linux-arm64 rke  
 chmod +x rke  
-./rke up  
+./rke up  (spam run if fail <= 3-attempts)
 ## Helm approach to install cert-manager && rancher  
-curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null  
-sudo apt install apt-transport-https --yes  
+curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null   
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/  
 stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list  
 sudo apt update  
 sudo apt install helm  
-## Kubectl
-sudo apt install -y apt-transport-https ca-certificates curl
-curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
-echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
-sudo apt update && sudo apt install -y kubectl
-###
-mkdir -p ~/.kube
-cp kube_config_cluster.yml ~/.kube/config
-###
-## Cert-manager
-helm repo add jetstack https://charts.jetstack.io
-helm repo update
-kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.12.0/cert-manager.crds.yaml
-helm install \
-  cert-manager jetstack/cert-manager \
-  --namespace cert-manager \
-  --create-namespace \
-  --version v1.12.0
+## Kubectl  
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg  
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list  
+sudo apt update && sudo apt install -y kubectl  
+###  
+mkdir -p ~/.kube  
+cp kube_config_cluster.yml ~/.kube/config  
+###  
+## Cert-manager  
+helm repo add jetstack https://charts.jetstack.io  
+helm repo update  
+kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.12.0/cert-manager.crds.yaml  
+helm install \  
+  cert-manager jetstack/cert-manager \  
+  --namespace cert-manager \  
+  --create-namespace \  
+  --version v1.12.0  
   
-kubectl apply -f clusterissuer.yml
-
-helm install rancher rancher-stable/rancher \
-  --namespace cattle-system \
-  --set hostname=rancher.jabl3s.uk \
-  --set ingress.tls.source=letsEncrypt \
-  --set letsEncrypt.email=j@jabl3s.uk \
-  --set letsEncrypt.ingress.class=nginx
-
-
-##########
+kubectl apply -f ~/jclusterissuer.yml  
+  
+helm install rancher rancher-stable/rancher \  
+  --namespace cattle-system \  
+  --set hostname=rancher.jabl3s.uk \  
+  --set ingress.tls.source=letsEncrypt \  
+  --set letsEncrypt.email=j@jabl3s.uk \  
+  --set letsEncrypt.ingress.class=nginx  
+  
+  
+########## ADDITINAL NOTES
 ((update all pi nodes ubuntu os kernal))- sudo apt upgrade linux-generic 
 sudo apt remove linux-image-generic  
 sudo dpkg --remove --force-remove-reinstreq linux-image-6.2.0-31-generic  
@@ -72,14 +70,4 @@ sudo apt update && sudo apt upgrade
 sudo apt-get dist-upgrade   
 lsb_release -a  
 ##########
-## Rancher  
-
-
-
-### CHATGPT
-On ARM64-based systems, you should use kernel packages specifically built for that architecture. The package names for ARM64 kernels typically have "arm64" or "aarch64" in their names. To find the appropriate kernel package for your ARM64 system, you can run:  
-
-apt-cache search linux-image | grep aarch64  
-
-This command will list the available Linux kernel packages for ARM64 architecture on your system. Choose the one that matches your needs and install it accordingly. Make sure to select a package that is compatible with your ARM64 hardware.
   
