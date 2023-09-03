@@ -57,9 +57,15 @@ helm install rancher rancher-stable/rancher \
   --set letsEncrypt.email=j@jabl3s.uk \  
   --set letsEncrypt.ingress.class=nginx  
   
+exit  
   
-########## ADDITINAL NOTES
-((update all pi nodes ubuntu os kernal))- sudo apt upgrade linux-generic 
+## NGINX access  
+jmux connect pi@pi-1.jabl3s.home pi@pi-2.jabl3s.home pi@pi-3.jabl3s.home pi@pi-4.jabl3s.home
+curl -o ~/jnginx.conf https://raw.githubusercontent.com/jabl3s/rke/main/jnginx.conf?token=GHSAT0AAAAAACGQ7F63BBSFV5TJV7QE76S2ZHVAZRQ  
+docker run --name jnginx-container -v ~/jnginx.conf:/etc/nginx/nginx.conf:ro -d  --cpu 0.5 --memory 512m nginx  
+  
+########## ADDITINAL NOTES  
+((update all pi nodes ubuntu os kernal))- sudo apt upgrade linux-generic  
 sudo apt remove linux-image-generic  
 sudo dpkg --remove --force-remove-reinstreq linux-image-6.2.0-31-generic  
 sudo apt --fix-broken install  
