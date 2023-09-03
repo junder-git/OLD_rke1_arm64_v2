@@ -1,26 +1,27 @@
 # rke  
-- raspberry pi imager flash 32gb-fat san disk sd && 32gb-fat san disk usb-3.0 speeds type with raspOS(64-bit)lite
-- 
-- (k3s tip) /boot/cmdline.txt cgroup_memory=1 cgroup_enable=memory ip=LOCAL_IP_ADDRESS::LOCAL_IP_GATEWAY:NET_MASK_255:HOSTNAME:NIC_eth0:off
-==========
-jmux connect pi@pi-1.jabl3s.home pi@pi-2.jabl3s.home pi@pi-3.jabl3s.home pi@pi-4.jabl3s.home
-sudo apt update
-sudo apt full-upgrade
-sudo apt install apt-transport-https ca-certificates curl software-properties-common
+- raspberry pi imager flash 32gb-fat san disk sd && 32gb-fat san disk usb-3.0 speeds type with raspOS(64-bit)lite  
+- (pi tip) - sudo rpi-eeprom-config --edit => BOOT_ORDER=0xf14 (1-usb 4-sd f-fallback_boot)  
+- (k3s tip) - /boot/cmdline.txt => cgroup_memory=1 cgroup_enable=memory ip=LOCAL_IP_ADDRESS::LOCAL_IP_GATEWAY:NET_MASK_255:HOSTNAME:NIC_eth0:off  
+  
+==========  
+jmux connect pi@pi-1.jabl3s.home pi@pi-2.jabl3s.home pi@pi-3.jabl3s.home pi@pi-4.jabl3s.home  
+sudo apt update  
+sudo apt full-upgrade  
+sudo apt install apt-transport-https ca-certificates curl software-properties-common  
 DOCKER INSTALL VERSION => https://www.suse.com/suse-rke1/support-matrix/all-supported-versions/rke1-v1-24/  
-rke 1.25 => sudo apt-get install docker-ce=5:20.10.24~3-0~debian-bullseye docker-ce=5:20.10.24~3-0~debian-bullseye  
+for rke 1.25 (jcluster.yml)=> sudo apt-get install docker-ce=5:20.10.24~3-0~debian-bullseye docker-ce=...  
 sudo usermod -aG docker pi  
 su - pi  
 exit  
 ##  
-jmux connect pi@192.168.3.11
-scp cluster.yml clusterissuer.yml and correct_rke_binary to master  
+jmux connect pi@pi-1.jabl3s.home  
+scp jcluster.yml jclusterissuer.yml jnginx.conf and correct_rke_binary to master  
 ssh-keygen -t rsa -b 4096 (empty passphrase)  
-ssh-copy-id pi@192.168.3.11  
-ssh-copy-id pi@192.168.3.12  
-ssh-copy-id pi@192.168.3.13  
-ssh-copy-id pi@192.168.3.14  
-mv rke_binary rke  
+ssh-copy-id pi@pi-1.jabl3s.home    
+ssh-copy-id pi@pi-2.jabl3s.home  
+ssh-copy-id pi@pi-3.jabl3s.home  
+ssh-copy-id pi@pi-4.jabl3s.home  
+mv rke_linux-arm64 rke  
 chmod +x rke  
 ./rke up  
 ## Helm approach to install cert-manager && rancher  
