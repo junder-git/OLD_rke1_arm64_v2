@@ -2,20 +2,20 @@ cluster_name: jcluster
 kubernetes_version: v1.25.12-rancher1-1
 ssh_key_path: ~/.ssh/id_rsa
 nodes:
-  - address: 192.168.3.11
+  - address: pi-1.jabl3s.home
     user: pi
     role:
       - controlplane
       - etcd
-  - address: 192.168.3.12
+  - address: pi-2.jabl3s.home
     user: pi
     role:
       - worker
-  - address: 192.168.3.13
+  - address: pi-3.jabl3s.home
     user: pi
     role:
       - worker
-  - address: 192.168.3.14
+  - address: pi-4.jabl3s.home
     user: pi
     role:
       - worker
