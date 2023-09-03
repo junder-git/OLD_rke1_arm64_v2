@@ -1,0 +1,2 @@
+#Hide those user specific envs!
+**/*.env
