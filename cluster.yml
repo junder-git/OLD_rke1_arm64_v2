@@ -1,3 +1,5 @@
+cluster_name: jcluster
+kubernetes_version: v1.25.12-rancher1-1
 ssh_key_path: ~/.ssh/id_rsa
 nodes:
   - address: 192.168.3.11
