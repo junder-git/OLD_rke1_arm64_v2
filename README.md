@@ -61,7 +61,7 @@ exit
   
 ## NGINX access  
 jmux connect pi@pi-1.jabl3s.home pi@pi-2.jabl3s.home pi@pi-3.jabl3s.home pi@pi-4.jabl3s.home
-curl -o ~/jnginx.conf https://raw.githubusercontent.com/jabl3s/rke/main/jnginx.conf?token=GHSAT0AAAAAACGQ7F63BBSFV5TJV7QE76S2ZHVAZRQ  
+curl -o ~/filename.ext -LJO https://raw.githubusercontent.com/jabl3s/rke/main/jnginx.conf?token=GHSAT0AAAAAACGQ7F624JNUFMFXD3BX7Y7YZHVCCLQ  
 docker run --name jnginx-container -v ~/jnginx.conf:/etc/nginx/nginx.conf:ro -d -p 8080:80 --cpus 0.5 --memory 512m nginx  
   
 ########## ADDITINAL NOTES  
