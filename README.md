@@ -62,9 +62,12 @@ exit
 ## NGINX access  
 jmux connect pi@pi-1.jabl3s.home pi@pi-2.jabl3s.home pi@pi-3.jabl3s.home pi@pi-4.jabl3s.home
 curl -o ~/jnginx.conf https://raw.githubusercontent.com/jabl3s/rke/main/jnginx.conf?token=GHSAT0AAAAAACGQ7F63BBSFV5TJV7QE76S2ZHVAZRQ  
-docker run --name jnginx-container -v ~/jnginx.conf:/etc/nginx/nginx.conf:ro -d -p 80:80 -p 443:443 --cpus 0.5 --memory 512m nginx  
+docker run --name jnginx-container -v ~/jnginx.conf:/etc/nginx/nginx.conf:ro -d -p 8080:80 --cpus 0.5 --memory 512m nginx  
   
 ########## ADDITINAL NOTES  
+docker ps -a  
+docker ps -a --filter "name=jnginx-container"  
+
 ((update all pi nodes ubuntu os kernal))- sudo apt upgrade linux-generic  
 sudo apt remove linux-image-generic  
 sudo dpkg --remove --force-remove-reinstreq linux-image-6.2.0-31-generic  
@@ -76,4 +79,14 @@ sudo apt update && sudo apt upgrade
 sudo apt-get dist-upgrade   
 lsb_release -a  
 ##########
+jnginx conf  
+https://docs.nginx.com/nginx/admin-guide/load-balancer/http-load-balancer/ See NGINX PLUS features
+        queue 100 timeout=70; NGINX PLUS FOR LIMMITING QUEUE
+        sticky learn  NGINX PLUS FOR SESSIONS
+            create=$upstream_cookie_examplecookie
+            lookup=$cookie_examplecookie
+            zone=client_sessions:1m
+            timeout=1h
+            sync;
   
+This allows the ability for the execute shell window to remain open for up to 15 minutes. Without this parameter, the default is 1 minute and will automatically close.
