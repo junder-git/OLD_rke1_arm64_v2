@@ -62,7 +62,7 @@ exit
 ## NGINX access  
 jmux connect pi@pi-1.jabl3s.home pi@pi-2.jabl3s.home pi@pi-3.jabl3s.home pi@pi-4.jabl3s.home
 curl -o ~/jnginx.conf https://raw.githubusercontent.com/jabl3s/rke/main/jnginx.conf?token=GHSAT0AAAAAACGQ7F63BBSFV5TJV7QE76S2ZHVAZRQ  
-docker run --name jnginx-container -v ~/jnginx.conf:/etc/nginx/nginx.conf:ro -d -p 80:80 -p 443:443 --cpu 0.5 --memory 512m nginx  
+docker run --name jnginx-container -v ~/jnginx.conf:/etc/nginx/nginx.conf:ro -d -p 80:80 -p 443:443 --cpus 0.5 --memory 512m nginx  
   
 ########## ADDITINAL NOTES  
 ((update all pi nodes ubuntu os kernal))- sudo apt upgrade linux-generic  
