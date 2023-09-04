@@ -61,7 +61,7 @@ kubectl get svc -n cattle-system
 
 kubectl get pods,svc,configmaps --namespace=ingress-nginx
 
-
+kubectl apply -f https://raw.githubusercontent.com/jabl3s/rke/main/jnginx-configmap.yaml
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm repo update
 helm upgrade nginx-ingress ingress-nginx/ingress-nginx \
