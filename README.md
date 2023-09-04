@@ -4,6 +4,12 @@
 - (k3s tip) - /boot/cmdline.txt => cgroup_memory=1 cgroup_enable=memory ip=LOCAL_IP_ADDRESS::LOCAL_IP_GATEWAY:NET_MASK_255:HOSTNAME:NIC_eth0:off  
   
 ==========  
+Enable dnsmasq in routers /etc/dnsmasq.conf by uncomment the following:  
+port=5353  
+address=/.jabl3s/IP_ADDRESS_OF_ONE_RKE_NODE  
+domain=jabl3s/SUBNET+NET_MASK  
+  
+==========  
 jmux connect pi@pi-1.jabl3s.home pi@pi-2.jabl3s.home pi@pi-3.jabl3s.home pi@pi-4.jabl3s.home  
 sudo apt update  
 sudo apt full-upgrade  
