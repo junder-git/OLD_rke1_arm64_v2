@@ -1,3 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: jnginx-configmap
+  namespace: ingress-nginx
+data:
+  # Your custom Nginx Ingress configuration here
+  nginx.conf: | 
 worker_processes 4;
 worker_rlimit_nofile 40000;
 

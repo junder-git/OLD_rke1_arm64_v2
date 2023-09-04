@@ -58,6 +58,24 @@ kubectl get svc -n cattle-system
   
 
 ## NGINX access  
+
+kubectl get pods,svc,configmaps --namespace=ingress-nginx
+
+
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+helm repo update
+helm upgrade nginx-ingress ingress-nginx/ingress-nginx \
+  --set controller.configMapName=jnginx-configmap
+
+  
+    
+      
+        
+          
+
+
+
+#########
 jmux connect pi@pi-1.jabl3s.home pi@pi-2.jabl3s.home pi@pi-3.jabl3s.home pi@pi-4.jabl3s.home
 curl -o ~/filename.ext -LJO https://raw.githubusercontent.com/jabl3s/rke/main/jnginx.conf     
 docker run --name jnginx-container -v ~/jnginx.conf:/etc/nginx/nginx.conf:ro -d -p 80:80 --cpus 0.5 --memory 512m nginx  
@@ -93,3 +111,30 @@ https://docs.nginx.com/nginx/admin-guide/load-balancer/http-load-balancer/ See N
             sync;
   
 This allows the ability for the execute shell window to remain open for up to 15 minutes. Without this parameter, the default is 1 minute and will automatically close.
+
+#########CHATGPT
+Use Helm Hooks: If you originally installed Nginx Ingress using Helm, you can define a Helm hook to handle the update of the ConfigMap and restart the Controller pods. Here's an example:
+
+yaml
+Copy code
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: nginx-config-update
+  namespace: ingress-nginx
+spec:
+  template:
+    spec:
+      containers:
+        - name: nginx-config-update
+          image: your-image-with-kubectl  # An image with kubectl installed
+          command:
+            - kubectl
+            - delete
+            - pods
+            - -n
+            - ingress-nginx
+            - -l
+            - app.kubernetes.io/component=controller
+          restartPolicy: OnFailure
+This Helm hook defines a Kubernetes Job that deletes the Nginx Ingress Controller pods when the chart is upgraded or installed. Make sure to use an image with kubectl installed.
