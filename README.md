@@ -50,19 +50,21 @@ helm install \
   
 kubectl apply -f ~/jclusterissuer.yml  
   
-helm install rancher rancher-stable/rancher \  
-  --namespace cattle-system \  
-  --set hostname=rancher.jabl3s.uk \  
-  --set ingress.tls.source=letsEncrypt \  
-  --set letsEncrypt.email=j@jabl3s.uk \  
-  --set letsEncrypt.ingress.class=nginx  
+helm install rancher rancher-stable/rancher --namespace cattle-system --create-namespace --set hostname=pi-1.jabl3s.home --set bootstrapPassword=admin --set ingress.tls.source=letsEncrypt --set letsEncrypt.email=j@jabl3s.uk --set letsEncrypt.ingress.class=nginx  
   
 exit  
   
+kubectl get svc -n cattle-system  
+  
+
 ## NGINX access  
 jmux connect pi@pi-1.jabl3s.home pi@pi-2.jabl3s.home pi@pi-3.jabl3s.home pi@pi-4.jabl3s.home
 curl -o ~/filename.ext -LJO https://raw.githubusercontent.com/jabl3s/rke/main/jnginx.conf     
-docker run --name jnginx-container -v ~/jnginx.conf:/etc/nginx/nginx.conf:ro -d -p 8080:80 --cpus 0.5 --memory 512m nginx  
+docker run --name jnginx-container -v ~/jnginx.conf:/etc/nginx/nginx.conf:ro -d -p 80:80 --cpus 0.5 --memory 512m nginx  
+
+kubectl get svc -n <namespace>
+
+docker stop jnginx-container && docker rm jnginx-container
   
 ########## ADDITINAL NOTES  
 docker ps -a  
