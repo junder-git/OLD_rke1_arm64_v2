@@ -58,25 +58,27 @@ kubectl get svc -n cattle-system
   
 
 ## NGINX access  
-
-kubectl get pods,svc,configmaps --namespace=ingress-nginx
-
-kubectl apply -f https://raw.githubusercontent.com/jabl3s/rke/main/jnginx-configmap.yaml
-helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-helm repo update
-helm upgrade nginx-ingress ingress-nginx/ingress-nginx \
-  --set controller.configMapName=jnginx-configmap
-
   
-    
-      
-        
-          
-
-
-
+kubectl get pods,svc,configmaps --namespace=ingress-nginx  
+  
+kubectl delete ingressclass nginx -n default  
+kubectl delete validatingwebhookconfiguration ingress-nginx-admission -n default  
+kubectl delete serviceaccount nginx-ingress -n default  
+kubectl delete clusterrole nginx-ingress -n default  
+kubectl delete clusterrolebinding nginx-ingress -n default  
+  
+  
+kubectl apply -f https://raw.githubusercontent.com/jabl3s/rke/main/jnginx-configmap.yaml  
+  
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx  
+helm repo update  
+helm install nginx-ingress ingress-nginx/ingress-nginx --namespace default --set controller.configMapName=jnginx-configmap  
+  
 #########
-jmux connect pi@pi-1.jabl3s.home pi@pi-2.jabl3s.home pi@pi-3.jabl3s.home pi@pi-4.jabl3s.home
+  
+  
+#########  
+jmux connect pi@pi-1.jabl3s.home pi@pi-2.jabl3s.home pi@pi-3.jabl3s.home pi@pi-4.jabl3s.home  
 curl -o ~/filename.ext -LJO https://raw.githubusercontent.com/jabl3s/rke/main/jnginx.conf     
 docker run --name jnginx-container -v ~/jnginx.conf:/etc/nginx/nginx.conf:ro -d -p 80:80 --cpus 0.5 --memory 512m nginx  
 
@@ -99,7 +101,9 @@ sudo apt update && sudo apt upgrade
 sudo apt-get dist-upgrade   
 lsb_release -a  
 ##########
-jnginx conf  
+jnginx-configmap.yaml  
+  
+  
 NGINX PLUS FOR max_conns=3;  
 https://docs.nginx.com/nginx/admin-guide/load-balancer/http-load-balancer/ See NGINX PLUS features  
         queue 100 timeout=70; NGINX PLUS FOR LIMMITING QUEUE
