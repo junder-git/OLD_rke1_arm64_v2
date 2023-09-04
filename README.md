@@ -4,8 +4,7 @@
 - (k3s tip) - /boot/cmdline.txt => cgroup_memory=1 cgroup_enable=memory ip=LOCAL_IP_ADDRESS::LOCAL_IP_GATEWAY:NET_MASK_255:HOSTNAME:NIC_eth0:off  
   
 ==========  
-Enable dnsmasq in routers /etc/dnsmasq.conf by uncomment the following:  
-port=5353  
+Enable dnsmasq in routers /etc/dnsmasq.conf by uncomment the following:    
 address=/.jabl3s/IP_ADDRESS_OF_ONE_RKE_NODE  
 domain=jabl3s/SUBNET+NET_MASK  
   
