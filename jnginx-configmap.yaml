@@ -15,9 +15,9 @@ data:
     http {
         upstream rke {
             # server pi-1.jabl3s.uk; control etcd doesnt seem to allow for 443 80
-            server pi-2.jabl3s.uk;
-            server pi-3.jabl3s.uk;
-            server pi-4.jabl3s.uk;
+            server pi-2.jabl3s;
+            server pi-3.jabl3s;
+            server pi-4.jabl3s;
         }
         map $http_upgrade $connection_upgrade {
             default Upgrade;
@@ -26,7 +26,7 @@ data:
         server {
             listen 80;
             listen 443 ssl;
-            server_name *.jabl3s.uk;
+            server_name *.jabl3s;
             return 301 https://$server_name$request_uri;
             location / {
                 proxy_set_header Host $host;
