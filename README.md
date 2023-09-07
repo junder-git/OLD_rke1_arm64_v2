@@ -1,12 +1,8 @@
 # rke1 arm64 setup guide    
+- Assumes home dns is already running
 - raspberry pi imager flash 32gb-fat san disk sd && 32gb-fat san disk usb-3.0 speeds type with raspOS(64-bit)lite  
 - (pi tip) - sudo rpi-eeprom-config --edit => BOOT_ORDER=0xf14 (1-usb 4-sd f-fallback_boot)  
-- (k3s tip) - /boot/cmdline.txt => cgroup_memory=1 cgroup_enable=memory ip=LOCAL_IP_ADDRESS::LOCAL_IP_GATEWAY:NET_MASK_255:HOSTNAME:NIC_eth0:off  
-  
-==========  
-Enable dnsmasq in routers /etc/dnsmasq.conf by uncomment the following:    
-address=/.jabl3s/IP_ADDRESS_OF_ONE_RKE_NODE  
-domain=jabl3s/SUBNET+NET_MASK  
+- (k3s tip) - /boot/cmdline.txt => cgroup_memory=1 cgroup_enable=memory ip=LOCAL_IP_ADDRESS::LOCAL_IP_GATEWAY:NET_MASK_255:HOSTNAME:NIC_eth0:off   
   
 ==========  
 jmux connect pi@pi-1.jabl3s.home pi@pi-2.jabl3s.home pi@pi-3.jabl3s.home pi@pi-4.jabl3s.home  
