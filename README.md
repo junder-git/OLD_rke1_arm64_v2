@@ -1,4 +1,4 @@
-# rke1 arm64 setup guide    
+# rke1-arm64 setup guide    
 - Assumes home dns is already running
 - raspberry pi imager flash 32gb-fat san disk sd && 32gb-fat san disk usb-3.0 speeds type with raspOS(64-bit)lite  
 - (pi tip) - sudo rpi-eeprom-config --edit => BOOT_ORDER=0xf14 (1-usb 4-sd f-fallback_boot)  
