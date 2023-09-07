@@ -5,7 +5,7 @@
 - (k3s tip) - /boot/cmdline.txt => cgroup_memory=1 cgroup_enable=memory ip=LOCAL_IP_ADDRESS::LOCAL_IP_GATEWAY:NET_MASK_255:HOSTNAME:NIC_eth0:off   
   
 ==========  
-jmux connect pi@pi-1.jabl3s.home pi@pi-2.jabl3s.home pi@pi-3.jabl3s.home pi@pi-4.jabl3s.home  
+jmux connect pi@pi-1.jabl3s pi@pi-2.jabl3s pi@pi-3.jabl3s pi@pi-4.jabl3s  
 sudo apt update  
 sudo apt full-upgrade  
 sudo apt install apt-transport-https ca-certificates curl software-properties-common  
@@ -15,13 +15,13 @@ sudo usermod -aG docker pi
 su - pi  
 exit  
 ##  
-jmux connect pi@pi-1.jabl3s.home  
+jmux connect pi@pi-1.jabl3s  
 scp jcluster.yml jclusterissuer.yml jnginx.conf and correct_rke_binary to master  
 ssh-keygen -t rsa -b 4096 (empty passphrase)  
-ssh-copy-id pi@pi-1.jabl3s.home    
-ssh-copy-id pi@pi-2.jabl3s.home  
-ssh-copy-id pi@pi-3.jabl3s.home  
-ssh-copy-id pi@pi-4.jabl3s.home  
+ssh-copy-id pi@pi-1.jabl3s    
+ssh-copy-id pi@pi-2.jabl3s  
+ssh-copy-id pi@pi-3.jabl3s  
+ssh-copy-id pi@pi-4.jabl3s  
 mv rke_linux-arm64 rke  
 chmod +x rke  
 ./rke up  (spam run if fail <= 3-attempts)
@@ -51,7 +51,7 @@ helm install \
   
 kubectl apply -f ~/jclusterissuer.yml  
   
-helm install rancher rancher-stable/rancher --namespace cattle-system --create-namespace --set hostname=pi-1.jabl3s.home --set bootstrapPassword=admin --set ingress.tls.source=letsEncrypt --set letsEncrypt.email=j@jabl3s.uk --set letsEncrypt.ingress.class=nginx  
+helm install rancher rancher-stable/rancher --namespace cattle-system --create-namespace --set hostname=pi-4.jabl3s --set bootstrapPassword=admin --set ingress.tls.source=letsEncrypt --set letsEncrypt.email=j@jabl3s.uk --set letsEncrypt.ingress.class=nginx  
   
 exit  
   
@@ -82,7 +82,7 @@ helm upgrade nginx-ingress ingress-nginx/ingress-nginx --namespace default --set
   
   
 #########  
-jmux connect pi@pi-1.jabl3s.home pi@pi-2.jabl3s.home pi@pi-3.jabl3s.home pi@pi-4.jabl3s.home  
+jmux connect pi@pi-1.jabl3s pi@pi-2.jabl3s pi@pi-3.jabl3s pi@pi-4.jabl3s  
 curl -o ~/filename.ext -LJO https://raw.githubusercontent.com/jabl3s/rke/main/jnginx.conf     
 docker run --name jnginx-container -v ~/jnginx.conf:/etc/nginx/nginx.conf:ro -d -p 80:80 --cpus 0.5 --memory 512m nginx  
 
