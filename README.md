@@ -1,4 +1,9 @@
 # rke1-arm64 setup guide    
+  
+### Useful commands  
+- docker ps -a -q | awk '{print $1}' | xargs docker stop  
+  
+##  
 - Assumes home dns is already running, (needs dns wildcard setup at some point)
 - raspberry pi imager flash 32gb-fat san disk sd && 32gb-fat san disk usb-3.0 speeds type with raspOS(64-bit)lite  
 - (pi tip) - sudo rpi-eeprom-config --edit => BOOT_ORDER=0xf14 (1-usb 4-sd f-fallback_boot)  
