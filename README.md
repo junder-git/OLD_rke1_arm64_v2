@@ -1,11 +1,16 @@
 # rke1-arm64 setup guide    
+  
+### Useful commands  
+- docker ps -a -q | awk '{print $1}' | xargs docker stop  
+  
+##  
 - Assumes home dns is already running, (needs dns wildcard setup at some point)
 - raspberry pi imager flash 32gb-fat san disk sd && 32gb-fat san disk usb-3.0 speeds type with raspOS(64-bit)lite  
 - (pi tip) - sudo rpi-eeprom-config --edit => BOOT_ORDER=0xf14 (1-usb 4-sd f-fallback_boot)  
 - (k3s tip) - /boot/cmdline.txt => cgroup_memory=1 cgroup_enable=memory ip=LOCAL_IP_ADDRESS::LOCAL_IP_GATEWAY:NET_MASK_255:HOSTNAME:NIC_eth0:off   
   
 ==========  
-jmux connect pi@pi-1.jabl3s.uk pi@pi-2.jabl3s.uk pi@pi-3.jabl3s.uk pi@pi-4.jabl3s.uk  
+jmux connect pi@pi-1.jabl3s pi@pi-2.jabl3s pi@pi-3.jabl3s pi@pi-4.jabl3s  
 sudo apt update  
 sudo apt full-upgrade  
 sudo apt install apt-transport-https ca-certificates curl software-properties-common  
@@ -15,13 +20,13 @@ sudo usermod -aG docker pi
 su - pi  
 exit  
 ##  
-jmux connect pi@pi-1.jabl3s.uk  
+jmux connect pi@pi-1.jabl3s  
 scp jcluster.yml jclusterissuer.yml jnginx.conf and correct_rke_binary to master  
 ssh-keygen -t rsa -b 4096 (empty passphrase)  
-ssh-copy-id pi@pi-1.jabl3s.uk    
-ssh-copy-id pi@pi-2.jabl3s.uk  
-ssh-copy-id pi@pi-3.jabl3s.uk  
-ssh-copy-id pi@pi-4.jabl3s.uk  
+ssh-copy-id pi@pi-1.jabl3s    
+ssh-copy-id pi@pi-2.jabl3s  
+ssh-copy-id pi@pi-3.jabl3s  
+ssh-copy-id pi@pi-4.jabl3s  
 mv rke_linux-arm64 rke  
 chmod +x rke  
 ./rke up  (spam run if fail <= 3-attempts)
@@ -51,7 +56,7 @@ helm install \
   
 kubectl apply -f ~/jclusterissuer.yml  
   
-helm install rancher rancher-stable/rancher --namespace cattle-system --create-namespace --set hostname=pi-4.jabl3s.uk --set bootstrapPassword=admin --set ingress.tls.source=letsEncrypt --set letsEncrypt.email=j@jabl3s.uk --set letsEncrypt.ingress.class=nginx  
+helm install rancher rancher-stable/rancher --namespace cattle-system --create-namespace --set hostname=pi-4.jabl3s --set bootstrapPassword=admin --set ingress.tls.source=letsEncrypt --set letsEncrypt.email=j@jabl3s --set letsEncrypt.ingress.class=nginx  
   
 exit  
   
@@ -69,7 +74,7 @@ kubectl delete clusterrole nginx-ingress -n default
 kubectl delete clusterrolebinding nginx-ingress -n default  
   
   
-kubectl apply -f https://raw.githubusercontent.com/jabl3s.uk/rke/main/jnginx-configmap.yaml  
+kubectl apply -f https://raw.githubusercontent.com/jabl3s/rke/main/jnginx-configmap.yaml  
   
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx  
 helm repo update  
@@ -82,8 +87,8 @@ helm upgrade nginx-ingress ingress-nginx/ingress-nginx --namespace default --set
   
   
 #########  
-jmux connect pi@pi-1.jabl3s.uk pi@pi-2.jabl3s.uk pi@pi-3.jabl3s.uk pi@pi-4.jabl3s.uk  
-curl -o ~/filename.ext -LJO https://raw.githubusercontent.com/jabl3s.uk/rke/main/jnginx.conf     
+jmux connect pi@pi-1.jabl3s pi@pi-2.jabl3s pi@pi-3.jabl3s pi@pi-4.jabl3s  
+curl -o ~/filename.ext -LJO https://raw.githubusercontent.com/jabl3s/rke/main/jnginx.conf     
 docker run --name jnginx-container -v ~/jnginx.conf:/etc/nginx/nginx.conf:ro -d -p 80:80 --cpus 0.5 --memory 512m nginx  
 
 kubectl get svc -n <namespace>
