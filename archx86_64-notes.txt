@@ -30,9 +30,9 @@ sudo pacman-key --init
 sudo pacman-key --populate archlinux  
 sudo pacman -S grub efibootmgr os-prober nano
 sudo grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=grub    
-sudo blkid -s UUID -o value /dev/sda1 | sudo tee -a /etc/fstab
-sudo blkid -s UUID -o value /dev/sda2 | sudo tee -a /etc/fstab
-sudo blkid -s UUID -o value /dev/sda3 | sudo tee -a /etc/fstab
+sudo blkid -s UUID -o value /dev/sdX1 | sudo tee -a /etc/fstab
+sudo blkid -s UUID -o value /dev/sdX2 | sudo tee -a /etc/fstab
+sudo blkid -s UUID -o value /dev/sdX3 | sudo tee -a /etc/fstab
 sudo nano /etc/fstab
 UUID=XXX /boot/efi vfat umask=0077 0 2
 UUID=XXX none swap sw 0 0
