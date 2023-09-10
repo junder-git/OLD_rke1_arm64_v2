@@ -1,6 +1,5 @@
 ### airootfs essentailly an entire os running in ram, adjust cow-space with 'e' at menu...  
 lsblk
-sudo dd if=/dev/zero of=/dev/sdX bs=4M status=progress
 sudo gdisk /dev/sdX
 #####
 In gdisk, type o to create a new empty GUID Partition Table (GPT).
@@ -97,3 +96,5 @@ mkpart primary linux-swap 512MiB 2GiB
 set 2 swap on
 mkpart primary ext4 2GiB 100%
 quit
+###
+sudo dd if=/dev/zero of=/dev/sdX bs=4M status=progress
