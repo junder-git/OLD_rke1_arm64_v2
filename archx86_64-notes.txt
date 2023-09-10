@@ -1,5 +1,6 @@
 ### airootfs essentailly an entire os running in ram, adjust cow-space with 'e' at menu...  
 lsblk
+sudo dd if=/dev/zero of=/dev/sdX bs=4M status=progress
 sudo gdisk /dev/sdX
 #####
 In gdisk, type o to create a new empty GUID Partition Table (GPT).
@@ -16,17 +17,20 @@ Accept the default values for partition number, first sector, and last sector.
 This will use the remaining space on the drive for the root partition.
 For the hex code or GUID, you can use the default, which is typically 8300 for a Linux filesystem.
 - Use the p command to print the partition table and verify that everything looks as expected. 
-Ensure that the EFI partition is correctly marked as "EFI System Partition" (code EF00), the swap partition as "Linux swap" (code 8200), 
+Ensure that the EFI partition is correctly marked as "EFI System Partition" (code EF00), 
+the swap partition as "Linux swap" (code 8200), 
 and the root partition with the appropriate type (usually 8300 for Linux).
 - Type w to write the partition table changes to the disk. Confirm this action by typing Y.
 - Type q to exit gdisk.
-#####
+#####  
 sudo mkfs.fat -F32 /dev/sdX1
 sudo mkfs.ext4 /dev/sdX3
 sudo mkswap /dev/sdX2
+blkid
 sudo nano /etc/fstab ### remember airootfs temporary
-/dev/sdX1 /mnt/arch/boot/efi vfat umask=0077 0 2
-/dev/sdX3 /mnt/arch ext4 rw 0 1
+/dev/sdX3 /mnt/arch ext4 defaults 0 1
+/dev/sdX1 /mnt/arch/boot/efi vfat defaults 0 2
+  
 mkdir -p /mnt/arch/boot/efi
 sudo nano -w /etc/resolv.conf ==> nameserver ((dns-server))
 iwctl station wlan0 connect SSID
@@ -71,9 +75,9 @@ station wlan0 get-networks
 station wlan0 connect SSID
 quit  
 sudo systemctl restart systemd-networkd
-/dev/sdX1 /mnt/arch/boot/efi vfat umask=0077 0 2
+/dev/sdX1 /mnt/arch/boot/efi vfat defaults 0 2
 /dev/sdX2 none swap sw 0 0
-/dev/sdX3 /mnt/arch ext4 rw 0 1
+/dev/sdX3 /mnt/arch ext4 defaults 0 1
 sudo chmod -R o-w /
 sudo mount -o remount,rw / /
 sudo nano -w /etc/pacman.d/mirrorlist
