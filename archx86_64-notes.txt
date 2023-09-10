@@ -38,10 +38,9 @@ UUID=XXX /boot/efi vfat umask=0077 0 2
 UUID=XXX none swap sw 0 0
 UUID=XXX / ext4 rw 0 1  
   
-  
 echo "archx86_64-usb" > /etc/hostname
 ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
-sudo nano -w /etc/locale.gen  # Uncomment the desired locale(s) ((cy_GB.UTF-8 UTF-8))
+sudo nano -w /etc/locale.gen  # Uncomment the desired locale(s) ((en_GB.UTF-8 UTF-8))
 locale-gen
 echo "LANG=en_GB.UTF-8" > /etc/locale.conf
 sudo update-grub
