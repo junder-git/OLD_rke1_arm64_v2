@@ -1,100 +1,100 @@
-### airootfs essentailly an entire os running in ram, adjust cow-space with 'e' at menu...  
-lsblk
-sudo gdisk /dev/sdX
-#####
-In gdisk, type o to create a new empty GUID Partition Table (GPT).
-- Type n to create a new partition. When asked for the partition number, just press Enter to accept the default. 
-For the first sector, also press Enter to use the default. For the last sector, 
-specify the size of your EFI boot partition (e.g., +512M to create a 512MB EFI partition).
-When prompted for the hex code or GUID, type EF00 to set the partition type to "EFI System Partition."
-- Type n to create another new partition for the swap. 
-Again, accept the default partition number and first sector. 
-Specify the size of your swap partition (e.g., +4G for a 4GB swap partition).
-For the hex code or GUID, use 8200 to set the partition type to "Linux swap."
-- Type n once more to create the root partition. 
-Accept the default values for partition number, first sector, and last sector. 
-This will use the remaining space on the drive for the root partition.
-For the hex code or GUID, you can use the default, which is typically 8300 for a Linux filesystem.
-- Use the p command to print the partition table and verify that everything looks as expected. 
-Ensure that the EFI partition is correctly marked as "EFI System Partition" (code EF00), 
-the swap partition as "Linux swap" (code 8200), 
-and the root partition with the appropriate type (usually 8300 for Linux).
-- Type w to write the partition table changes to the disk. Confirm this action by typing Y.
-- Type q to exit gdisk.
-#####  
-sudo mkfs.fat -F32 /dev/sdX1
-sudo mkfs.ext4 /dev/sdX3
-sudo mkswap /dev/sdX2
-blkid
-sudo nano /etc/fstab ### remember airootfs temporary
-/dev/sdX3 /mnt/arch ext4 defaults 0 1
-/dev/sdX1 /mnt/arch/boot/efi vfat defaults 0 2
-  
-mkdir -p /mnt/arch/boot/efi
-sudo nano -w /etc/resolv.conf ==> nameserver ((dns-server))
-iwctl station wlan0 connect SSID
-ping google.com
-sudo pacman-key --init
-sudo pacman-key --populate archlinux  
+### airootfs essentailly an entire os running in ram, adjust cow-space with 'e' at menu...      
+lsblk     
+sudo gdisk /dev/sdX     
+#####     
+In gdisk, type o to create a new empty GUID Partition Table (GPT).     
+- Type n to create a new partition. When asked for the partition number, just press Enter to accept the default.      
+For the first sector, also press Enter to use the default. For the last sector,     
+specify the size of your EFI boot partition (e.g., +512M to create a 512MB EFI partition).     
+When prompted for the hex code or GUID, type EF00 to set the partition type to "EFI System Partition."   
+- Type n to create another new partition for the swap.    
+Again, accept the default partition number and first sector.    
+Specify the size of your swap partition (e.g., +4G for a 4GB swap partition).   
+For the hex code or GUID, use 8200 to set the partition type to "Linux swap."   
+- Type n once more to create the root partition.    
+Accept the default values for partition number, first sector, and last sector.    
+This will use the remaining space on the drive for the root partition.   
+For the hex code or GUID, you can use the default, which is typically 8300 for a Linux filesystem.   
+- Use the p command to print the partition table and verify that everything looks as expected.    
+Ensure that the EFI partition is correctly marked as "EFI System Partition" (code EF00),    
+the swap partition as "Linux swap" (code 8200),    
+and the root partition with the appropriate type (usually 8300 for Linux).   
+- Type w to write the partition table changes to the disk. Confirm this action by typing Y.   
+- Type q to exit gdisk.   
+#####     
+sudo mkfs.fat -F32 /dev/sdX1   
+sudo mkfs.ext4 /dev/sdX3   
+sudo mkswap /dev/sdX2   
+blkid   
+sudo nano /etc/fstab ### remember airootfs temporary   
+/dev/sdX3 /mnt/arch ext4 defaults 0 1   
+/dev/sdX1 /mnt/arch/boot/efi vfat defaults 0 2   
 
-sudo mount -o remount,rw / /       
-sudo mount -a  
-sudo pacstrap /mnt/arch base base-devel  
-sudo arch-chroot /mnt/arch   
-mkdir -p /boot/efi  
-sudo pacman -S grub efibootmgr os-prober nano
-sudo grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=grub --recheck /dev/sdX    
-sudo blkid -s UUID -o value /dev/sdX1 | sudo tee -a /etc/fstab
-sudo blkid -s UUID -o value /dev/sdX2 | sudo tee -a /etc/fstab
-sudo blkid -s UUID -o value /dev/sdX3 | sudo tee -a /etc/fstab
-sudo nano /etc/fstab
-UUID=XXX /boot/efi vfat umask=0077 0 2
-UUID=XXX none swap sw 0 0
-UUID=XXX / ext4 rw 0 1  
-sudo grub-mkconfig -o /boot/grub/grub.cfg  
-  
-echo "archx86_64-usb" > /etc/hostname
-ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
-sudo nano -w /etc/locale.gen  # Uncomment the desired locale(s) ((en_GB.UTF-8 UTF-8))
-locale-gen
-echo "LANG=en_GB.UTF-8" > /etc/locale.conf
-sudo update-grub
-exit
-sudo umount -a
-sudo reboot  
-  
-  
-### Additional commands  
-blkid
-iwctl device wlan0 set-property Powered on
-iwctl 
-device wlan0 set-property Powered on
-station wlan0 scan
-station wlan0 get-networks
-station wlan0 connect SSID
+mkdir -p /mnt/arch/boot/efi   
+sudo nano -w /etc/resolv.conf ==> nameserver ((dns-server))   
+iwctl station wlan0 connect SSID   
+ping google.com   
+sudo pacman-key --init   
+sudo pacman-key --populate archlinux     
+
+sudo mount -o remount,rw / /          
+sudo mount -a     
+sudo pacstrap /mnt/arch base base-devel     
+sudo arch-chroot /mnt/arch      
+mkdir -p /boot/efi     
+sudo pacman -S grub efibootmgr os-prober nano   
+sudo grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=grub --recheck /dev/sdX       
+sudo blkid -s UUID -o value /dev/sdX1 | sudo tee -a /etc/fstab   
+sudo blkid -s UUID -o value /dev/sdX2 | sudo tee -a /etc/fstab   
+sudo blkid -s UUID -o value /dev/sdX3 | sudo tee -a /etc/fstab  
+sudo nano /etc/fstab   
+UUID=XXX /boot/efi vfat umask=0077 0 2   
+UUID=XXX none swap sw 0 0   
+UUID=XXX / ext4 rw 0 1     
+sudo grub-mkconfig -o /boot/grub/grub.cfg     
+echo "archx86_64-usb" > /etc/hostname   
+ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime   
+sudo nano -w /etc/locale.gen  # Uncomment the desired locale(s) ((en_GB.UTF-8 UTF-8))   
+locale-gen   
+echo "LANG=en_GB.UTF-8" > /etc/locale.conf   
+sudo update-grub   
+exit   
+sudo umount -a   
+sudo reboot     
+
+
+
+### Additional commands     
+blkid   
+iwctl device wlan0 set-property Powered on   
+iwctl    
+device wlan0 set-property Powered on   
+station wlan0 scan   
+station wlan0 get-networks   
+station wlan0 connect SSID   
+quit     
+sudo systemctl restart systemd-networkd   
+/dev/sdX1 /mnt/arch/boot/efi vfat defaults 0 2   
+/dev/sdX2 none swap sw 0 0   
+/dev/sdX3 /mnt/arch ext4 defaults 0 1   
+sudo chmod -R o-w /   
+sudo mount -o remount,rw / /   
+sudo nano -w /etc/pacman.d/mirrorlist   
+###  BOOT INTO GRUB identify root       
+ls   
+ls (hdX,Y)/   
+set root=(hdX,Y)   
+linux /boot/vmlinuz-<kernel-version> root=/dev/sdXY   
+initrd /boot/initrd-<initrd-version>   
+boot   
+#####     
+sudo parted /dev/sdX     
+mklabel gpt ###USE gdisk to check this still isnt mbr   
+mkpart primary fat32 1MiB 512MiB   
+set 1 esp on   
+mkpart primary linux-swap 512MiB 2GiB   
+set 2 swap on   
+mkpart primary ext4 2GiB 100%   
 quit  
-sudo systemctl restart systemd-networkd
-/dev/sdX1 /mnt/arch/boot/efi vfat defaults 0 2
-/dev/sdX2 none swap sw 0 0
-/dev/sdX3 /mnt/arch ext4 defaults 0 1
-sudo chmod -R o-w /
-sudo mount -o remount,rw / /
-sudo nano -w /etc/pacman.d/mirrorlist
-###  BOOT INTO GRUB identify root    
-ls
-ls (hdX,Y)/
-set root=(hdX,Y)
-linux /boot/vmlinuz-<kernel-version> root=/dev/sdXY
-initrd /boot/initrd-<initrd-version>
-boot
-#####  
-sudo parted /dev/sdX  
-mklabel gpt ###USE gdisk to check this still isnt mbr
-mkpart primary fat32 1MiB 512MiB
-set 1 esp on
-mkpart primary linux-swap 512MiB 2GiB
-set 2 swap on
-mkpart primary ext4 2GiB 100%
-quit
-###
-sudo dd if=/dev/zero of=/dev/sdX bs=4M status=progress
+###   
+sudo dd if=/dev/zero of=/dev/sdX bs=4M status=progress   
