@@ -1,74 +1,58 @@
+### airootfs essentailly an entire os running in ram, adjust cow-space with 'e' at menu...  
 lsblk
-
 sudo parted /dev/sdX  
-
 mklabel gpt
-
 mkpart primary fat32 1MiB 512MiB
-
-set 1 boot on
-
+set 1 esp on
 mkpart primary linux-swap 512MiB 2GiB
-
 set 2 swap on
-
 mkpart primary ext4 2GiB 100%
-
-sudo mkfs.fat -F 32 /dev/sdX1
+quit
+sudo mkfs.fat -F32 /dev/sdX1
 sudo mkfs.ext4 /dev/sdX3
 sudo mkswap /dev/sdX2
-
-###blkid
+sudo blkid -s UUID -o value /dev/sda1 | sudo tee -a /etc/fstab
 sudo nano /etc/fstab
-###UUID boot: 9e4a4876-4d85
-###UUID swap: 0448c3ad-d542-425
-###UUID root: 8e40e
-
-/dev/sdX1 /mnt/arch/boot/efi vfat rw 0 2
-/dev/sdX2 none swap sw 0 0
-/dev/sdX3 /mnt/arch ext4 rw 0 1
-
-mkdir /mnt/arch
-mkdir /mnt/arch/boot
-mkdir /mnt/arch/boot/efi
+UUID=XXX /mnt/arch/boot/efi vfat umask=0077 0 2
+UUID=XXX none swap sw 0 0
+UUID=XXX /mnt/arch ext4 rw 0 1
+mkdir -p /mnt/arch/boot/efi
 sudo nano -w /etc/resolv.conf ==> nameserver ((dns-server))
-###sudo systemctl restart systemd-networkd
-
-###iwctl device wlan0 set-property Powered on
 iwctl station wlan0 connect SSID
 ping google.com
-###iwctl 
-###device wlan0 set-property Powered on
-###station wlan0 scan
-###station wlan0 get-networks
-###station wlan0 connect SSID
-###quit
-
-
-###sudo chmod -R o-w /
-sudo mount -o remount,rw / /
-sudo nano -w /etc/pacman.d/mirrorlist
-###sudo pacman-key --init
-###sudo pacman-key --populate archlinux
-#####sudo pacman -Syyuu dont run this
-
-sudo mount -a 
-sudo pacstrap /mnt/arch base base-devel
-sudo arch-chroot /mnt/arch
-###sudo genfstab -U /mnt >> /mnt/etc/fstab
-sudo blkid -s UUID -o value /dev/sda1 | sudo tee -a /etc/fstab
-echo "myhostname" > /etc/hostname
+sudo pacman-key --init
+sudo pacman-key --populate archlinux  
+     
+sudo mount -a  
+sudo pacstrap /mnt/arch base base-devel 
+sudo arch-chroot /mnt/arch   
+sudo pacman -S grub efibootmgr os-prober  
+sudo grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=grub --recheck /dev/sda3  
+  
+  
+echo "archx86_64-usb" > /etc/hostname
 ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
-sudo nano -w /etc/locale.gen  # Uncomment the desired locale(s)
-((cy_GB.UTF-8 UTF-8))
+sudo nano -w /etc/locale.gen  # Uncomment the desired locale(s) ((cy_GB.UTF-8 UTF-8))
 locale-gen
 echo "LANG=en_GB.UTF-8" > /etc/locale.conf
-passwd
-useradd -m -G wheel username  # Replace "username" with your desired username
-passwd username
-pacman -S grub
-sudo grub-install --target=x86_64-efi /dev/sda --force
 sudo update-grub
 exit
 umount -R /mnt
 reboot
+  
+### Additional commands  
+blkid
+iwctl device wlan0 set-property Powered on
+iwctl 
+device wlan0 set-property Powered on
+station wlan0 scan
+station wlan0 get-networks
+station wlan0 connect SSID
+quit  
+sudo systemctl restart systemd-networkd
+/dev/sdX1 /mnt/arch/boot/efi vfat umask=0077 0 2
+/dev/sdX2 none swap sw 0 0
+/dev/sdX3 /mnt/arch ext4 rw 0 1
+sudo chmod -R o-w /
+sudo mount -o remount,rw / /
+sudo nano -w /etc/pacman.d/mirrorlist
