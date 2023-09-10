@@ -33,7 +33,7 @@ sudo pacman-key --populate archlinux
 
 sudo mount -o remount,rw / /  ((REdoesDNS))        
 sudo mount -a     
-sudo pacstrap /mnt/arch base base-devel     
+sudo pacstrap -K /mnt/arch base linux linux-firmware      
 sudo arch-chroot /mnt/arch         
 sudo pacman -S grub efibootmgr os-prober nano         
 ### Order is important in fstab     
@@ -42,16 +42,15 @@ sudo blkid -s UUID -o value /dev/sdX1 | sudo tee -a /etc/fstab
 sudo nano /etc/fstab   
 UUID=XXX /boot/efi vfat defaults 0 2      
 UUID=XXX / ext4 defaults 0 1   
-sudo grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub  
-sudo nano -w /etc/default/grub  
-UNCOMMENT==> GRUB_DISABLE_OS_PROBER=false  
+sudo grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=grub
 sudo grub-mkconfig -o /boot/efi/grub/grub.cfg ((place in same dir as efi binary))    
 echo "archx86_64-usb" > /etc/hostname   
-ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime   
+ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime  
+hwclock --systohc    
 sudo nano -w /etc/locale.gen  # Uncomment the desired locale(s) ((en_GB.UTF-8 UTF-8))   
 locale-gen   
 echo "LANG=en_GB.UTF-8" > /etc/locale.conf   
-sudo update-grub   
+passwd   
 exit   
 sudo umount -a   
 sudo reboot     
@@ -78,8 +77,9 @@ sudo nano -w /etc/pacman.d/mirrorlist
 ls   
 ls (hdX,Y)/   
 set root=(hdX,Y)   
-linux /boot/vmlinuz-<kernel-version> root=/dev/sdXY   
-initrd /boot/initrd-<initrd-version>   
+linux /boot/vmlinuz-<kernel-version> root=/dev/sdXY   ==> uname -r ==> 6.4.12-arch1-1  
+initrd /boot/initrd-<initrd-version>   ==> pacman -Qi mkinitcpio ==> 36-1
+
 boot   
 #####     
 sudo parted /dev/sdX     
@@ -103,10 +103,18 @@ sudo blkid -s UUID -o value /dev/sdX2 | sudo tee -a /etc/grub.d/40_custom
 sudo nano /etc/grub.d/40_custom 
 ###  
 menuentry "J ARCH LINUX FOR x86_64bit" {
-    set root=(hd0,gpt3)
+    set root=(hd0,gpt2)
     linux /boot/vmlinuz-custom1 root=UUID=your-uuid1 rw
     initrd /boot/initramfs-custom1.img
 }
 ###  
 
 --recheck /dev/sdX 
+
+### GRUB CONSOLE
+
+set root=(hd0,gpt2)
+linux (hd0,gpt1)/vmlinuz-linux root=/dev/sda2
+initrd (hd0,gpt1)/initramfs-linux.img
+
+boot
