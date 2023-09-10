@@ -1,7 +1,7 @@
 ### airootfs essentailly an entire os running in ram, adjust cow-space with 'e' at menu...  
 lsblk
 sudo parted /dev/sdX  
-mklabel gpt
+mklabel gpt ###USE gdisk to check this still isnt mbr
 mkpart primary fat32 1MiB 512MiB
 set 1 esp on
 mkpart primary linux-swap 512MiB 2GiB
@@ -26,8 +26,6 @@ sudo mount -a
 sudo pacstrap /mnt/arch base base-devel  
 sudo arch-chroot /mnt/arch   
 mkdir -p /boot/efi  
-sudo pacman-key --init  
-sudo pacman-key --populate archlinux  
 sudo pacman -S grub efibootmgr os-prober nano
 sudo grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=grub --recheck /dev/sdX    
 sudo blkid -s UUID -o value /dev/sdX1 | sudo tee -a /etc/fstab
