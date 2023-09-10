@@ -24,9 +24,15 @@ sudo pacman-key --init
 sudo pacman-key --populate archlinux  
      
 sudo mount -a  
-sudo pacstrap /mnt/arch base base-devel 
+sudo pacstrap /mnt/arch base base-devel  
 sudo arch-chroot /mnt/arch   
+mkdir -p /boot/efi  
 sudo pacman -S grub efibootmgr os-prober  
+sudo blkid -s UUID -o value /dev/sda1 | sudo tee -a /etc/fstab
+sudo nano /etc/fstab
+UUID=XXX /boot/efi vfat umask=0077 0 2
+UUID=XXX none swap sw 0 0
+UUID=XXX / ext4 rw 0 1
 sudo grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=grub --recheck /dev/sda3  
   
   
