@@ -34,19 +34,18 @@ sudo pacman-key --populate archlinux
 sudo mount -o remount,rw / /  ((REdoesDNS))        
 sudo mount -a     
 sudo pacstrap /mnt/arch base base-devel     
-sudo arch-chroot /mnt/arch      
-mkdir -p /boot/efi     
+sudo arch-chroot /mnt/arch         
 sudo pacman -S grub efibootmgr os-prober nano         
 ### Order is important in fstab     
 sudo blkid -s UUID -o value /dev/sdX2 | sudo tee -a /etc/fstab   
 sudo blkid -s UUID -o value /dev/sdX1 | sudo tee -a /etc/fstab  
 sudo nano /etc/fstab   
-UUID=XXX /boot/efi vfat umask=0077 0 2      
-UUID=XXX / ext4 rw 0 1   
-sudo grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=grub  
+UUID=XXX /boot/efi vfat defaults 0 2      
+UUID=XXX / ext4 defaults 0 1   
+sudo grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub  
 sudo nano -w /etc/default/grub  
 UNCOMMENT==> GRUB_DISABLE_OS_PROBER=false  
-sudo grub-mkconfig -o /boot/grub/grub.cfg     
+sudo grub-mkconfig -o /boot/efi/grub/grub.cfg ((place in same dir as efi binary))    
 echo "archx86_64-usb" > /etc/hostname   
 ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime   
 sudo nano -w /etc/locale.gen  # Uncomment the desired locale(s) ((en_GB.UTF-8 UTF-8))   
@@ -104,7 +103,7 @@ sudo blkid -s UUID -o value /dev/sdX2 | sudo tee -a /etc/grub.d/40_custom
 sudo nano /etc/grub.d/40_custom 
 ###  
 menuentry "J ARCH LINUX FOR x86_64bit" {
-    set root=(hd0,gpt3)  # Replace with your custom partition's root
+    set root=(hd0,gpt3)
     linux /boot/vmlinuz-custom1 root=UUID=your-uuid1 rw
     initrd /boot/initramfs-custom1.img
 }
