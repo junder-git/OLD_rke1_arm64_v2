@@ -31,7 +31,7 @@ ping google.com
 sudo pacman-key --init   
 sudo pacman-key --populate archlinux     
 
-sudo mount -o remount,rw / /          
+sudo mount -o remount,rw / /  ((REdoesDNS))        
 sudo mount -a     
 sudo pacstrap /mnt/arch base base-devel     
 sudo arch-chroot /mnt/arch      
