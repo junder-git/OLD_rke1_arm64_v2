@@ -28,7 +28,7 @@ mkdir -p /boot/efi
 sudo pacman-key --init  
 sudo pacman-key --populate archlinux  
 sudo pacman -S grub efibootmgr os-prober nano
-sudo grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=grub    
+sudo grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=grub --recheck /dev/sdX    
 sudo blkid -s UUID -o value /dev/sdX1 | sudo tee -a /etc/fstab
 sudo blkid -s UUID -o value /dev/sdX2 | sudo tee -a /etc/fstab
 sudo blkid -s UUID -o value /dev/sdX3 | sudo tee -a /etc/fstab
