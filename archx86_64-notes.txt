@@ -13,7 +13,6 @@ sudo mkfs.ext4 /dev/sdX3
 sudo mkswap /dev/sdX2
 sudo nano /etc/fstab ### remember airootfs temporary
 /dev/sdX1 /mnt/arch/boot/efi vfat umask=0077 0 2
-/dev/sdX2 none swap sw 0 0
 /dev/sdX3 /mnt/arch ext4 rw 0 1
 mkdir -p /mnt/arch/boot/efi
 sudo nano -w /etc/resolv.conf ==> nameserver ((dns-server))
@@ -37,6 +36,7 @@ sudo nano /etc/fstab
 UUID=XXX /boot/efi vfat umask=0077 0 2
 UUID=XXX none swap sw 0 0
 UUID=XXX / ext4 rw 0 1  
+sudo grub-mkconfig -o /boot/grub/grub.cfg  
   
 echo "archx86_64-usb" > /etc/hostname
 ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
@@ -45,8 +45,9 @@ locale-gen
 echo "LANG=en_GB.UTF-8" > /etc/locale.conf
 sudo update-grub
 exit
-umount -R /mnt
-reboot
+sudo umount -a
+sudo reboot  
+  
   
 ### Additional commands  
 blkid
@@ -64,3 +65,10 @@ sudo systemctl restart systemd-networkd
 sudo chmod -R o-w /
 sudo mount -o remount,rw / /
 sudo nano -w /etc/pacman.d/mirrorlist
+###  BOOT INTO GRUB identify root    
+ls
+ls (hdX,Y)/
+set root=(hdX,Y)
+linux /boot/vmlinuz-<kernel-version> root=/dev/sdXY
+initrd /boot/initrd-<initrd-version>
+boot
