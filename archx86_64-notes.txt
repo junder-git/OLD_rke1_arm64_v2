@@ -1,12 +1,13 @@
 ### USB-USB config  
 ### airootfs essentailly an entire os running in ram, adjust cow-space with 'e' at menu...     
   
+loadkeys uk
 sudo nano -w /etc/resolv.conf ==> nameserver ((dns-server))   
 iwctl station wlan0 connect SSID   
-ping google.com 
-loadkeys uk  
-timedatectl  
-reflector -c "UK" -f 12 -l 10 -n 12 --save /etc/pacman.d/mirrorlist  
+ping google.com   
+timedatectl set-timezone "Europe/London"  
+###reflector -c GB -f 12 -l 10 -n 12 --save /etc/pacman.d/mirrorlist
+sudo nano /etc/pacman.d/mirrorlist ### use uk mirrors remove others  
 lsblk     
 sudo gdisk /dev/sdX     
 ##### BIOS BOOT NOT SUPPORTED ON MY DEVICES USE EFI EF00     
@@ -15,7 +16,7 @@ new partition ==> n  ==> (accept default start) ==> +512M ==> EF00
 n  ==> (accept all defaults, start, end, 8300)  
 write ==> w ==> yes  
 #####    
-sud mkfs.fat -F32 /dev/sdX1 
+sudo mkfs.fat -F32 /dev/sdX1 
 sudo mkfs.ext4 /dev/sdX2  
 ### remember below airootfs fstab is temporary  
 sudo nano /etc/fstab    
@@ -26,7 +27,7 @@ sudo mkdir -p /mnt/arch/boot/efi
 sudo pacman-key --init   
 sudo pacman-key --populate archlinux             
 sudo mount -a     
-sudo pacstrap -K /mnt/arch base linux-lts linux-lts-headers linux-firmware base-devel nano dhcpcd networkmanager grub efibootmgr iw reflector sudo xorg networkmanager plasma sddm kde-applications dolphin konsole alsa-utils chromium ffmpeg nvidia-dkms     
+sudo pacstrap -K /mnt/arch base linux-lts linux-lts-headers linux-firmware base-devel nano dhcpcd networkmanager grub efibootmgr iw reflector sudo xorg plasma sddm kde-applications dolphin konsole alsa-utils chromium ffmpeg nvidia-dkms     
 sudo arch-chroot /mnt/arch   
 ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
 hwclock --systohc  
