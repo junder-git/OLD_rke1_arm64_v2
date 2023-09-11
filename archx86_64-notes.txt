@@ -1,63 +1,69 @@
-### airootfs essentailly an entire os running in ram, adjust cow-space with 'e' at menu...      
+### airootfs essentailly an entire os running in ram, adjust cow-space with 'e' at menu...     
+  
 lsblk     
 sudo gdisk /dev/sdX     
-#####     
-In gdisk, type o to create a new empty GUID Partition Table (GPT).     
-- Type n to create a new partition. When asked for the partition number, just press Enter to accept the default.      
-For the first sector, also press Enter to use the default. For the last sector,     
-specify the size of your EFI boot partition (e.g., +512M to create a 512MB EFI partition).     
-When prompted for the hex code or GUID, type EF00 to set the partition type to "EFI System Partition."   
-- Type n once more to create the root partition.    
-Accept the default values for partition number, first sector, and last sector.    
-This will use the remaining space on the drive for the root partition.   
-For the hex code or GUID, you can use the default, which is typically 8300 for a Linux filesystem.   
-- Use the p command to print the partition table and verify that everything looks as expected.    
-Ensure that the EFI partition is correctly marked as "EFI System Partition" (code EF00),     
-and the root partition with the appropriate type (usually 8300 for Linux).   
-- Type w to write the partition table changes to the disk. Confirm this action by typing Y.   
-- Type q to exit gdisk.   
-#####     
-sudo mkfs.fat -F32 /dev/sdX1   
-sudo mkfs.ext4 /dev/sdX2   
-blkid   
-sudo nano /etc/fstab ### remember airootfs temporary   
-/dev/sdX2 /mnt/arch ext4 rw 0 1   
-/dev/sdX1 /mnt/arch/boot vfat umask=0077 0 2   ###grub at /boot efi in arch-chroot /boot/efi
-
-mkdir -p /mnt/arch/boot 
+##### BIOS BOOT NOT SUPPORTED ON MY DEVICES USE EFI EF00     
+overwrite with new gpt table ==> o ==> yes  
+new partition ==> n  ==> (accept default start) ==> +512M ==> EF00  
+n  ==> (accept all defaults, start, end, 8300)  
+write ==> w ==> yes  
+#####    
+sud mkfs.fat -F32 /dev/sdX1 
+sudo mkfs.ext4 /dev/sdX2  
+### remember below airootfs fstab is temporary  
+sudo nano /etc/fstab    
+/dev/sdX2 /mnt/arch ext4 defaults 0 1  
+/dev/sdX1 /mnt/arch/boot/efi vfat defaults 0 2 
+###   
+sudo mkdir -p /mnt/arch/boot/efi   
 sudo nano -w /etc/resolv.conf ==> nameserver ((dns-server))   
 iwctl station wlan0 connect SSID   
 ping google.com   
 sudo pacman-key --init   
-sudo pacman-key --populate archlinux     
-
-sudo mount -o remount,rw / /  ((REdoesDNS))        
+sudo pacman-key --populate archlinux             
 sudo mount -a     
 sudo pacstrap -K /mnt/arch base linux linux-firmware      
-sudo arch-chroot /mnt/arch         
-sudo pacman -S grub efibootmgr os-prober nano         
+sudo arch-chroot /mnt/arch        
+loadkeys uk  
+pacman -Syy  
+pacman -S grub nano efibootmgr iw reflector sudo xorg networkmanager plasma-desktop sddm kde-applications dolphin konsole pulseaudio pulseaudio-alsa pavucontrol chromium ffmpeg nvidia
+reflector -c "UK" -f 12 -l 10 -n 12 --save /etc/pacman.d/mirrorlist         
 ### Order is important in fstab     
-sudo blkid -s UUID -o value /dev/sdX2 | sudo tee -a /etc/fstab   
-sudo blkid -s UUID -o value /dev/sdX1 | sudo tee -a /etc/fstab  
-sudo nano /etc/fstab   
-UUID=XXX /boot/efi vfat defaults 0 2      
+blkid -s UUID -o value /dev/sdX2 | tee -a /etc/fstab    
+blkid -s UUID -o value /dev/sdX1 | tee -a /etc/fstab
+###    
+nano /etc/fstab        
 UUID=XXX / ext4 defaults 0 1   
-sudo grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=grub
-sudo grub-mkconfig -o /boot/efi/grub/grub.cfg ((place in same dir as efi binary))    
-echo "archx86_64-usb" > /etc/hostname   
-ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime  
-hwclock --systohc    
+UUID=XXX /boot/efi vfat defaults 0 2
+###    
+grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
+grub-mkconfig -o /boot/grub/grub.cfg   
+echo archx86_64-usb > /etc/hostname   
+timedatectl set-timezone Europe/London    
 sudo nano -w /etc/locale.gen  # Uncomment the desired locale(s) ((en_GB.UTF-8 UTF-8))   
-locale-gen   
-echo "LANG=en_GB.UTF-8" > /etc/locale.conf   
+locale-gen
+echo LANG=en_GB.UTF-8 > /etc/locale.conf
+export LANG=en_GB.UTF-8  
+touch /etc/hosts
+###  
+127.0.0.1	localhost  
+::1		localhost  
+127.0.1.1	archx86_64-usb  
+###  
 passwd   
+useradd -m jabl3s  
+passwd jabl3s    
+usermod -aG wheel,audio,video,storage jabl3s  
+EDITOR=nano visudo  ### uncoment the wheel line
+systemctl enable NetworkManager.service
 exit   
 sudo umount -a   
 sudo reboot     
-
-
-
-### Additional commands     
+  
+  
+  
+### Additional commands  
+sudo mount -o remount,rw / /  ((REdoesDNS))     
 blkid   
 iwctl device wlan0 set-property Powered on   
 iwctl    
@@ -102,13 +108,13 @@ sudo mkswap /dev/sdX2
 sudo blkid -s UUID -o value /dev/sdX2 | sudo tee -a /etc/grub.d/40_custom
 sudo nano /etc/grub.d/40_custom 
 ###  
-menuentry "J ARCH LINUX FOR x86_64bit" {
-    set root=(hd0,gpt2)
-    linux /boot/vmlinuz-custom1 root=UUID=your-uuid1 rw
-    initrd /boot/initramfs-custom1.img
-}
-###  
-
+menuentry "JBOOT" {  
+    set root=(hd0,gpt2)  
+    linux (hd0,gpt1)/vmlinuz-linux root=UUID=theuuidgoesere  
+    initrd (hd0,gpt1)/boot/initramfs-linux.img  
+}  
+###    
+  
 --recheck /dev/sdX 
 
 ### GRUB CONSOLE
@@ -118,3 +124,23 @@ linux (hd0,gpt1)/vmlinuz-linux root=/dev/sda2
 initrd (hd0,gpt1)/initramfs-linux.img
 
 boot
+###
+grub-install --target=x86_64-pc --recheck /dev/sdX
+sudo mkfs.fat -F32 /dev/sdX1 
+/dev/sdX1 /mnt/arch/boot vfat umask=0077 0 2   ###grub at /boot efi in arch-chroot /boot/efi
+UUID=XXX /boot/efi vfat defaults 0 2 
+sudo blkid -s UUID -o value /dev/sdX1 | sudo tee -a /etc/fstab  
+In gdisk, type o to create a new empty GUID Partition Table (GPT).     
+- Type n to create a new partition. When asked for the partition number, just press Enter to accept the default.      
+For the first sector, also press Enter to use the default. For the last sector,     
+specify the size of your EFI boot partition (e.g., +512M to create a 512MB EFI partition).     
+When prompted for the hex code or GUID, type EF00 to set the partition type to "EFI System Partition."   
+- Type n once more to create the root partition.    
+Accept the default values for partition number, first sector, and last sector.    
+This will use the remaining space on the drive for the root partition.   
+For the hex code or GUID, you can use the default, which is typically 8300 for a Linux filesystem.   
+- Use the p command to print the partition table and verify that everything looks as expected.    
+Ensure that the EFI partition is correctly marked as "EFI System Partition" (code EF00),     
+and the root partition with the appropriate type (usually 8300 for Linux).   
+- Type w to write the partition table changes to the disk. Confirm this action by typing Y.   
+- Type q to exit gdisk.   
