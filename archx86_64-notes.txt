@@ -54,7 +54,7 @@ touch /etc/hosts
 passwd   
 useradd -m jabl3s  
 passwd jabl3s    
-usermod -aG wheel,audio,video,storage jabl3s  
+usermod -aG wheel jabl3s  ### remove these at some point... ,audio,video,storage  
 EDITOR=nano visudo
 nano /usr/bin/visudo  
 ### uncoment the wheel line  
