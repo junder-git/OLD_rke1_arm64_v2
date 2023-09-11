@@ -1,3 +1,4 @@
+### USB-USB config
 ### airootfs essentailly an entire os running in ram, adjust cow-space with 'e' at menu...     
   
 sudo nano -w /etc/resolv.conf ==> nameserver ((dns-server))   
@@ -166,5 +167,3 @@ Ensure that the EFI partition is correctly marked as "EFI System Partition" (cod
 and the root partition with the appropriate type (usually 8300 for Linux).   
 - Type w to write the partition table changes to the disk. Confirm this action by typing Y.   
 - Type q to exit gdisk.   
-
-###export EDITOR=nano
