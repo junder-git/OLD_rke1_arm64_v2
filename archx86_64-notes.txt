@@ -31,10 +31,9 @@ sudo arch-chroot /mnt/arch
 ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
 hwclock --systohc  
 echo archx86_64-usb > /etc/hostname    
-sudo nano -w /etc/locale.gen  # Uncomment the desired locale(s) ((en_GB.UTF-8 UTF-8))   
+nano -w /etc/locale.gen  # Uncomment the desired locale(s) ((en_GB.UTF-8 UTF-8))   
 locale-gen  
-echo LANG=en_GB.UTF-8 > /etc/locale.conf  
-export LANG=en_GB.UTF-8  
+echo LANG=en_GB.UTF-8 > /etc/locale.conf    
 /etc/vconsole.conf
 ### 
 KEYMAP=uk  
@@ -62,23 +61,31 @@ nano /usr/bin/visudo
 ### uncoment the wheel line  
 %wheel ALL=(ALL:ALL) ALL
 ###  
-sudo nano /etc/sddm.conf  ((touch to create))
+nano -w /etc/sddm.conf
 ###  
-[Input]
-KeyboardLayout=gb
+[General]
+InputMethod=xkb
+InputMethodConf=/etc/X11/xorg.conf.d/00-keyboard.conf
 ###  
-systemctl enable NetworkManager
-systemctl enable sddm
-systemctl enable systemd-timesyncd
-nvidia-xconfig  
-modprobe nvidia  
+sudo nano /etc/X11/xorg.conf.d/00-keyboard.conf
+###  
+Section "InputClass"
+    Identifier "system-keyboard"
+    MatchIsKeyboard "on"
+    Option "XkbLayout" "gb"
+EndSection
+###    
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB  
 grub-mkconfig -o /boot/grub/grub.cfg   
+systemctl enable NetworkManager  
+systemctl enable sddm  
+systemctl enable systemd-timesyncd  
+nvidia-xconfig  
+modprobe nvidia
 exit   
 sudo umount -a   
 sudo reboot     
   
-
 ##########
 $ alsamixer
 $ amixer sset Master unmute
