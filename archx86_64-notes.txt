@@ -27,7 +27,7 @@ sudo mkdir -p /mnt/arch/boot/efi
 sudo pacman-key --init   
 sudo pacman-key --populate archlinux             
 sudo mount -a     
-sudo pacstrap -K /mnt/arch base linux-lts linux-lts-headers linux-firmware base-devel nano dhcpcd networkmanager grub efibootmgr iw reflector sudo xorg plasma sddm kde-applications dolphin konsole alsa-utils alsa-firmware alsa-lib alsa-oss sof-firmware chromium ffmpeg nvidia-lts nvidia-utils     
+sudo pacstrap -K /mnt/arch base linux-lts linux-lts-headers linux-firmware base-devel nano dhcpcd networkmanager grub efibootmgr iw reflector sudo xorg plasma sddm kde-applications dolphin konsole alsa-utils alsa-firmware alsa-lib alsa-oss sof-firmware chromium ffmpeg nvidia-lts nvidia-utils nvidia-settings       
 sudo arch-chroot /mnt/arch   
 ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
 hwclock --systohc  
