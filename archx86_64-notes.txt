@@ -54,9 +54,10 @@ passwd
 useradd -m jabl3s  
 passwd jabl3s    
 usermod -aG wheel,audio,video,storage jabl3s  
-nano visudo  
+EDITOR=nano visudo
+nano /usr/bin/visudo  
 ### uncoment the wheel line  
-%wheel ALL=(ALL) ALL
+%wheel ALL=(ALL:ALL) ALL
 ###  
 systemctl enable NetworkManager.service
 systemctl enable sddm
@@ -148,3 +149,5 @@ Ensure that the EFI partition is correctly marked as "EFI System Partition" (cod
 and the root partition with the appropriate type (usually 8300 for Linux).   
 - Type w to write the partition table changes to the disk. Confirm this action by typing Y.   
 - Type q to exit gdisk.   
+
+###export EDITOR=nano
