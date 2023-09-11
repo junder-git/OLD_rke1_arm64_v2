@@ -27,7 +27,7 @@ sudo arch-chroot /mnt/arch
 loadkeys uk  
 pacman -Syy  
 pacman -S grub nano efibootmgr iw reflector sudo xorg networkmanager plasma plasma-desktop sddm kde-applications dolphin konsole pulseaudio pulseaudio-alsa pavucontrol chromium ffmpeg nvidia
-reflector -c "UK" -f 12 -l 10 -n 12 --save /etc/pacman.d/mirrorlist  ### should do this before getting packages ideally...           
+reflector -c "UK" -f 12 -l 10 -n 12 --save /etc/pacman.d/mirrorlist  ### should do this before getting packages ideally, but reflector might need install...           
 ### Order is important in fstab     
 blkid -s UUID -o value /dev/sdX2 | tee -a /etc/fstab    
 blkid -s UUID -o value /dev/sdX1 | tee -a /etc/fstab
