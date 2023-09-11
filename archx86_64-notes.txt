@@ -27,7 +27,7 @@ sudo mkdir -p /mnt/arch/boot/efi
 sudo pacman-key --init   
 sudo pacman-key --populate archlinux             
 sudo mount -a     
-sudo pacstrap -K /mnt/arch base linux-lts linux-lts-headers linux-firmware base-devel nano dhcpcd networkmanager grub efibootmgr iw reflector sudo xorg plasma sddm kde-applications dolphin konsole alsa-utils chromium ffmpeg nvidia-dkms     
+sudo pacstrap -K /mnt/arch base linux-lts linux-lts-headers linux-firmware base-devel nano dhcpcd networkmanager grub efibootmgr iw reflector sudo xorg plasma sddm kde-applications dolphin konsole alsa-utils alsa-firmware alsa-lib alsa-oss sof-firmware chromium ffmpeg nvidia-lts nvidia-utils     
 sudo arch-chroot /mnt/arch   
 ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
 hwclock --systohc  
@@ -47,7 +47,7 @@ nano /etc/fstab
 UUID=XXX / ext4 defaults 0 1   
 UUID=XXX /boot/efi vfat defaults 0 2
 ###      
-touch /etc/hosts
+nano /etc/hosts
 ###  
 127.0.0.1	localhost  
 ::1		localhost  
@@ -57,25 +57,10 @@ passwd
 useradd -m jabl3s  
 passwd jabl3s    
 usermod -aG wheel jabl3s  ### remove these at some point... ,audio,video,storage  
-EDITOR=nano visudo
-nano /usr/bin/visudo  
+EDITOR=nano visudo  
 ### uncoment the wheel line  
 %wheel ALL=(ALL:ALL) ALL
-###  
-nano -w /etc/sddm.conf
-###  
-[General]
-InputMethod=xkb
-InputMethodConf=/etc/X11/xorg.conf.d/00-keyboard.conf
-###  
-sudo nano /etc/X11/xorg.conf.d/00-keyboard.conf
-###  
-Section "InputClass"
-    Identifier "system-keyboard"
-    MatchIsKeyboard "on"
-    Option "XkbLayout" "gb"
-EndSection
-###    
+###     
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB  
 grub-mkconfig -o /boot/grub/grub.cfg   
 systemctl enable NetworkManager sddm systemd-timesyncd  
@@ -85,14 +70,16 @@ exit
 sudo umount -a   
 sudo reboot     
   
-##########
+##########  
+pamixer --get-volume-human  
 $ alsamixer
 $ amixer sset Master unmute
 $ amixer sset Speaker unmute
 $ amixer sset Headphone unmute
   
 ### Additional commands  
-sudo mount -o remount,rw / /  ((REdoesDNS))     
+sudo mount -o remount,rw / /  ((REdoesDNS))   
+pacman -Rns package_name  
 blkid   
 iwctl device wlan0 set-property Powered on   
 iwctl    
