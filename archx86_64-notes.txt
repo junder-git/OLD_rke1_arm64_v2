@@ -1,5 +1,11 @@
 ### airootfs essentailly an entire os running in ram, adjust cow-space with 'e' at menu...     
   
+sudo nano -w /etc/resolv.conf ==> nameserver ((dns-server))   
+iwctl station wlan0 connect SSID   
+ping google.com 
+loadkeys uk  
+timedatectl  
+reflector -c "UK" -f 12 -l 10 -n 12 --save /etc/pacman.d/mirrorlist  
 lsblk     
 sudo gdisk /dev/sdX     
 ##### BIOS BOOT NOT SUPPORTED ON MY DEVICES USE EFI EF00     
@@ -15,21 +21,23 @@ sudo nano /etc/fstab
 /dev/sdX2 /mnt/arch ext4 defaults 0 1  
 /dev/sdX1 /mnt/arch/boot/efi vfat defaults 0 2 
 ###   
-sudo mkdir -p /mnt/arch/boot/efi   
-sudo nano -w /etc/resolv.conf ==> nameserver ((dns-server))   
-iwctl station wlan0 connect SSID   
-ping google.com   
+sudo mkdir -p /mnt/arch/boot/efi     
 sudo pacman-key --init   
 sudo pacman-key --populate archlinux             
 sudo mount -a     
-sudo pacstrap -K /mnt/arch base linux-lts linux-firmware base-devel nano dhcpcd grub efibootmgr iw reflector sudo xorg networkmanager plasma sddm kde-applications dolphin konsole pulseaudio pulseaudio-alsa pavucontrol chromium ffmpeg nvidia     
-sudo arch-chroot /mnt/arch  
-reflector -c "UK" -f 12 -l 10 -n 12 --save /etc/pacman.d/mirrorlist 
-timedatectl   
-localectl set-x11-keymap gb  
-loadkeys uk  
-pacman -Syy  
-
+sudo pacstrap -K /mnt/arch base linux-lts linux-lts-headers linux-firmware base-devel nano dhcpcd networkmanager grub efibootmgr iw reflector sudo xorg networkmanager plasma sddm kde-applications dolphin konsole alsa-utils chromium ffmpeg nvidia-dkms     
+sudo arch-chroot /mnt/arch   
+ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
+hwclock --systohc  
+echo archx86_64-usb > /etc/hostname    
+sudo nano -w /etc/locale.gen  # Uncomment the desired locale(s) ((en_GB.UTF-8 UTF-8))   
+locale-gen  
+echo LANG=en_GB.UTF-8 > /etc/locale.conf  
+export LANG=en_GB.UTF-8  
+/etc/vconsole.conf
+### 
+KEYMAP=uk  
+###  
 ### Order is important in fstab     
 blkid -s UUID -o value /dev/sdX2 | tee -a /etc/fstab    
 blkid -s UUID -o value /dev/sdX1 | tee -a /etc/fstab
@@ -37,15 +45,7 @@ blkid -s UUID -o value /dev/sdX1 | tee -a /etc/fstab
 nano /etc/fstab        
 UUID=XXX / ext4 defaults 0 1   
 UUID=XXX /boot/efi vfat defaults 0 2
-###    
-grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
-grub-mkconfig -o /boot/grub/grub.cfg   
-echo archx86_64-usb > /etc/hostname   
-timedatectl set-timezone Europe/London    
-sudo nano -w /etc/locale.gen  # Uncomment the desired locale(s) ((en_GB.UTF-8 UTF-8))   
-locale-gen
-echo LANG=en_GB.UTF-8 > /etc/locale.conf
-export LANG=en_GB.UTF-8  
+###      
 touch /etc/hosts
 ###  
 127.0.0.1	localhost  
@@ -66,13 +66,23 @@ sudo nano /etc/sddm.conf  ((touch to create))
 [Input]
 KeyboardLayout=gb
 ###  
-systemctl enable NetworkManager.service
+systemctl enable NetworkManager
 systemctl enable sddm
+systemctl enable systemd-timesyncd
+nvidia-xconfig  
+modprobe nvidia  
+grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB  
+grub-mkconfig -o /boot/grub/grub.cfg   
 exit   
 sudo umount -a   
 sudo reboot     
   
-  
+
+##########
+$ alsamixer
+$ amixer sset Master unmute
+$ amixer sset Speaker unmute
+$ amixer sset Headphone unmute
   
 ### Additional commands  
 sudo mount -o remount,rw / /  ((REdoesDNS))     
