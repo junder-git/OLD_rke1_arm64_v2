@@ -23,7 +23,8 @@ sudo pacman-key --init
 sudo pacman-key --populate archlinux             
 sudo mount -a     
 sudo pacstrap -K /mnt/arch base linux linux-firmware      
-sudo arch-chroot /mnt/arch        
+sudo arch-chroot /mnt/arch  
+localectl set-x11-keymap gb  
 loadkeys uk  
 pacman -Syy  
 pacman -S grub nano efibootmgr iw reflector sudo xorg networkmanager plasma plasma-desktop sddm kde-applications dolphin konsole pulseaudio pulseaudio-alsa pavucontrol chromium ffmpeg nvidia
