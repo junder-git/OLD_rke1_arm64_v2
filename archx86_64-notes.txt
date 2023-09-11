@@ -22,13 +22,13 @@ ping google.com
 sudo pacman-key --init   
 sudo pacman-key --populate archlinux             
 sudo mount -a     
-sudo pacstrap -K /mnt/arch base linux linux-firmware      
+sudo pacstrap -K /mnt/arch base linux linux-firmware grub nano efibootmgr iw reflector sudo       
 sudo arch-chroot /mnt/arch  
 localectl set-x11-keymap gb  
 loadkeys uk  
 pacman -Syy  
-pacman -S grub nano efibootmgr iw reflector sudo xorg networkmanager plasma plasma-desktop sddm kde-applications dolphin konsole pulseaudio pulseaudio-alsa pavucontrol chromium ffmpeg nvidia
-reflector -c "UK" -f 12 -l 10 -n 12 --save /etc/pacman.d/mirrorlist  ### should do this before getting packages ideally, but reflector might need install...           
+reflector -c "UK" -f 12 -l 10 -n 12 --save /etc/pacman.d/mirrorlist  
+pacman -S xorg networkmanager plasma plasma-desktop sddm kde-applications dolphin konsole pulseaudio pulseaudio-alsa pavucontrol chromium ffmpeg nvidia
 ### Order is important in fstab     
 blkid -s UUID -o value /dev/sdX2 | tee -a /etc/fstab    
 blkid -s UUID -o value /dev/sdX1 | tee -a /etc/fstab
@@ -59,6 +59,11 @@ EDITOR=nano visudo
 nano /usr/bin/visudo  
 ### uncoment the wheel line  
 %wheel ALL=(ALL:ALL) ALL
+###  
+sudo nano /etc/sddm.conf  ((touch to create))
+###  
+[Input]
+KeyboardLayout=gb
 ###  
 systemctl enable NetworkManager.service
 systemctl enable sddm
