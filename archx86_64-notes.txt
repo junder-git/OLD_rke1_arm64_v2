@@ -26,7 +26,7 @@ sudo pacstrap -K /mnt/arch base linux linux-firmware
 sudo arch-chroot /mnt/arch        
 loadkeys uk  
 pacman -Syy  
-pacman -S grub nano efibootmgr iw reflector sudo xorg networkmanager plasma-desktop sddm kde-applications dolphin konsole pulseaudio pulseaudio-alsa pavucontrol chromium ffmpeg nvidia
+pacman -S grub nano efibootmgr iw reflector sudo xorg networkmanager plasma plasma-desktop sddm kde-applications dolphin konsole pulseaudio pulseaudio-alsa pavucontrol chromium ffmpeg nvidia
 reflector -c "UK" -f 12 -l 10 -n 12 --save /etc/pacman.d/mirrorlist         
 ### Order is important in fstab     
 blkid -s UUID -o value /dev/sdX2 | tee -a /etc/fstab    
@@ -54,7 +54,10 @@ passwd
 useradd -m jabl3s  
 passwd jabl3s    
 usermod -aG wheel,audio,video,storage jabl3s  
-EDITOR=nano visudo  ### uncoment the wheel line
+nano visudo  
+### uncoment the wheel line  
+%wheel ALL=(ALL) ALL
+###  
 systemctl enable NetworkManager.service
 systemctl enable sddm
 exit   
