@@ -4,8 +4,7 @@
 loadkeys uk
 sudo nano -w /etc/resolv.conf ==> nameserver ((dns-server))   
 iwctl station wlan0 connect SSID   
-ping google.com   
-timedatectl set-timezone "Europe/London"  
+ping google.com     
 ###reflector -c GB -f 12 -l 10 -n 12 --save /etc/pacman.d/mirrorlist
 sudo nano /etc/pacman.d/mirrorlist ### use uk mirrors remove others  
 lsblk     
@@ -63,6 +62,7 @@ nano /etc/vconsole.conf
 ###  
 KEYMAP=en  
 ###  
+timedatectl set-timezone "Europe/London"  
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB  
 grub-mkconfig -o /boot/grub/grub.cfg    
 exit   

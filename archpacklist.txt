@@ -28,3 +28,6 @@ nvidia-utils
 nvidia-settings 
 vulkan-tools 
 vulkan-icd-loader
+intel-ucode
+mesa
+git
