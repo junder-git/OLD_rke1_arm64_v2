@@ -64,6 +64,10 @@ sudo pacstrap -K /mnt/arch
     mesa
     git
     curl
+    firefox
+    konsole
+    dolphin
+    kde-applications
 sudo arch-chroot /mnt/arch   
 git ((test))
 ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
