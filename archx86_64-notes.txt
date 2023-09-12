@@ -28,18 +28,14 @@ sudo pacman-key --init
 sudo pacman-key --populate archlinux             
 sudo mount -a     
 ### BELOW LINE MODS need soc-firmaware on msi katana, using lts kernel...  
-sudo pacstrap -K /mnt/arch base linux-lts linux-lts-headers linux-firmware base-devel nano dhcpcd networkmanager grub efibootmgr iw reflector sudo xorg plasma sddm kde-applications dolphin konsole alsa-utils alsa-firmware alsa-lib alsa-oss sof-firmware chromium ffmpeg nvidia-lts nvidia-utils nvidia-settings vulkan-tools           
+sudo pacstrap -K /mnt/arch base linux-lts linux-lts-headers linux-firmware base-devel nano dhcpcd networkmanager grub efibootmgr iw reflector sudo xorg plasma sddm kde-applications dolphin konsole alsa-utils alsa-firmware alsa-lib alsa-oss sof-firmware ffmpeg nvidia-lts nvidia-utils nvidia-settings vulkan-tools vulkan-icd-loader                 
 sudo arch-chroot /mnt/arch   
 ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
 hwclock --systohc  
 echo archx86_64-usb > /etc/hostname    
 nano -w /etc/locale.gen  # Uncomment the desired locale(s) ((en_GB.UTF-8 UTF-8))   
 locale-gen  
-echo LANG=en_GB.UTF-8 > /etc/locale.conf    
-/etc/vconsole.conf
-### 
-KEYMAP=uk  
-###  
+echo LANG=en_GB.UTF-8 > /etc/locale.conf      
 ### Order is important in fstab     
 blkid -s UUID -o value /dev/sdX2 | tee -a /etc/fstab    
 blkid -s UUID -o value /dev/sdX1 | tee -a /etc/fstab
@@ -63,14 +59,47 @@ EDITOR=nano visudo
 %wheel ALL=(ALL:ALL) ALL
 ###     
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB  
+nano /etc/default/grub
+###
+GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1"
+###
 grub-mkconfig -o /boot/grub/grub.cfg   
 systemctl enable NetworkManager sddm systemd-timesyncd  
 modprobe nvidia  
-### nvidia-xconfig DONT RUN  
+### nvidia-xconfig DONT RUN instead...  
+nano /etc/X11/xorg.conf.d/10-nvidia-drm-outputclass.conf
+### 
+Section "OutputClass"
+    Identifier "intel"
+    MatchDriver "i915"
+    Driver "modesetting"
+EndSection
+
+Section "OutputClass"
+    Identifier "nvidia"
+    MatchDriver "nvidia-drm"
+    Driver "nvidia"
+    Option "AllowEmptyInitialConfiguration"
+    Option "PrimaryGPU" "yes"
+    ModulePath "/usr/lib/nvidia/xorg"
+    ModulePath "/usr/lib/xorg/modules"
+EndSection
+###  
+nano /usr/share/sddm/scripts/Xsetup
+### 
+xrandr --setprovideroutputsource modesetting NVIDIA-0
+xrandr --auto
+###    
 exit   
 sudo umount -a   
 sudo reboot     
   
+
+
+
+
+
+
 ##########  
 pamixer --get-volume-human  
 $ alsamixer
@@ -161,3 +190,5 @@ Ensure that the EFI partition is correctly marked as "EFI System Partition" (cod
 and the root partition with the appropriate type (usually 8300 for Linux).   
 - Type w to write the partition table changes to the disk. Confirm this action by typing Y.   
 - Type q to exit gdisk.   
+
+~/.nvidia-settings-rc
