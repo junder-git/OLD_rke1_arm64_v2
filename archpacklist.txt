@@ -31,3 +31,4 @@ vulkan-icd-loader
 intel-ucode
 mesa
 git
+curl
