@@ -27,7 +27,7 @@ sudo pacman-key --init
 sudo pacman-key --populate archlinux             
 sudo mount -a     
 ### BELOW LINE MODS need soc-firmaware on msi katana, using lts kernel...  
-curl -Ls https://raw.githubusercontent.com/jabl3s/rke1-arm64/main/archpacklist.txt | sudo pacstrap -K /mnt/arch -p -                  
+curl -Ls https://raw.githubusercontent.com/jabl3s/rke1-arm64/main/archpacklist.txt | sudo pacstrap -K /mnt/arch                  
 sudo arch-chroot /mnt/arch   
 ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
 hwclock --systohc  
