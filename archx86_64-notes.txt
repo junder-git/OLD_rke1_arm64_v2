@@ -27,7 +27,42 @@ sudo pacman-key --init
 sudo pacman-key --populate archlinux             
 sudo mount -a     
 ### BELOW LINE MODS need soc-firmaware on msi katana, using lts kernel...  
-curl -Ls https://raw.githubusercontent.com/jabl3s/rke1-arm64/main/archpacklist.txt | sudo pacstrap -K /mnt/arch                  
+### curl -Ls https://raw.githubusercontent.com/jabl3s/rke1-arm64/main/archpacklist.txt | sudo pacstrap -K /mnt/arch                  
+sudo pacstrap -K /mnt/arch
+    base 
+    linux 
+    linux-firmware 
+    linux-headers 
+    sudo 
+    wireless_tools 
+    wpa_supplicant 
+    netctl 
+    base-devel 
+    nano 
+    dhcpcd 
+    networkmanager 
+    grub 
+    efibootmgr 
+    iw 
+    reflector 
+    xorg
+    sddm
+    plasma 
+    alsa-utils 
+    alsa-firmware 
+    alsa-lib 
+    alsa-oss 
+    sof-firmware 
+    ffmpeg 
+    nvidia 
+    nvidia-utils 
+    nvidia-settings 
+    vulkan-tools 
+    vulkan-icd-loader
+    intel-ucode
+    mesa
+    git
+    curl
 sudo arch-chroot /mnt/arch   
 ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
 hwclock --systohc  
