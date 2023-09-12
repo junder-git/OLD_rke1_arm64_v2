@@ -64,6 +64,7 @@ sudo pacstrap -K /mnt/arch
     git
     curl
 sudo arch-chroot /mnt/arch   
+git ((test))
 ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
 hwclock --systohc  
 echo archx8664-usb > /etc/hostname    
