@@ -28,7 +28,7 @@ sudo pacman-key --init
 sudo pacman-key --populate archlinux             
 sudo mount -a     
 ### BELOW LINE MODS need soc-firmaware on msi katana, using lts kernel...  
-sudo pacstrap -K /mnt/arch base linux-lts linux-lts-headers linux-firmware base-devel nano dhcpcd networkmanager grub efibootmgr iw reflector sudo xorg plasma sddm kde-applications dolphin konsole alsa-utils alsa-firmware alsa-lib alsa-oss sof-firmware chromium ffmpeg nvidia-lts nvidia-utils nvidia-settings       
+sudo pacstrap -K /mnt/arch base linux-lts linux-lts-headers linux-firmware base-devel nano dhcpcd networkmanager grub efibootmgr iw reflector sudo xorg plasma sddm kde-applications dolphin konsole alsa-utils alsa-firmware alsa-lib alsa-oss sof-firmware chromium ffmpeg nvidia-lts nvidia-utils nvidia-settings yay         
 sudo arch-chroot /mnt/arch   
 ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
 hwclock --systohc  
@@ -135,13 +135,13 @@ menuentry "JBOOT" {
 --recheck /dev/sdX 
 
 ### GRUB CONSOLE
-
-set root=(hd0,gpt2)
-linux (hd0,gpt1)/vmlinuz-linux root=/dev/sda2
-initrd (hd0,gpt1)/initramfs-linux.img
-
-boot
-###
+  
+set root=(hd0,gpt2)  
+linux (hd0,gpt1)/vmlinuz-linux root=/dev/sda2  
+initrd (hd0,gpt1)/initramfs-linux.img  
+  
+boot  
+###  
 grub-install --target=x86_64-pc --recheck /dev/sdX
 sudo mkfs.fat -F32 /dev/sdX1 
 /dev/sdX1 /mnt/arch/boot vfat umask=0077 0 2   ###grub at /boot efi in arch-chroot /boot/efi
