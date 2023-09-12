@@ -58,8 +58,11 @@ EDITOR=nano visudo
 ### uncoment the wheel line  
 %wheel ALL=(ALL:ALL) ALL
 ###    
-systemctl enable NetworkManager gdm systemd-timesyncd  
-modprobe nvidia   
+systemctl enable NetworkManager sddm systemd-timesyncd  
+nano /etc/vconsole.conf
+###  
+KEYMAP=en  
+###  
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB  
 grub-mkconfig -o /boot/grub/grub.cfg    
 exit   
