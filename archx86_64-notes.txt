@@ -32,7 +32,7 @@ curl -Ls https://raw.githubusercontent.com/jabl3s/rke1-arm64/main/archpacklist.t
 sudo arch-chroot /mnt/arch   
 ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
 hwclock --systohc  
-echo archx86_64-usb > /etc/hostname    
+echo archx8664-usb > /etc/hostname    
 nano -w /etc/locale.gen  # Uncomment the desired locale(s) ((en_GB.UTF-8 UTF-8))   
 locale-gen  
 echo LANG=en_GB.UTF-8 > /etc/locale.conf      
@@ -48,7 +48,7 @@ nano /etc/hosts
 ###  
 127.0.0.1	localhost  
 ::1		localhost  
-127.0.1.1	archx86_64-usb  
+127.0.1.1	archx8664-usb  
 ###  
 passwd   
 useradd -m jabl3s  
