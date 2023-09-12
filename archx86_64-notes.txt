@@ -64,7 +64,16 @@ KEYMAP=en
 ###  
 timedatectl set-timezone "Europe/London"  
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB  
+nano /etc/default/grub
+###  
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash nvidia-drm.modeset=1"  
+###  
 grub-mkconfig -o /boot/grub/grub.cfg    
+nano /etc/mkinitcpio.conf
+###  
+MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)  
+###  
+mkinitcpio -P  
 exit   
 sudo umount -a   
 sudo reboot     
@@ -195,3 +204,5 @@ xrandr --auto
 nano /etc/default/grub
 ###
 GRUB_CMDLINE_LINUX="nvidia_drm.modeset=1"
+
+see: https://github.com/korvahannu/arch-nvidia-drivers-installation-guide  
