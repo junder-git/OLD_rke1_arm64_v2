@@ -1,5 +1,5 @@
 # rke1-arm64 setup guide    
-  
+((nginx and gzip config, issues in the past with compression techniques for performance and data security)) - gzip attack nginx  
 ### Useful commands  
 - docker ps -a -q | awk '{print $1}' | xargs docker stop  
   
@@ -64,7 +64,8 @@ kubectl get svc -n cattle-system
   
 
 ## NGINX access  
-  
+
+((nginx and gzip config, issues in the past with compression techniques for performance and data security)) -gzip attck nginx    
 kubectl get pods,svc,configmaps --namespace=ingress-nginx  
   
 kubectl delete ingressclass nginx -n default  
