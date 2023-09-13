@@ -64,7 +64,8 @@ kubectl get svc -n cattle-system
   
 
 ## NGINX access  
-  
+
+((nginx and gzip config issues))  
 kubectl get pods,svc,configmaps --namespace=ingress-nginx  
   
 kubectl delete ingressclass nginx -n default  
