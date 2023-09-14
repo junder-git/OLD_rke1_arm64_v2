@@ -1,15 +1,14 @@
 # rke1-arm64 setup guide    
-Potential nixos to replace raspbian to aid os state management via saltstack/ansible.   
-### Useful commands  
-- docker ps -a -q | awk '{print $1}' | xargs docker stop  
+Potential nixos to replace raspbian to aid os state management via saltstack/ansible.    
   
 ## Pre-requisites   
 - Assumes home dns is already running with remote machine root ssh access to all node types, (needs dns wildcard setup at some point)
 - raspberry pi imager flash 32gb-fat san disk sd && 32gb-fat san disk usb-3.0 speeds type with raspOS(64-bit)lite  
 - (pi tip) - sudo rpi-eeprom-config --edit => BOOT_ORDER=0xf14 (1-usb 4-sd f-fallback_boot)  
 - (k3s tip) - /boot/cmdline.txt => cgroup_memory=1 cgroup_enable=memory ip=LOCAL_IP_ADDRESS::LOCAL_IP_GATEWAY:NET_MASK_255:HOSTNAME:NIC_eth0:off
+
+## Start install
   
-==========  
 jmux connect pi@pi-1.jabl3s pi@pi-2.jabl3s pi@pi-3.jabl3s pi@pi-4.jabl3s  
 sudo apt update  
 sudo apt full-upgrade  
@@ -64,6 +63,8 @@ kubectl get svc -n cattle-system
   
 
 ## NGINX access  
+
+- Consider rancher helm install without specifying nginx to begin with
   
 ((nginx and gzip config, issues in the past with compression techniques for performance and data security)) - gzip attack nginx     
 kubectl get pods,svc,configmaps --namespace=ingress-nginx  
@@ -83,11 +84,12 @@ helm install nginx-ingress ingress-nginx/ingress-nginx --namespace default --set
   
 helm upgrade nginx-ingress ingress-nginx/ingress-nginx --namespace default --set controller.configMapName=jnginx-configmap 
   
+## End installation
+
+=====
   
-#########
+## Aditional non-sense  
   
-  
-#########  
 jmux connect pi@pi-1.jabl3s pi@pi-2.jabl3s pi@pi-3.jabl3s pi@pi-4.jabl3s  
 curl -o ~/filename.ext -LJO https://raw.githubusercontent.com/jabl3s/rke/main/jnginx.conf     
 docker run --name jnginx-container -v ~/jnginx.conf:/etc/nginx/nginx.conf:ro -d -p 80:80 --cpus 0.5 --memory 512m nginx  
@@ -96,7 +98,8 @@ kubectl get svc -n <namespace>
 
 docker stop jnginx-container && docker rm jnginx-container
   
-########## ADDITINAL NOTES  
+########## ADDITINAL commands    
+docker ps -a -q | awk '{print $1}' | xargs docker stop 
 docker ps -a  
 docker ps -a --filter "name=jnginx-container"  
 
