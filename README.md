@@ -1,5 +1,5 @@
 # rke1-arm64 setup guide        
-  
+- Check for harvester arm releases in the coming future    
 ## Pre-requisites   
 - Assumes home dns is already running with remote machine root ssh access to all node types, (needs dns wildcard setup at some point)
 - raspberry pi imager flash 32gb-fat san disk sd && 32gb-fat san disk usb-3.0 speeds type UHS-I only available with raspOS(64-bit)lite, potential nixos to replace raspbian to aid os state management via saltstack/ansible.  
