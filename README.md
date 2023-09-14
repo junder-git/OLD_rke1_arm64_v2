@@ -1,9 +1,8 @@
-# rke1-arm64 setup guide    
-Potential nixos to replace raspbian to aid os state management via saltstack/ansible.    
+# rke1-arm64 setup guide        
   
 ## Pre-requisites   
 - Assumes home dns is already running with remote machine root ssh access to all node types, (needs dns wildcard setup at some point)
-- raspberry pi imager flash 32gb-fat san disk sd && 32gb-fat san disk usb-3.0 speeds type with raspOS(64-bit)lite  
+- raspberry pi imager flash 32gb-fat san disk sd && 32gb-fat san disk usb-3.0 speeds type with raspOS(64-bit)lite, potential nixos to replace raspbian to aid os state management via saltstack/ansible.  
 - (pi tip) - sudo rpi-eeprom-config --edit => BOOT_ORDER=0xf14 (1-usb 4-sd f-fallback_boot)  
 - (k3s tip) - /boot/cmdline.txt => cgroup_memory=1 cgroup_enable=memory ip=LOCAL_IP_ADDRESS::LOCAL_IP_GATEWAY:NET_MASK_255:HOSTNAME:NIC_eth0:off
 
