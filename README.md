@@ -28,7 +28,7 @@ ssh-copy-id pi@pi-4.jabl3s
 mv rke_linux-arm64 rke  
 chmod +x rke  
 ./rke up  (spam run if fail <= 3-attempts)
-## Helm approach to install cert-manager && rancher  
+## Helm package manager approach to install initial cluster resources   
 curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null   
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/  
 stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list  
@@ -42,7 +42,7 @@ sudo apt update && sudo apt install -y kubectl
 mkdir -p ~/.kube  
 cp kube_config_cluster.yml ~/.kube/config  
 ###  
-## Cert-manager  
+## Cert-manager package    
 helm repo add jetstack https://charts.jetstack.io  
 helm repo update  
 kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.12.0/cert-manager.crds.yaml  
@@ -53,17 +53,15 @@ helm install \
   --version v1.12.0  
   
 kubectl apply -f ~/jclusterissuer.yml  
-  
-helm install rancher rancher-stable/rancher --namespace cattle-system --create-namespace --set hostname=pi-4.jabl3s --set bootstrapPassword=admin --set ingress.tls.source=letsEncrypt --set letsEncrypt.email=j@jabl3s --set letsEncrypt.ingress.class=nginx  
-  
-exit  
+
+## Rancher package  
+helm install rancher rancher-stable/rancher --namespace cattle-system --create-namespace --set hostname=pi-4.jabl3s --set bootstrapPassword=admin --set ingress.tls.source=letsEncrypt --set letsEncrypt.email=j@jabl3s --set letsEncrypt.ingress.class=nginx    
   
 kubectl get svc -n cattle-system  
   
-
-## NGINX access  
-
-- Consider rancher helm install without specifying nginx to begin with
+## NGINX pacakge    
+  
+- Consider rancher helm install without specifying nginx to begin with  
   
 ((nginx and gzip config, issues in the past with compression techniques for performance and data security)) - gzip attack nginx     
 kubectl get pods,svc,configmaps --namespace=ingress-nginx  
@@ -83,9 +81,9 @@ helm install nginx-ingress ingress-nginx/ingress-nginx --namespace default --set
   
 helm upgrade nginx-ingress ingress-nginx/ingress-nginx --namespace default --set controller.configMapName=jnginx-configmap 
   
-## End installation
-
-=====
+## End initial cluster and package installation, now apply my own .yml files for my own apps to run :D      
+  
+=====  
   
 ## Aditional non-sense  
   
