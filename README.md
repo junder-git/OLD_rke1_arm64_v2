@@ -32,7 +32,7 @@ chmod +x rke
 curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg  
 echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list  
 sudo apt update && sudo apt install -y kubectl  
-## Helm package manager approach to install initial cluster resources   
+## Helm package manager tool and approach to install further initial cluster resources   
 curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null   
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/  
 stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list  
