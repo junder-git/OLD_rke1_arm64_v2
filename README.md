@@ -28,7 +28,7 @@ ssh-copy-id pi@pi-4.jabl3s
 mv rke_linux-arm64 rke  
 chmod +x rke  
 ./rke up  (spam run if fail <= 3-attempts)  
-## Kubectl cluster tool      
+## Kubectl cluster management tool (rancher cli at some point too maybe)         
 curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg  
 echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list  
 sudo apt update && sudo apt install -y kubectl  
