@@ -38,7 +38,7 @@ Pin-Priority: 1000
 sudo usermod -aG docker pi && su - pi && exit  
 ```
 ``` bash
-curl -o ~/rke https://github.com/jabl3s/rke1-arm64/raw/main/rke_linux-arm64 && chmod +x rke
+curl -o ~/rke https://raw.githubusercontent.com/jabl3s/rke1-arm64/main/rke_linux-arm64 && chmod +x rke
 curl -o ~/cluster.yml https://raw.githubusercontent.com/jabl3s/rke1-arm64/main/jcluster.yml
 curl -o ~/jclusterissuer.yml https://raw.githubusercontent.com/jabl3s/rke1-arm64/main/jclusterissuer.yml
 curl -o ~/jnginx-configmap.yaml https://raw.githubusercontent.com/jabl3s/rke1-arm64/main/jnginx-configmap.yaml
