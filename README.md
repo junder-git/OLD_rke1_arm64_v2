@@ -38,17 +38,14 @@ Pin-Priority: 1000
 sudo usermod -aG docker pi && su - pi && exit  
 ```
 ``` bash
-jmux connect pi@pi-1.jabl3s
-```
-scp jcluster.yml jclusterissuer.yml jnginx.conf and correct_rke_binary to master via command line or fav sftp client, or do this from your remote machine itself...      
+curl -o ~/rke.sh https://github.com/jabl3s/rke1-arm64/raw/main/rke_linux-arm64 && chmod +x rke  
+```      
 ``` bash
 ssh-keygen -t rsa -b 4096   
 ssh-copy-id pi@pi-1.jabl3s    
 ssh-copy-id pi@pi-2.jabl3s  
 ssh-copy-id pi@pi-3.jabl3s  
-ssh-copy-id pi@pi-4.jabl3s  
-mv rke_linux-arm64 rke  
-chmod +x rke  
+ssh-copy-id pi@pi-4.jabl3s     
 ./rke up
 ```
 (spam run ./rke up if fail <= 3-attempts and empty passphrase used in key-gen)  
