@@ -14,7 +14,7 @@ apt install apt-transport-https ca-certificates curl software-properties-common 
 ```
 DOCKER INSTALL SPECIFIC VERSION SEE  
 1)=> https://www.suse.com/suse-rke1/support-matrix/all-supported-versions/rke1-v1-26/  
-2)=> https://docs.docker.com/engine/install/ubuntu/     
+2)=> https://docs.docker.com/engine/install/ubuntu/ list versions with => apt-cache madison docker-ce | awk '{ print $3 }'     
 ``` bash
 sudo apt install docker-ce=5:23.0.6-1~ubuntu.22.04~jammy \  
 docker-ce-cli=5:23.0.6-1~ubuntu.22.04~jammy
