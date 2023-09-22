@@ -15,16 +15,17 @@ sudo su - && apt update && \
 apt install apt-transport-https ca-certificates curl software-properties-common && apt upgrade  
 ```
 DOCKER INSTALL VERSION => https://www.suse.com/suse-rke1/support-matrix/all-supported-versions/rke1-v1-26/  
-for rke 1.25 (jcluster.yml)=> 
+for rke 1.26 (jcluster.yml)=> 
 ``` bash
 sudo apt install docker-ce=5:23.0.6-1~debian.11~bullseye \  
 docker-ce-cli=5:23.0.6-1~debian.11~bullseye containerd.io docker-buildx-plugin
 ```
-((sudo apt remove docker-ce docker-ce-cli containerd.io))==> change between versions remove and reinstall  
+((sudo apt remove docker-ce docker-ce-cli containerd.io)) ==> change between versions by removing and reinstall  
   
 ===  pin docker version to prevent apt update changing to any newer unsupported docker versions  
-sudo nano /etc/apt/preferences.d/docker-pin   ==>  
-  
+``` bash
+sudo nano /etc/apt/preferences.d/docker-pin
+```  
 Package: docker-ce  
 Pin: version 5:23.0.6-1~debian.11~bullseye    
 Pin-Priority: 1000  
@@ -38,10 +39,11 @@ Pin-Priority: 1000
 sudo usermod -aG docker pi  
 su - pi   
 exit  
-##  
-jmux connect pi@pi-1.jabl3s  
-scp jcluster.yml jclusterissuer.yml jnginx.conf and correct_rke_binary to master  
-ssh-keygen -t rsa -b 4096 (empty passphrase)  
+jmux connect pi@pi-1.jabl3s
+```
+scp jcluster.yml jclusterissuer.yml jnginx.conf and correct_rke_binary to master
+``` bash
+ssh-keygen -t rsa -b 4096   
 ssh-copy-id pi@pi-1.jabl3s    
 ssh-copy-id pi@pi-2.jabl3s  
 ssh-copy-id pi@pi-3.jabl3s  
@@ -50,7 +52,7 @@ mv rke_linux-arm64 rke
 chmod +x rke  
 ./rke up
 ```
-(spam run ./rke up if fail <= 3-attempts)  
+(spam run ./rke up if fail <= 3-attempts and empty passphrase used in key-gen)  
   
 ## Kubectl cluster management tool (rancher cli at some point too maybe)         
 curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg  
