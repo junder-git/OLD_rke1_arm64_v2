@@ -1,4 +1,5 @@
-# rke1-arm64 setup guide        
+# rke1-arm64 setup guide     
+- Uses rke-v1.3.23 and docker 20.10...  ((latest and greatest seem to go bust))  
 - Check for harvester arm releases in the coming future    
 ## Pre-requisites  
 - Assumes home dns is already running with remote machine root ssh access to all node types, (needs dns wildcard setup at some point)  
