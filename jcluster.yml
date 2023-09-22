@@ -1,5 +1,5 @@
 cluster_name: jcluster
-kubernetes_version: v1.26.8-rancher1-1
+kubernetes_version: v1.24.16-rancher1-1
 ssh_key_path: ~/.ssh/id_rsa
 network:
   plugin: weave
