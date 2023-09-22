@@ -27,7 +27,7 @@ ssh-copy-id pi@pi-3.jabl3s
 ssh-copy-id pi@pi-4.jabl3s  
 mv rke_linux-arm64 rke  
 chmod +x rke  
-./rke up  (spam run if fail <= 3-attempts)  (((./rke remove)) to destroy whole shhbang)
+./rke up  (spam run if fail <= 3-attempts)  
 ## Kubectl cluster management tool (rancher cli at some point too maybe)         
 curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg  
 echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list  
@@ -81,7 +81,17 @@ helm install nginx-ingress ingress-nginx/ingress-nginx --namespace default --set
   
 helm upgrade nginx-ingress ingress-nginx/ingress-nginx --namespace default --set controller.configMapName=jnginx-configmap 
   
-## End initial cluster and package installation, now apply my own .yml files for my own apps to run :D      
+## End initial cluster and package installation, now apply my own .yml files for my own apps to run :D    
+  
+UNINSTALL:::  
+  
+./rke remove  
+=== OR ===  
+jmux connect pi@pi-1.jabl3s pi@pi-2.jabl3s pi@pi-3.jabl3s pi@pi-4.jabl3s  
+docker stop $(docker ps -aq)  
+docker rm $(docker ps -aq)  
+docker system prune  
+docker volume prune  
   
 =====  
   
