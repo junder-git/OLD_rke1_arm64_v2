@@ -22,7 +22,7 @@ docker-ce-cli=5:23.0.6-1~debian.11~bullseye containerd.io docker-buildx-plugin
 ```
 ((sudo apt remove docker-ce docker-ce-cli containerd.io)) ==> change between versions by removing and reinstall  
   
-===  pin docker version to prevent apt update changing to any newer unsupported docker versions  
+===  pin docker version to prevent apt update-upgrade changing to any newer unsupported docker versions  
 ``` bash
 sudo nano /etc/apt/preferences.d/docker-pin
 ```
