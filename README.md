@@ -6,7 +6,7 @@
   Now poe power from router settings page and check the boot order with ```sudo rpi-eeprom-config --edit``` if hostname on jmux connect dont match pi-X formatting.    
   
 ## Start storage setup  
-Wipe all storagare devices partitions and data to best of ability with zeros:    
+Wipe all storage devices partitions and data to best of ability with zeros:    
 ``` bash
 sudo gdisk /dev/sda  ==> o ==> w
 ```
