@@ -1,6 +1,12 @@
 # rke1-arm64 setup guide        
 - Check for harvester arm releases in the coming future    
 ## Pre-requisites   
+``` bash
+sudo gdisk /dev/sda  ==> o ==> w
+```
+``` bash
+sudo dd if=/dev/zero of=/dev/sda bs=4M status=progress
+```
 - Assumes home dns is already running with remote machine root ssh access to all node types, (needs dns wildcard setup at some point)
 - raspberry pi imager flash 32gb-fat san disk sd && 32gb-fat san disk usb-3.0 speeds type UHS-I only available with Ubuntu-22.04.03(64-bit), potential nixos to replace ubuntu to aid os state management via saltstack/ansible.  
   
@@ -140,13 +146,7 @@ kubectl get svc -n <namespace>
 
 docker stop jnginx-container && docker rm jnginx-container
   
-########## ADDITINAL commands
-``` bash
-sudo gdisk /dev/sda  ==> o ==> w
-```
-``` bash
-sudo dd if=/dev/zero of=/dev/sda bs=4M status=progress
-```
+########## ADDITIONAL commands  
 docker ps -a -q | awk '{print $1}' | xargs docker stop 
 docker ps -a  
 docker ps -a --filter "name=jnginx-container"  
