@@ -1,6 +1,7 @@
 # rke1-arm64 setup guide        
 - Check for harvester arm releases in the coming future    
-## Pre-requisites   
+## Pre-requisites  
+Wipe all storagare devices to best of ability with zeros:  
 ``` bash
 sudo gdisk /dev/sda  ==> o ==> w
 ```
