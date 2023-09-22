@@ -12,20 +12,20 @@ jmux connect pi@pi-1.jabl3s pi@pi-2.jabl3s pi@pi-3.jabl3s pi@pi-4.jabl3s
 sudo apt update  
 sudo apt full-upgrade  
 sudo apt install apt-transport-https ca-certificates curl software-properties-common  
-DOCKER INSTALL VERSION => https://www.suse.com/suse-rke1/support-matrix/all-supported-versions/rke1-v1-24/  
+DOCKER INSTALL VERSION => https://www.suse.com/suse-rke1/support-matrix/all-supported-versions/rke1-v1-26/  
 for rke 1.25 (jcluster.yml)=>   
-sudo apt install docker-ce=5:20.10.24~3-0~debian-bullseye docker-ce-cli=5:20.10.24~3-0~debian-bullseye containerd.io docker-buildx-plugin  
+sudo apt install docker-ce=5:23.0.6-1~debian.11~bullseye docker-ce-cli=5:23.0.6-1~debian.11~bullseye containerd.io docker-buildx-plugin  
 ((sudo apt remove docker-ce docker-ce-cli containerd.io))==> change between versions remove and reinstall  
   
 ===  pin docker version to prevent apt update changing to any newer unsupported docker versions  
 sudo nano /etc/apt/preferences.d/docker-pin   ==>  
   
 Package: docker-ce  
-Pin: version 5:20.10.24~3-0~debian-bullseye  
+Pin: version 5:23.0.6-1~debian.11~bullseye    
 Pin-Priority: 1000  
   
 Package: docker-ce-cli  
-Pin: version 5:20.10.24~3-0~debian-bullseye  
+Pin: version 5:23.0.6-1~debian.11~bullseye    
 Pin-Priority: 1000
   
 === Ctrl+o ==> Ctrl+x   
