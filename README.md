@@ -91,9 +91,9 @@ jmux connect pi@pi-1.jabl3s pi@pi-2.jabl3s pi@pi-3.jabl3s pi@pi-4.jabl3s
 docker rm -f $(docker ps -aq)  
 docker system prune  
 docker volume prune  
-
+  
 === AND ===  
-delete the rke state file in users home directory.  
+./cluster.rkestate ==> Delete this file    
   
 =====  
   
