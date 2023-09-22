@@ -16,7 +16,8 @@ sudo apt install apt-transport-https ca-certificates curl software-properties-co
 DOCKER INSTALL VERSION => https://www.suse.com/suse-rke1/support-matrix/all-supported-versions/rke1-v1-26/  
 for rke 1.25 (jcluster.yml)=> 
 ``` bash
-sudo apt install docker-ce=5:23.0.6-1~debian.11~bullseye docker-ce-cli=5:23.0.6-1~debian.11~bullseye containerd.io docker-buildx-plugin
+sudo apt install docker-ce=5:23.0.6-1~debian.11~bullseye \  
+docker-ce-cli=5:23.0.6-1~debian.11~bullseye containerd.io docker-buildx-plugin
 ```
 ((sudo apt remove docker-ce docker-ce-cli containerd.io))==> change between versions remove and reinstall  
   
@@ -32,7 +33,7 @@ Pin: version 5:23.0.6-1~debian.11~bullseye
 Pin-Priority: 1000
   
 === Ctrl+o ==> Ctrl+x   
-```bash  
+``` bash  
 sudo usermod -aG docker pi  
 su - pi   
 exit  
