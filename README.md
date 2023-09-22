@@ -6,14 +6,27 @@
 - (pi tip) - sudo rpi-eeprom-config --edit => BOOT_ORDER=0xf14 (1-usb 4-sd f-fallback_boot, saw vid where boot order was from the right not left, but hostname is of type usb so eh?!, jeff here https://youtu.be/UT5UbSJOyog?t=499 has the nvme usb boot figure at the end, but my pi is booting from left to right it seems...)  
 - (k3s tip) - /boot/cmdline.txt => cgroup_memory=1 cgroup_enable=memory ip=LOCAL_IP_ADDRESS::LOCAL_IP_GATEWAY:NET_MASK_255:HOSTNAME:NIC_eth0:off ((eth0:off is for auto configuration off))  
   
-## Start kubernetes cluster intitialization with cluster wide packages/resources needed for all apps     
+## Start kubernetes cluster intitialization with cluster wide packages/resources needed for all apps  
   
 jmux connect pi@pi-1.jabl3s pi@pi-2.jabl3s pi@pi-3.jabl3s pi@pi-4.jabl3s  
 sudo apt update  
 sudo apt full-upgrade  
 sudo apt install apt-transport-https ca-certificates curl software-properties-common  
 DOCKER INSTALL VERSION => https://www.suse.com/suse-rke1/support-matrix/all-supported-versions/rke1-v1-24/  
-for rke 1.25 (jcluster.yml)=> sudo apt-get install docker-ce=5:20.10.24~3-0~debian-bullseye docker-ce=...  
+for rke 1.25 (jcluster.yml)=> sudo apt-get install docker-ce=5:20.10.24~3-0~debian-bullseye docker-ce=... 
+
+===  
+sudo nano /etc/apt/preferences.d/docker-pin   ==>  
+  ...
+Package: docker-ce  
+Pin: version 5:20.10.24~3-0~debian-bullseye  
+Pin-Priority: 1000  
+  
+Package: docker-ce-cli  
+Pin: version 5:20.10.24~3-0~debian-bullseye  
+Pin-Priority: 1000  
+  ...  
+===  
 sudo usermod -aG docker pi  
 su - pi  
 exit  
