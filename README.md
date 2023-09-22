@@ -17,7 +17,7 @@ for rke 1.25 (jcluster.yml)=> sudo apt-get install docker-ce=5:20.10.24~3-0~debi
 
 ===  
 sudo nano /etc/apt/preferences.d/docker-pin   ==>  
-  ...
+  
 Package: docker-ce  
 Pin: version 5:20.10.24~3-0~debian-bullseye  
 Pin-Priority: 1000  
@@ -26,8 +26,8 @@ Package: docker-ce-cli
 Pin: version 5:20.10.24~3-0~debian-bullseye  
 Pin-Priority: 1000
   
-  ...  
 ===  
+  
 sudo usermod -aG docker pi  
 su - pi  
 exit  
