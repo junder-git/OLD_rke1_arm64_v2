@@ -4,7 +4,7 @@
 - Assumes home dns is already running with remote machine root ssh access to all node types, (needs dns wildcard setup at some point)
 - raspberry pi imager flash 32gb-fat san disk sd && 32gb-fat san disk usb-3.0 speeds type UHS-I only available with Ubuntu-22.04.03(64-bit), potential nixos to replace ubuntu to aid os state management via saltstack/ansible.  
   
-## Start kubernetes cluster intitialization with cluster wide packages/resources needed for all apps  
+## Start kubernetes cluster intitialization with cluster wide packages    
 ``` bash
 jmux connect pi@pi-1.jabl3s pi@pi-2.jabl3s pi@pi-3.jabl3s pi@pi-4.jabl3s
 ```
