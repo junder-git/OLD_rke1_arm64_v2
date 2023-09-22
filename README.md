@@ -83,14 +83,17 @@ helm upgrade nginx-ingress ingress-nginx/ingress-nginx --namespace default --set
   
 ## End initial cluster and package installation, now apply my own .yml files for my own apps to run :D    
   
-# UNINSTALL:::  
+# UNINSTALL:::   
   
-./rke remove  ((make sure all nodes are connected to master))  
+./rke remove  ((make sure all nodes are connected to master))    
 === OR ===  
 jmux connect pi@pi-1.jabl3s pi@pi-2.jabl3s pi@pi-3.jabl3s pi@pi-4.jabl3s   
 docker rm -f $(docker ps -aq)  
 docker system prune  
 docker volume prune  
+
+=== AND ===  
+delete the rke state file in users home directory.  
   
 =====  
   
