@@ -89,7 +89,7 @@ helm upgrade nginx-ingress ingress-nginx/ingress-nginx --namespace default --set
 === OR ===  
 jmux connect pi@pi-1.jabl3s pi@pi-2.jabl3s pi@pi-3.jabl3s pi@pi-4.jabl3s  
 docker stop $(docker ps -aq)  
-docker rm $(docker ps -aq)  
+docker rm -f $(docker ps -aq)  
 docker system prune  
 docker volume prune  
   
