@@ -85,7 +85,7 @@ helm upgrade nginx-ingress ingress-nginx/ingress-nginx --namespace default --set
   
 # UNINSTALL:::  
   
-./rke remove  
+./rke remove  ((make sure all nodes are connected to master))
 === OR ===  
 jmux connect pi@pi-1.jabl3s pi@pi-2.jabl3s pi@pi-3.jabl3s pi@pi-4.jabl3s   
 docker rm -f $(docker ps -aq)  
