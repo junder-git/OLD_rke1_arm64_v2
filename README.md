@@ -31,8 +31,7 @@ Pin-Priority: 1000
 === Ctrl+o ==> Ctrl+x   
   
 sudo usermod -aG docker pi  
-su - pi  
-((sudo systemctl stop nftables.service))-disable-raspbian-firewalls...  
+su - pi   
 exit  
 ##  
 jmux connect pi@pi-1.jabl3s  
