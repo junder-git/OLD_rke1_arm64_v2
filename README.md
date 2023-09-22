@@ -13,7 +13,9 @@ sudo apt update
 sudo apt full-upgrade  
 sudo apt install apt-transport-https ca-certificates curl software-properties-common  
 DOCKER INSTALL VERSION => https://www.suse.com/suse-rke1/support-matrix/all-supported-versions/rke1-v1-24/  
-for rke 1.25 (jcluster.yml)=> sudo apt-get install docker-ce=5:20.10.24~3-0~debian-bullseye docker-ce=... 
+for rke 1.25 (jcluster.yml)=> sudo apt install docker-ce=5:20.10.24~3-0~debian-bullseye docker-ce-cli=5:20.10.24~3-0~debian-bullseye   
+((sudo apt remove docker-ce docker-ce-cli containerd.io))==> change between versions remove and reinstall  
+
 
 ===  
 sudo nano /etc/apt/preferences.d/docker-pin   ==>  
@@ -26,7 +28,7 @@ Package: docker-ce-cli
 Pin: version 5:20.10.24~3-0~debian-bullseye  
 Pin-Priority: 1000
   
-===  
+=== Ctrl+o ==> Ctrl+x   
   
 sudo usermod -aG docker pi  
 su - pi  
