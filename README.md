@@ -83,7 +83,7 @@ helm upgrade nginx-ingress ingress-nginx/ingress-nginx --namespace default --set
   
 ## End initial cluster and package installation, now apply my own .yml files for my own apps to run :D    
   
-UNINSTALL:::  
+# UNINSTALL:::  
   
 ./rke remove  
 === OR ===  
