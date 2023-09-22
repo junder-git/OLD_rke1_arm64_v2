@@ -19,9 +19,8 @@ for rke 1.26 (jcluster.yml) docker 23.0.x
 ``` bash
 sudo apt install docker-ce=5:23.0.6-1~ubuntu.22.04~jammy \  
 docker-ce-cli=5:23.0.6-1~ubuntu.22.04~jammy
-```
-((sudo apt remove docker-ce docker-ce-cli))  
-==> change between versions by removing and reinstall in use with pin method listed below...        
+``` 
+==> change between versions by apt removing and reinstall in use with pin method listed below...        
 ``` bash
 sudo nano /etc/apt/preferences.d/docker-pin
 ```
