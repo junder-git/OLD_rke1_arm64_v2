@@ -118,6 +118,9 @@ jmux connect pi@pi-1.jabl3s pi@pi-2.jabl3s pi@pi-3.jabl3s pi@pi-4.jabl3s
 ``` bash
 docker stop $(docker ps -aq) && docker rm -f $(docker ps -aq) && docker volume prune
 ```
+``` bash
+sudo apt purge -y docker-engine docker docker.io docker-ce docker-ce-cli docker-compose-plugin && sudo apt autoremove -y --purge docker-engine docker docker.io docker-ce docker-compose-plugin
+```
   
 === AND ===  
 ./cluster.rkestate ==> Delete this file    
