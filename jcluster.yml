@@ -4,20 +4,20 @@ ssh_key_path: ~/.ssh/id_rsa
 network:
   plugin: weave
 nodes:
-  - address: pi-1.jabl3s
+  - address: pi-1.jabl3 #REPLACE WITH INTERNAL IPs
     user: pi
     role:
       - controlplane
       - etcd
-  - address: pi-2.jabl3s
+  - address: pi-2.jabl3s #REPLACE WITH INTERNAL IPs
     user: pi
     role:
       - worker
-  - address: pi-3.jabl3s
+  - address: pi-3.jabl3s #REPLACE WITH INTERNAL IPs
     user: pi
     role:
       - worker
-  - address: pi-4.jabl3s
+  - address: pi-4.jabl3s #REPLACE WITH INTERNAL IPs
     user: pi
     role:
       - worker
