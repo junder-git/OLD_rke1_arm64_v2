@@ -4,22 +4,22 @@ ssh_key_path: ~/.ssh/id_rsa
 network:
   plugin: weave
 nodes:
-  - address: pi-1.jabl3 #REPLACE WITH INTERNAL IPs
+  - address: 192.168.3.11 #pi-1.jabl3s must use internal IPs
     user: pi
     role:
       - controlplane
       - etcd
-  - address: pi-2.jabl3s #REPLACE WITH INTERNAL IPs
+  - address: 192.168.3.12 #pi-2.jabl3s must use internal IPs
     user: pi
     role:
       - controlplane
       - etcd
-  - address: pi-3.jabl3s #REPLACE WITH INTERNAL IPs
+  - address: 192.168.3.13 #pi-3.jabl3s must use internal IPs
     user: pi
     role:
       - etcd
       - worker
-  - address: pi-4.jabl3s #REPLACE WITH INTERNAL IPs
+  - address: 192.168.3.14 #pi-4.jabl3s must use internal IPs
     user: pi
     role:
       - worker
