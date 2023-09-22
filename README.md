@@ -13,11 +13,10 @@ sudo su -
 nano /boot/config.txt
 boot_order=0xf41
 nano /boot/cmdline.txt
-cgroup_memory=1 cgroup_enable=memory ip=LOCAL_IP_ADDRESS::LOCAL_IP_GATEWAY:NET_MASK_255:HOSTNAME:NIC_eth0:off
-``` bash 
+cgroup_memory=1 cgroup_enable=memory ip=LOCAL_IP_ADDRESS::LOCAL_IP_GATEWAY:NET_MASK_255:HOSTNAME:NIC_eth0:off 
 apt update && apt install apt-transport-https ca-certificates curl software-properties-common && apt upgrade  
 ```
-DOCKER INSTALL SPECIFIC VERSION SEE  
+DOCKER INSTALL SPECIFIC VERSION SEE:  
 1)=> https://www.suse.com/suse-rke1/support-matrix/all-supported-versions/rke1-v1-26/  
 2)=> https://docs.docker.com/engine/install/ubuntu/ list versions with => ```apt-cache madison docker-ce | awk '{ print $3 }'```  
 In my case:  
