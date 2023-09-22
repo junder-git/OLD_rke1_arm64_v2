@@ -8,6 +8,7 @@
 ``` bash
 jmux connect pi@pi-1.jabl3s pi@pi-2.jabl3s pi@pi-3.jabl3s pi@pi-4.jabl3s
 ```
+((Perhaps eeprom before rpi-imager here for ubuntu was enough see, sudo rpi-eeprom-config))  
 ``` bash
 sudo su -
 nano /boot/config.txt
