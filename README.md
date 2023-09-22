@@ -13,7 +13,8 @@ sudo apt update
 sudo apt full-upgrade  
 sudo apt install apt-transport-https ca-certificates curl software-properties-common  
 DOCKER INSTALL VERSION => https://www.suse.com/suse-rke1/support-matrix/all-supported-versions/rke1-v1-24/  
-for rke 1.25 (jcluster.yml)=> sudo apt install docker-ce=5:20.10.24~3-0~debian-bullseye docker-ce-cli=5:20.10.24~3-0~debian-bullseye   
+for rke 1.25 (jcluster.yml)=>   
+sudo apt install docker-ce=5:20.10.24~3-0~debian-bullseye docker-ce-cli=5:20.10.24~3-0~debian-bullseye containerd.io docker-buildx-plugin  
 ((sudo apt remove docker-ce docker-ce-cli containerd.io))==> change between versions remove and reinstall  
   
 ===  pin docker version to prevent apt update changing to any newer unsupported docker versions  
@@ -31,6 +32,7 @@ Pin-Priority: 1000
   
 sudo usermod -aG docker pi  
 su - pi  
+((sudo systemctl stop nftables.service))-disable-raspbian-firewalls...  
 exit  
 ##  
 jmux connect pi@pi-1.jabl3s  
