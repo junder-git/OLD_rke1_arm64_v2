@@ -24,7 +24,8 @@ Pin-Priority: 1000
   
 Package: docker-ce-cli  
 Pin: version 5:20.10.24~3-0~debian-bullseye  
-Pin-Priority: 1000  
+Pin-Priority: 1000
+  
   ...  
 ===  
 sudo usermod -aG docker pi  
