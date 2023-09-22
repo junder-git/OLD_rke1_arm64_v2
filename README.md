@@ -38,7 +38,7 @@ Pin-Priority: 1000
 sudo usermod -aG docker pi && su - pi && exit  
 ```
 ``` bash
-curl -o ~/rke.sh https://github.com/jabl3s/rke1-arm64/raw/main/rke_linux-arm64 && chmod +x rke  
+curl -o ~/rke https://github.com/jabl3s/rke1-arm64/raw/main/rke_linux-arm64 && chmod +x rke  
 ```      
 ``` bash
 ssh-keygen -t rsa -b 4096   
