@@ -105,7 +105,9 @@ helm upgrade nginx-ingress ingress-nginx/ingress-nginx --namespace default --set
 ./rke remove  ((make sure all nodes are connected to master))    
 === OR ===  
 jmux connect pi@pi-1.jabl3s pi@pi-2.jabl3s pi@pi-3.jabl3s pi@pi-4.jabl3s   
-docker stop $(docker ps -aq) && docker rm -f $(docker ps -aq) && docker volume prune  
+``` bash
+docker stop $(docker ps -aq) && docker rm -f $(docker ps -aq) && docker volume prune
+```
   
 === AND ===  
 ./cluster.rkestate ==> Delete this file    
