@@ -71,7 +71,7 @@ helm install \
 kubectl apply -f ~/jclusterissuer.yml  
 
 ## Rancher package  
-helm install rancher rancher-stable/rancher --namespace cattle-system --create-namespace --set hostname=pi-4.jabl3s --set bootstrapPassword=admin --set ingress.tls.source=letsEncrypt --set letsEncrypt.email=j@jabl3s --set letsEncrypt.ingress.class=nginx    
+helm install rancher rancher-stable/rancher --namespace cattle-system --create-namespace --set hostname=pi-1.jabl3s --set bootstrapPassword=admin --set ingress.tls.source=letsEncrypt --set letsEncrypt.email=j@jabl3s --set letsEncrypt.ingress.class=nginx    
   
 kubectl get svc -n cattle-system  
   
