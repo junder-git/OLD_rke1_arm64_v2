@@ -35,7 +35,8 @@ Package: docker-ce-cli
 Pin: version 5:23.0.6-1~debian.11~bullseye    
 Pin-Priority: 1000
 ```
-=== Ctrl+o ==> Ctrl+x   
+==> Ctrl+o  
+==> Ctrl+x   
 ``` bash  
 sudo usermod -aG docker pi  
 su - pi   
