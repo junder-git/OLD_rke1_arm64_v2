@@ -8,10 +8,11 @@
   
 ## Start kubernetes cluster intitialization with cluster wide packages/resources needed for all apps  
 ``` bash
-jmux connect pi@pi-1.jabl3s pi@pi-2.jabl3s pi@pi-3.jabl3s pi@pi-4.jabl3s  
-sudo apt update  
-sudo apt full-upgrade  
-sudo apt install apt-transport-https ca-certificates curl software-properties-common
+jmux connect pi@pi-1.jabl3s pi@pi-2.jabl3s pi@pi-3.jabl3s pi@pi-4.jabl3s
+```
+``` bash 
+sudo su - && apt update && \
+apt install apt-transport-https ca-certificates curl software-properties-common && apt upgrade  
 ```
 DOCKER INSTALL VERSION => https://www.suse.com/suse-rke1/support-matrix/all-supported-versions/rke1-v1-26/  
 for rke 1.25 (jcluster.yml)=> 
