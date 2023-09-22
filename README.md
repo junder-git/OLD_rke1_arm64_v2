@@ -7,14 +7,17 @@
 - (k3s tip) - /boot/cmdline.txt => cgroup_memory=1 cgroup_enable=memory ip=LOCAL_IP_ADDRESS::LOCAL_IP_GATEWAY:NET_MASK_255:HOSTNAME:NIC_eth0:off ((eth0:off is for auto configuration off))  
   
 ## Start kubernetes cluster intitialization with cluster wide packages/resources needed for all apps  
-  
+``` bash
 jmux connect pi@pi-1.jabl3s pi@pi-2.jabl3s pi@pi-3.jabl3s pi@pi-4.jabl3s  
 sudo apt update  
 sudo apt full-upgrade  
-sudo apt install apt-transport-https ca-certificates curl software-properties-common  
+sudo apt install apt-transport-https ca-certificates curl software-properties-common
+```
 DOCKER INSTALL VERSION => https://www.suse.com/suse-rke1/support-matrix/all-supported-versions/rke1-v1-26/  
-for rke 1.25 (jcluster.yml)=>   
-sudo apt install docker-ce=5:23.0.6-1~debian.11~bullseye docker-ce-cli=5:23.0.6-1~debian.11~bullseye containerd.io docker-buildx-plugin  
+for rke 1.25 (jcluster.yml)=> 
+``` bash
+sudo apt install docker-ce=5:23.0.6-1~debian.11~bullseye docker-ce-cli=5:23.0.6-1~debian.11~bullseye containerd.io docker-buildx-plugin
+```
 ((sudo apt remove docker-ce docker-ce-cli containerd.io))==> change between versions remove and reinstall  
   
 ===  pin docker version to prevent apt update changing to any newer unsupported docker versions  
@@ -29,7 +32,7 @@ Pin: version 5:23.0.6-1~debian.11~bullseye
 Pin-Priority: 1000
   
 === Ctrl+o ==> Ctrl+x   
-  
+```bash  
 sudo usermod -aG docker pi  
 su - pi   
 exit  
@@ -43,7 +46,10 @@ ssh-copy-id pi@pi-3.jabl3s
 ssh-copy-id pi@pi-4.jabl3s  
 mv rke_linux-arm64 rke  
 chmod +x rke  
-./rke up  (spam run if fail <= 3-attempts)  
+./rke up
+```
+(spam run ./rke up if fail <= 3-attempts)  
+  
 ## Kubectl cluster management tool (rancher cli at some point too maybe)         
 curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg  
 echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list  
