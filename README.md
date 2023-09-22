@@ -151,45 +151,46 @@ du -h myfolder
 sudo apt update && sudo apt upgrade  
 sudo apt-get dist-upgrade   
 lsb_release -a  
-##########
+##########  
 jnginx-configmap.yaml  
   
   
-NGINX PLUS FOR max_conns=3;  
-https://docs.nginx.com/nginx/admin-guide/load-balancer/http-load-balancer/ See NGINX PLUS features  
-        queue 100 timeout=70; NGINX PLUS FOR LIMMITING QUEUE
-        sticky learn  NGINX PLUS FOR SESSIONS
-            create=$upstream_cookie_examplecookie
-            lookup=$cookie_examplecookie
-            zone=client_sessions:1m
-            timeout=1h
-            sync;
-  
+NGINX PLUS FOR max_conns=3;   
+https://docs.nginx.com/nginx/admin-guide/load-balancer/http-load-balancer/ See NGINX PLUS features    
+        queue 100 timeout=70; NGINX PLUS FOR LIMMITING QUEUE  
+        sticky learn  NGINX PLUS FOR SESSIONS  
+            create=$upstream_cookie_examplecookie    
+            lookup=$cookie_examplecookie  
+            zone=client_sessions:1m  
+            timeout=1h  
+            sync;  
+    
 This allows the ability for the execute shell window to remain open for up to 15 minutes. Without this parameter, the default is 1 minute and will automatically close.
-
-#########CHATGPT
-Use Helm Hooks: If you originally installed Nginx Ingress using Helm, you can define a Helm hook to handle the update of the ConfigMap and restart the Controller pods. Here's an example:
-
-yaml
-Copy code
-apiVersion: batch/v1
-kind: Job
-metadata:
-  name: nginx-config-update
-  namespace: ingress-nginx
-spec:
-  template:
-    spec:
-      containers:
-        - name: nginx-config-update
-          image: your-image-with-kubectl  # An image with kubectl installed
-          command:
-            - kubectl
-            - delete
-            - pods
-            - -n
-            - ingress-nginx
-            - -l
-            - app.kubernetes.io/component=controller
-          restartPolicy: OnFailure
-This Helm hook defines a Kubernetes Job that deletes the Nginx Ingress Controller pods when the chart is upgraded or installed. Make sure to use an image with kubectl installed.
+  
+#########CHATGPT  
+Use Helm Hooks: If you originally installed Nginx Ingress using Helm, you can define a Helm hook to handle the update of the ConfigMap and restart the Controller   pods. Here's an example:  
+  
+yaml  
+Copy code  
+apiVersion: batch/v1  
+kind: Job  
+metadata:  
+  name: nginx-config-update  
+  namespace: ingress-nginx  
+spec:  
+  template:  
+    spec:  
+      containers:  
+        - name: nginx-config-update  
+          image: your-image-with-kubectl  # An image with kubectl installed  
+          command:  
+            - kubectl  
+            - delete  
+            - pods  
+            - -n  
+            - ingress-nginx  
+            - -l  
+            - app.kubernetes.io/component=controller  
+          restartPolicy: OnFailure  
+This Helm hook defines a Kubernetes Job that deletes the Nginx Ingress Controller pods when the chart is upgraded or installed.  
+Make sure to use an image with kubectl installed.  
