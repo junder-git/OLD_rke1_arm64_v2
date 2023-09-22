@@ -25,7 +25,8 @@ docker-ce-cli=5:23.0.6-1~debian.11~bullseye containerd.io docker-buildx-plugin
 ===  pin docker version to prevent apt update changing to any newer unsupported docker versions  
 ``` bash
 sudo nano /etc/apt/preferences.d/docker-pin
-```  
+```
+``` text
 Package: docker-ce  
 Pin: version 5:23.0.6-1~debian.11~bullseye    
 Pin-Priority: 1000  
@@ -33,7 +34,7 @@ Pin-Priority: 1000
 Package: docker-ce-cli  
 Pin: version 5:23.0.6-1~debian.11~bullseye    
 Pin-Priority: 1000
-  
+```
 === Ctrl+o ==> Ctrl+x   
 ``` bash  
 sudo usermod -aG docker pi  
