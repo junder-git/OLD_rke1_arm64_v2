@@ -140,8 +140,13 @@ kubectl get svc -n <namespace>
 
 docker stop jnginx-container && docker rm jnginx-container
   
-########## ADDITINAL commands    
-``` dd if=/dev/zero of=/dev/sda2 bs=512 count=1```
+########## ADDITINAL commands
+``` bash
+sudo gdisk /dev/sda  ==> o ==> w
+```
+``` bash
+sudo dd if=/dev/zero of=/dev/sda bs=4M status=progress
+```
 docker ps -a -q | awk '{print $1}' | xargs docker stop 
 docker ps -a  
 docker ps -a --filter "name=jnginx-container"  
