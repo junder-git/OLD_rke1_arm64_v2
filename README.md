@@ -8,9 +8,14 @@
 ``` bash
 jmux connect pi@pi-1.jabl3s pi@pi-2.jabl3s pi@pi-3.jabl3s pi@pi-4.jabl3s
 ```
+``` bash
+sudo su -
+nano /boot/config.txt
+boot_order=0xf41
+nano /boot/cmdline.txt
+cgroup_memory=1 cgroup_enable=memory ip=LOCAL_IP_ADDRESS::LOCAL_IP_GATEWAY:NET_MASK_255:HOSTNAME:NIC_eth0:off
 ``` bash 
-sudo su - && apt update && \
-apt install apt-transport-https ca-certificates curl software-properties-common && apt upgrade  
+apt update && apt install apt-transport-https ca-certificates curl software-properties-common && apt upgrade  
 ```
 DOCKER INSTALL SPECIFIC VERSION SEE  
 1)=> https://www.suse.com/suse-rke1/support-matrix/all-supported-versions/rke1-v1-26/  
