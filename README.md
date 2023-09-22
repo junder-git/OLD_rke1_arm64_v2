@@ -144,7 +144,10 @@ sudo apt-get autoremove
 =====  
   
 ## Aditional non-sense  
-  
+Clear dns/curl cache:  
+``` bash
+sudo systemctl restart systemd-resolved
+```  
 jmux connect pi@pi-1.jabl3s pi@pi-2.jabl3s pi@pi-3.jabl3s pi@pi-4.jabl3s  
 curl -o ~/filename.ext -LJO https://raw.githubusercontent.com/jabl3s/rke/main/jnginx.conf     
 docker run --name jnginx-container -v ~/jnginx.conf:/etc/nginx/nginx.conf:ro -d -p 80:80 --cpus 0.5 --memory 512m nginx  
