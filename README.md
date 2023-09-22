@@ -38,7 +38,10 @@ Pin-Priority: 1000
 sudo usermod -aG docker pi && su - pi && exit  
 ```
 ``` bash
-curl -o ~/rke https://github.com/jabl3s/rke1-arm64/raw/main/rke_linux-arm64 && chmod +x rke  
+curl -o ~/rke https://github.com/jabl3s/rke1-arm64/raw/main/rke_linux-arm64 && chmod +x rke
+curl -o ~/cluster.yml https://raw.githubusercontent.com/jabl3s/rke1-arm64/main/jcluster.yml
+curl -o https://raw.githubusercontent.com/jabl3s/rke1-arm64/main/jclusterissuer.yml
+curl -o https://raw.githubusercontent.com/jabl3s/rke1-arm64/main/jnginx-configmap.yaml
 ```      
 ``` bash
 ssh-keygen -t rsa -b 4096   
@@ -46,6 +49,8 @@ ssh-copy-id pi@pi-1.jabl3s
 ssh-copy-id pi@pi-2.jabl3s  
 ssh-copy-id pi@pi-3.jabl3s  
 ssh-copy-id pi@pi-4.jabl3s     
+```
+``` bash
 ./rke up
 ```
 (spam run ./rke up if fail <= 3-attempts and empty passphrase used in key-gen)  
