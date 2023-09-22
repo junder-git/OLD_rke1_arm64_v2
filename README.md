@@ -25,11 +25,11 @@ sudo nano /etc/apt/preferences.d/docker-pin
 ```
 ``` text
 Package: docker-ce  
-Pin: version 5:23.0.6-1~debian.11~bullseye    
+Pin: version 5:23.0.6-1~ubuntu.22.04~jammy-<<YOUR_VERSION_REPLACE_JAMMY>>     
 Pin-Priority: 1000  
   
 Package: docker-ce-cli  
-Pin: version 5:23.0.6-1~debian.11~bullseye    
+Pin: version 5:23.0.6-1~ubuntu.22.04~jammy-<<YOUR_VERSION_REPLACE_JAMMY>>    
 Pin-Priority: 1000
 ```
 ==> Ctrl+o  
