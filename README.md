@@ -55,7 +55,7 @@ chmod +x rke
   
 ## Kubectl cluster management tool (rancher cli at some point too maybe)         
 https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/  
-==> see through package manager then addtional two steps below:  
+==> see package manager walk-through then do addtional two steps below:  
 ###  
 mkdir -p ~/.kube  
 cp kube_config_cluster.yml ~/.kube/config  
