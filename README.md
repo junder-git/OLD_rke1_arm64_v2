@@ -10,7 +10,7 @@ jmux connect pi@pi-1.jabl3s pi@pi-2.jabl3s pi@pi-3.jabl3s pi@pi-4.jabl3s
 ```
 ((Perhaps eeprom default on pi hardware before rpi-imager here for ubuntu usb was correct see; ```sudo rpi-eeprom-config --edit```))  
 ``` bash
-sudo apt update && sudo apt install apt-transport-https ca-certificates curl software-properties-common && sudo apt upgrade  
+sudo apt update && sudo apt install apt-transport-https ca-certificates curl software-properties-common gnupg && sudo apt upgrade  
 ```
 DOCKER INSTALL SPECIFIC VERSION SEE:  
 1)=> https://www.suse.com/suse-rke1/support-matrix/all-supported-versions/rke1-v1-26/  
