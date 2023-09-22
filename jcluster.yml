@@ -9,13 +9,17 @@ nodes:
     role:
       - controlplane
       - etcd
+      - worker
   - address: pi-2.jabl3s #REPLACE WITH INTERNAL IPs
     user: pi
     role:
+      - controlplane
+      - etcd
       - worker
   - address: pi-3.jabl3s #REPLACE WITH INTERNAL IPs
     user: pi
     role:
+      - etcd
       - worker
   - address: pi-4.jabl3s #REPLACE WITH INTERNAL IPs
     user: pi
