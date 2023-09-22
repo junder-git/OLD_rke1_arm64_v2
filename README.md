@@ -1,6 +1,11 @@
 # rke1-arm64 setup guide        
 - Check for harvester arm releases in the coming future    
 ## Pre-requisites  
+- Assumes home dns is already running with remote machine root ssh access to all node types, (needs dns wildcard setup at some point)  
+- Now use rpi imager to flash 32gb san disk sd with raspbian-os && 32gb san disk usb-3.0 speeds type UHS-I with Ubuntu-22.04.03(64-bit) server both storage with ssh user-pass, locale and hostnames pi-sd and pi-X respectively.  
+  Now poe power from router settings page and check the boot order with ```sudo rpi-eeprom-config --edit``` if hostname on jmux connect dont match pi-X formatting.    
+  
+## Start storage setup  
 Wipe all storagare devices partitions and data to best of ability with zeros:    
 ``` bash
 sudo gdisk /dev/sda  ==> o ==> w
@@ -8,9 +13,7 @@ sudo gdisk /dev/sda  ==> o ==> w
 ``` bash
 sudo dd if=/dev/zero of=/dev/sda bs=4M status=progress
 ```
-- Assumes home dns is already running with remote machine root ssh access to all node types, (needs dns wildcard setup at some point)  
-- Now use rpi imager to flash 32gb san disk sd with raspbian-os && 32gb san disk usb-3.0 speeds type UHS-I with Ubuntu-22.04.03(64-bit) server both storage with ssh user-pass, locale and hostnames pi-sd and pi-X respectively.  
-  Now poe power from router settings page and check the boot order with ```sudo rpi-eeprom-config --edit``` if hostname on jmux connect dont match pi-X formatting.    
+Note, raid used in past with hypervisor and lvm with flags too.  
   
 ## Start kubernetes cluster intitialization with cluster wide packages    
 ``` bash
