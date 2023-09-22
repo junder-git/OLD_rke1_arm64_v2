@@ -2,9 +2,7 @@
 - Check for harvester arm releases in the coming future    
 ## Pre-requisites   
 - Assumes home dns is already running with remote machine root ssh access to all node types, (needs dns wildcard setup at some point)
-- raspberry pi imager flash 32gb-fat san disk sd && 32gb-fat san disk usb-3.0 speeds type UHS-I only available with raspOS(64-bit)lite, potential nixos to replace raspbian to aid os state management via saltstack/ansible.  
-- (pi tip) - sudo rpi-eeprom-config --edit => BOOT_ORDER=0xf14 (1-usb 4-sd f-fallback_boot, saw vid where boot order was from the right not left, but hostname is of type usb so eh?!, jeff here https://youtu.be/UT5UbSJOyog?t=499 has the nvme usb boot figure at the end, but my pi is booting from left to right it seems...)  
-- (k3s tip) - /boot/cmdline.txt => cgroup_memory=1 cgroup_enable=memory ip=LOCAL_IP_ADDRESS::LOCAL_IP_GATEWAY:NET_MASK_255:HOSTNAME:NIC_eth0:off ((eth0:off is for auto configuration off))  
+- raspberry pi imager flash 32gb-fat san disk sd && 32gb-fat san disk usb-3.0 speeds type UHS-I only available with Ubuntu-22.04.03(64-bit), potential nixos to replace ubuntu to aid os state management via saltstack/ansible.  
   
 ## Start kubernetes cluster intitialization with cluster wide packages/resources needed for all apps  
 ``` bash
@@ -194,3 +192,7 @@ spec:
           restartPolicy: OnFailure  
 This Helm hook defines a Kubernetes Job that deletes the Nginx Ingress Controller pods when the chart is upgraded or installed.  
 Make sure to use an image with kubectl installed.  
+  
+===  
+- (pi tip for raspbian os) - sudo rpi-eeprom-config --edit => BOOT_ORDER=0xf14 (1-usb 4-sd f-fallback_boot, saw vid where boot order was from the right not left, but hostname is of type usb so eh?!, jeff here https://youtu.be/UT5UbSJOyog?t=499 has the nvme usb boot figure at the end, but my pi is booting from left to right it seems...)  
+- (k3s tip for raspbian os) - /boot/cmdline.txt => cgroup_memory=1 cgroup_enable=memory ip=LOCAL_IP_ADDRESS::LOCAL_IP_GATEWAY:NET_MASK_255:HOSTNAME:NIC_eth0:off ((eth0:off is for auto configuration off))  
