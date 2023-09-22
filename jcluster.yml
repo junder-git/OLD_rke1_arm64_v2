@@ -1,6 +1,8 @@
 cluster_name: jcluster
 kubernetes_version: v1.25.12-rancher1-1
 ssh_key_path: ~/.ssh/id_rsa
+network:
+  plugin: weave
 nodes:
   - address: pi-1.jabl3s
     user: pi
