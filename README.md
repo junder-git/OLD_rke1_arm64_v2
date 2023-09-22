@@ -19,7 +19,7 @@ DOCKER INSTALL SPECIFIC VERSION SEE
 sudo apt install docker-ce=5:23.0.6-1~ubuntu.22.04~jammy \  
 docker-ce-cli=5:23.0.6-1~ubuntu.22.04~jammy
 ``` 
-==> change between versions by apt removing and reinstall in use with pin method listed below...        
+==> change between versions by apt removing and reinstall in use with pin file mod method listed below...        
 ``` bash
 sudo nano /etc/apt/preferences.d/docker-pin
 ```
