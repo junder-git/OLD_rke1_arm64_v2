@@ -3,7 +3,7 @@
 - Check for harvester arm releases in the coming future    
 ## Pre-requisites  
 - Assumes home dns is already running with remote machine root ssh access to all node types, (needs dns wildcard setup at some point)  
-- Now use rpi imager to flash 32gb san disk sd with raspbian-os && 32gb san disk usb-3.0 speeds type UHS-I with Ubuntu-22.04.03(64-bit) server both storage with ssh user-pass, locale and hostnames pi-sd and pi-X respectively.  
+- Now use rpi imager to flash 32gb san disk sd with raspbian-os && 32gb san disk usb-3.0 speeds type UHS-I with Ubuntu-22.04.03(64-bit) server. Both storage devices are to be configured with ssh user-pass, locale (gb) and hostnames pi-sd and pi-X respectively.  
 Now poe power from router settings page and check the boot order with ```sudo rpi-eeprom-config --edit``` if hostname on jmux connect dont match pi-X formatting.
   
 If in doubt, wipe all storage devices partitions and data to best of ability with zeros before using rpi-imager:    
