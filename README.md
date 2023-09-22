@@ -40,7 +40,7 @@ sudo usermod -aG docker pi && su - pi && exit
 ``` bash
 jmux connect pi@pi-1.jabl3s
 ```
-scp jcluster.yml jclusterissuer.yml jnginx.conf and correct_rke_binary to master via command line or fav sftp client    
+scp jcluster.yml jclusterissuer.yml jnginx.conf and correct_rke_binary to master via command line or fav sftp client, or do this from your remote machine itself...      
 ``` bash
 ssh-keygen -t rsa -b 4096   
 ssh-copy-id pi@pi-1.jabl3s    
