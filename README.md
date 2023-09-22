@@ -2,9 +2,9 @@
 - Uses rke-v1.3.23 and docker 20.10...  ((latest and greatest seem to go bust))  
 - Check for harvester arm releases in the coming future    
 ## Pre-requisites  
-- Assumes home dns is already running with remote machine root ssh access to all node types, (needs dns wildcard setup at some point)  
-- Now use rpi imager to flash 32gb san disk sd with raspbian-os && 32gb san disk usb-3.0 speeds type UHS-I with Ubuntu-22.04.03(64-bit) server. Both storage devices are to be configured with ssh user-pass, locale (gb) and hostnames pi-sd and pi-X respectively.  
-Now poe power from router settings page and check the boot order with ```sudo rpi-eeprom-config --edit``` if hostname on jmux connect dont match pi-X formatting.
+- Hardware: rpi-4b-8Gbram *X, sd card *X, usb *X, poe capeable router, poe-usb-c splitter *X. where X=4 power = 20Watts which is a third of your typical filament light bulb.  
+- Network: Home router internal dns is already running with domain to subnet/vlan for all node hostnames ((my-case: 192.168.3.0/24 vlan: X)), (needs dns wildcard setup at some point as well as access from public dns)  
+- Storage: Using rpi imager to flash 32gb san disk sd with raspbian-os && 32gb san disk usb-3.0 speeds type UHS-I with Ubuntu-22.04.03(64-bit) server. Both storage devices are to be configured with ssh user-pass, locale/timezone (gb) and hostnames pi-sd and pi-X respectively. Now poe power from router settings page and check the boot priorities with ```sudo rpi-eeprom-config --edit``` if hostname on jmux connect dont match pi-X formatting.  
   
 If in doubt, wipe all storage devices partitions and data to best of ability with zeros before using rpi-imager:    
 ``` bash
