@@ -47,9 +47,10 @@ Pin-Priority: 1000
 ==> Ctrl+o  
 ==> Ctrl+x   
 ``` bash  
-sudo usermod -aG docker pi && su - pi && exit  
+sudo usermod -aG docker pi && su - pi && docker ps 
 ```
 ``` bash
+jmux connect pi@pi-1.jabl3s
 curl -o ~/rke https://raw.githubusercontent.com/jabl3s/rke1-arm64/main/rke_linux-arm64 && chmod +x rke
 curl -o ~/cluster.yml https://raw.githubusercontent.com/jabl3s/rke1-arm64/main/jcluster.yml
 curl -o ~/jclusterissuer.yml https://raw.githubusercontent.com/jabl3s/rke1-arm64/main/jclusterissuer.yml
