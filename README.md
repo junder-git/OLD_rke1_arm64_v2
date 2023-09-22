@@ -13,7 +13,7 @@ sudo gdisk /dev/sda  ==> o ==> w
 ``` bash
 sudo dd if=/dev/zero of=/dev/sda bs=4M status=progress
 ```
-Note, raid used in past with hypervisor and lvm with flags too.  
+Note, ive installed fibre/raid in the past too, to use with hypervisor from vmware with lvm flags.    
   
 ## Start kubernetes cluster intitialization with cluster wide packages    
 ``` bash
