@@ -8,14 +8,13 @@ sudo gdisk /dev/sda  ==> o ==> w
 sudo dd if=/dev/zero of=/dev/sda bs=4M status=progress
 ```
 - Assumes home dns is already running with remote machine root ssh access to all node types, (needs dns wildcard setup at some point)  
-- Now use rpi imager to flash 32gb san disk sd && 32gb san disk usb-3.0 speeds type UHS-I with Ubuntu-22.04.03(64-bit) ssh user-pass, locale and hostnames.  
-  Potential nixos to replace ubuntu to aid os state management via saltstack/ansible.  
+- Now use rpi imager to flash 32gb san disk sd with raspbian-os && 32gb san disk usb-3.0 speeds type UHS-I with Ubuntu-22.04.03(64-bit) server both storage with ssh user-pass, locale and hostnames pi-sd and pi-X respectively.  
+  Now poe power from router settings page and check the boot order with ```sudo rpi-eeprom-config --edit``` if hostname on jmux connect dont match pi-X formatting.    
   
 ## Start kubernetes cluster intitialization with cluster wide packages    
 ``` bash
 jmux connect pi@pi-1.jabl3s pi@pi-2.jabl3s pi@pi-3.jabl3s pi@pi-4.jabl3s
 ```
-((Perhaps eeprom default on pi hardware before rpi-imager here for ubuntu usb was correct see; ```sudo rpi-eeprom-config --edit```))  
 ``` bash
 sudo apt update
 sudo apt upgrade
