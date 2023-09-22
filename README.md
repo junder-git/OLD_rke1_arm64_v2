@@ -47,7 +47,7 @@ Pin-Priority: 1000
 ==> Ctrl+o  
 ==> Ctrl+x   
 ``` bash  
-sudo usermod -aG docker pi && su - pi && docker ps 
+sudo usermod -aG docker pi && su - pi && docker --version   
 ```
 ``` bash
 jmux connect pi@pi-1.jabl3s
