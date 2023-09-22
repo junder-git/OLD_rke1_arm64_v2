@@ -38,9 +38,9 @@ Pin-Priority: 1000
 ==> Ctrl+o  
 ==> Ctrl+x   
 ``` bash  
-sudo usermod -aG docker pi  
-su - pi   
-exit  
+sudo usermod -aG docker pi && su - pi && exit  
+```
+``` bash
 jmux connect pi@pi-1.jabl3s
 ```
 scp jcluster.yml jclusterissuer.yml jnginx.conf and correct_rke_binary to master
