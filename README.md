@@ -12,15 +12,16 @@ jmux connect pi@pi-1.jabl3s pi@pi-2.jabl3s pi@pi-3.jabl3s pi@pi-4.jabl3s
 sudo su - && apt update && \
 apt install apt-transport-https ca-certificates curl software-properties-common && apt upgrade  
 ```
-DOCKER INSTALL VERSION => https://www.suse.com/suse-rke1/support-matrix/all-supported-versions/rke1-v1-26/  
-for rke 1.26 (jcluster.yml)=> 
+DOCKER INSTALL SPECIFIC VERSION SEE  
+1)=> https://www.suse.com/suse-rke1/support-matrix/all-supported-versions/rke1-v1-26/  
+2)=> https://docs.docker.com/engine/install/ubuntu/  
+for rke 1.26 (jcluster.yml) docker 23.0.x   
 ``` bash
-sudo apt install docker-ce=5:23.0.6-1~debian.11~bullseye \  
-docker-ce-cli=5:23.0.6-1~debian.11~bullseye containerd.io docker-buildx-plugin
+sudo apt install docker-ce=5:23.0.6-1~ubuntu.22.04~jammy \  
+docker-ce-cli=5:23.0.6-1~ubuntu.22.04~jammy
 ```
-((sudo apt remove docker-ce docker-ce-cli containerd.io)) ==> change between versions by removing and reinstall  
-  
-===  pin docker version to prevent apt update-upgrade changing to any newer unsupported docker versions  
+((sudo apt remove docker-ce docker-ce-cli))  
+==> change between versions by removing and reinstall in use with pin method listed below...        
 ``` bash
 sudo nano /etc/apt/preferences.d/docker-pin
 ```
