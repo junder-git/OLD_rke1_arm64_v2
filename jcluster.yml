@@ -1,6 +1,8 @@
 cluster_name: jcluster
 kubernetes_version: v1.24.16-rancher1-1
 ssh_key_path: ~/.ssh/id_rsa
+network:
+  plugin: canal
 nodes:
   - address: 192.168.3.11 #pi-1.jabl3s must use internal IPs
     user: pi
