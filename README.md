@@ -52,12 +52,15 @@ su - pi
 docker --version   
 ```
 ``` bash
-jmux connect pi@pi-1.jabl3s
 curl -o ~/rke https://raw.githubusercontent.com/jabl3s/rke1-arm64/main/rke_linux-arm64-v1.4.10 && chmod +x rke
 curl -o ~/cluster.yml https://raw.githubusercontent.com/jabl3s/rke1-arm64/main/jcluster.yml
 curl -o ~/jclusterissuer.yml https://raw.githubusercontent.com/jabl3s/rke1-arm64/main/jclusterissuer.yml
 curl -o ~/jnginx-configmap.yaml https://raw.githubusercontent.com/jabl3s/rke1-arm64/main/jnginx-configmap.yaml
-```      
+```
+Node race to master:  
+``` bash
+sed -i "s/PLACE_HOLDER_IP/$(ip a show dev eth0 | grep -oP 'inet \K[\d.]+')/g" config.yml
+```
 ``` bash
 ssh-keygen -t rsa -b 4096   
 ssh-copy-id pi@pi-1.jabl3s    
