@@ -13,7 +13,7 @@ sudo gdisk /dev/sda  ==> o ==> w
 ``` bash
 sudo dd if=/dev/zero of=/dev/sda bs=4M status=progress
 ```
-Note, ive installed fibre/raid in the past too, to use with hypervisor from vmware with lvm flags. lvm for /var/lib/docker, /var/lib/rancher, seperate from root. I added the /var/log to have lvm of its own too, cus I noticed it was polluting the vm storage space for root, preventing the install of further critical system packages like saltstack...      
+Note, ive installed fibre/raid in the past too, to use with hypervisor from vmware with lvm flags. lvm for /var/lib/docker, /var/lib/rancher, seperate from root. I added the /var/log to have lvm of its own too, cus I noticed it was polluting the vm storage space for root, preventing the install and config of further critical system packages like saltstack...      
   
 ## Start kubernetes cluster intitialization with cluster wide packages    
 ``` bash
