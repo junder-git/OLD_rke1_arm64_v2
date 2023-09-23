@@ -1,5 +1,5 @@
 cluster_name: jcluster
-ssh_key_path: ~/.ssh/id_rsa
+ssh_key_path: /home/pi/.ssh/id_rsa
 nodes:
   - address: PLACE_HOLDER_IP #pi-X.jabl3s must use internal IPs, node race to master...  
     user: pi
