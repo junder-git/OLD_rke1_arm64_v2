@@ -71,7 +71,7 @@ sed -i "s/PLACE_HOLDER_IP/$(ip a show dev eth0 | grep -oP 'inet \K[\d.]+')/g" cl
 ```
 ``` ./rke up ```  
 
-(spam run ./rke up if fail <= 3-attempts and use empty passphrase in key-gen command, rke notoriously fails a ton: https://github.com/rancher/rke/issues/2632#issuecomment-914315247 so my new practice will be to establish a 1 node rke cluster, and add nodes into the cluster with associated roles via uncommenting them one by one in the desired final cluster.yml with each rke up call being made per uncommented node.) Actually seems to be how they are progressing with it in rke2 as well, by adding nodes individually, perhaps to address this very issue idunno.
+(spam run ./rke up if fail <= 3-attempts and use empty passphrase in key-gen command, rke notoriously fails a ton: https://github.com/rancher/rke/issues/2632#issuecomment-914315247 so my new practice will be to establish a race to an 1 node rke cluster, and then add nodes into the cluster with associated roles via uncommenting them one by one in the desired final cluster.yml with each rke up call being made per uncommented node.) Actually seems to be how they are progressing with it in rke2 as well, by adding nodes individually, perhaps to address this very issue idunno.
 ((Eyyy instant 1 node cluster, can confirm this method is much more consistent install technique, especially on my given hardware :D ))        
   
 ## Kubectl cluster management tool (rancher cli at some point too maybe)         
