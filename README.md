@@ -151,9 +151,7 @@ sudo systemctl restart systemd-resolved
 ```
 Restart kubernetes master after reboot if not auto accepted:  
 ``` bash
-sudo systemctl restart kube-apiserver
-sudo systemctl restart kube-controller-manager
-sudo systemctl restart kube-scheduler
+sudo systemctl restart kube-apiserver kube-controller-manager kube-scheduler
 ```
 jmux connect pi@pi-1.jabl3s pi@pi-2.jabl3s pi@pi-3.jabl3s pi@pi-4.jabl3s  
 curl -o ~/filename.ext -LJO https://raw.githubusercontent.com/jabl3s/rke/main/jnginx.conf     
