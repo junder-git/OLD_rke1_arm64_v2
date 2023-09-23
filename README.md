@@ -13,7 +13,7 @@ sudo gdisk /dev/sda  ==> o ==> w
 ``` bash
 sudo dd if=/dev/zero of=/dev/sda bs=4M status=progress
 ```
-Note, ive installed fibre/raid in the past too, to use with hypervisor from vmware with lvm flags. lvm for /var/lib/docker, /var/lib/rancher, seperate from root. I managed all the logs partitions in lvm too on the fly cus I noticed it was polluting the vm storage space for root partition preventing install of further packages and whatever else mightve been needed at a later date...      
+Note, ive installed fibre/raid in the past too, to use with hypervisor from vmware with lvm flags. lvm for /var/lib/docker, /var/lib/rancher, seperate from root. I managed all the logs partitions in lvm too cus I noticed it was polluting the vm storage space for root partition preventing install of further packages and whatever else mightve been needed at a later date...      
   
 ## Start kubernetes cluster intitialization with cluster wide packages    
 ``` bash
