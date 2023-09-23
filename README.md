@@ -6,14 +6,14 @@
 - Network: Home router internal dns is already running with domain to subnet/vlan for all node hostnames ((my-case: 192.168.3.0/24 vlan: X)), (needs dns wildcard setup at some point as well as access from public dns)  
 - Storage: Using rpi imager to flash 32gb san disk sd with raspbian-os && 32gb san disk usb-3.0 speeds type UHS-I with Ubuntu-22.04.03(64-bit) server. Both storage devices are to be configured with ssh user-pass, locale/timezone (gb) and hostnames pi-sd and pi-X respectively. Now poe power on from router settings page and check the boot priorities with ```sudo rpi-eeprom-config --edit``` if hostname on jmux connect dont match pi-X formatting.  
   
-If in doubt, wipe all storage devices partitions and data to best of ability with zeros before using rpi-imager:    
+If in doubt, wipe all storage devices partitions and data to best of ability with zeros before using rpi-imager: ((usb/ssd performance gets obliterated on excessive re-writes and can not defrag either so minimise this))     
 ``` bash
 sudo gdisk /dev/sda  ==> o ==> w
 ```
 ``` bash
 sudo dd if=/dev/zero of=/dev/sda bs=4M status=progress
 ```
-Note, ive installed fibre/raid in the past too, to use with hypervisor from vmware with lvm flags.    
+Note, ive installed fibre/raid in the past too, to use with hypervisor from vmware with lvm flags.      
   
 ## Start kubernetes cluster intitialization with cluster wide packages    
 ``` bash
