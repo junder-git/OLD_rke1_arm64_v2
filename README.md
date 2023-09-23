@@ -1,5 +1,5 @@
 # rke1-arm64 setup guide     
-- Uses rke-v1.3.23 and docker 20.10...  ((latest and greatest seem to go bust))  
+- Uses rke-v1.3.23 and docker 20.10...  ((latest and greatest seem to go bust, might be fixed per node add revised method))  
 - Check for harvester arm releases in the coming future    
 ## Pre-requisites  
 - Hardware: rpi-4b-8Gbram *X, sd card *X, usb *X, poe capeable router, poe-usb-c splitter *X; where X=4 in my case => (4devices * 5volts * 3amps = 20watts total which is a third of your typical filament light bulb at 60watts.  
