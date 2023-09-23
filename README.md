@@ -61,15 +61,14 @@ Node race to master:
 ``` bash
 sed -i "s/PLACE_HOLDER_IP/$(ip a show dev eth0 | grep -oP 'inet \K[\d.]+')/g" config.yml
 ```
+On master node:  
 ``` bash
 ssh-keygen -t rsa -b 4096   
-ssh-copy-id pi@pi-1.jabl3s    
-ssh-copy-id pi@pi-2.jabl3s  
-ssh-copy-id pi@pi-3.jabl3s  
-ssh-copy-id pi@pi-4.jabl3s     
 ```
 ``` bash
-./rke up
+for i in {1..4}; do
+  sshpass -p "your_password" ssh-copy-id -o StrictHostKeyChecking=no pi@pi-$i.jabl3s <<< "yes"
+done
 ```
 (spam run ./rke up if fail <= 3-attempts and use empty passphrase in key-gen command, rke notoriously fails a ton: https://github.com/rancher/rke/issues/2632#issuecomment-914315247 so my new practice will be to establish a 1 node rke cluster, and add nodes into the cluster with associated roles via uncommenting them one by one in the desired final cluster.yml with each rke up call being made per uncommented node.) Actually seems to be how they are progressing with it in rke2 as well, by adding nodes individually, perhaps to address this very issue idunno.
 ((Eyyy instant 1 node cluster, can confirm this method is much more consistent install technique, especially on my given hardware :D ))        
