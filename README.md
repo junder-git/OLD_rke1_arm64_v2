@@ -22,7 +22,7 @@ jmux connect pi@pi-1.jabl3s pi@pi-2.jabl3s pi@pi-3.jabl3s pi@pi-4.jabl3s
 ``` bash
 sudo apt update
 sudo apt upgrade
-sudo apt install apt-transport-https ca-certificates curl software-properties-common gnupg  
+sudo apt install apt-transport-https ca-certificates curl software-properties-common gnupg sshpass   
 ```
 DOCKER INSTALL SPECIFIC VERSION SEE:  
 1)=> https://www.suse.com/suse-rke1/support-matrix/all-supported-versions/rke1-v1-25/  
