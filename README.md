@@ -74,7 +74,7 @@ sed -i "s/PLACE_HOLDER_IP/$(ip a show dev eth0 | grep -oP 'inet \K[\d.]+')/g" cl
 ((Eyyy instant 1 node cluster, can confirm this method is much more consistent install technique, especially on my given hardware :D ))  
   
 # UNINSTALL:::   
-./rke remove  ((make sure all nodes are connected to master))    
+./rke remove  ((make sure all nodes are connected to master)) ((Maybe running rke from remote machine x86_64 yeilds better results...))      
 === OR ===  
 jmux connect pi@pi-1.jabl3s pi@pi-2.jabl3s pi@pi-3.jabl3s pi@pi-4.jabl3s   
 ``` bash
