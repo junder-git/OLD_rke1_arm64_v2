@@ -1,22 +1,22 @@
 cluster_name: jcluster
 ssh_key_path: ~/.ssh/id_rsa
 nodes:
-  - address: 192.168.3.11 #pi-1.jabl3s must use internal IPs
+  - address: PLACE_HOLDER_IP #pi-X.jabl3s must use internal IPs, node race to master...  
     user: pi
     role:
       - controlplane
       - etcd
-  - address: 192.168.3.12 #pi-2.jabl3s must use internal IPs
-    user: pi
-    role:
-      - etcd
-      - worker
-  - address: 192.168.3.13 #pi-3.jabl3s must use internal IPs
-    user: pi
-    role:
-      - etcd
-      - worker
-  - address: 192.168.3.14 #pi-4.jabl3s must use internal IPs
-    user: pi
-    role:
-      - worker
+#  - address: pi-X.jabl3s must use internal IPs
+#    user: pi
+#    role:
+#      - etcd
+#      - worker
+#  - address: pi-X.jabl3s must use internal IPs
+#    user: pi
+#    role:
+#      - etcd
+#      - worker
+#  - address: pi-X.jabl3s must use internal IPs
+#    user: pi
+#    role:
+#      - worker
