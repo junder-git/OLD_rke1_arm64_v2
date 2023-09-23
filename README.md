@@ -68,7 +68,7 @@ ssh-copy-id pi@pi-4.jabl3s
 ``` bash
 ./rke up
 ```
-(spam run ./rke up if fail <= 3-attempts and empty passphrase used in key-gen)  
+(spam run ./rke up if fail <= 3-attempts and use empty passphrase in key-gen command, rke notoriously fails a ton: https://github.com/rancher/rke/issues/2632#issuecomment-914315247 so i will establish a 1 node with rke up and add nodes back into cluster.yml with each rke up call)    
   
 ## Kubectl cluster management tool (rancher cli at some point too maybe)         
 https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/  
