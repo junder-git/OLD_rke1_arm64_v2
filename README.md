@@ -59,7 +59,7 @@ curl -o ~/jnginx-configmap.yaml https://raw.githubusercontent.com/jabl3s/rke1-ar
 ```
 Node race to master:  
 ``` bash
-sed -i "s/PLACE_HOLDER_IP/$(ip a show dev eth0 | grep -oP 'inet \K[\d.]+')/g" config.yml
+sed -i "s/PLACE_HOLDER_IP/$(ip a show dev eth0 | grep -oP 'inet \K[\d.]+')/g" cluster.yml
 ```
 ``` ./rke up ```  
 On master node:  
