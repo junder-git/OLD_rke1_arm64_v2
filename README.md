@@ -69,10 +69,24 @@ Node race to master:
 ``` bash
 sed -i "s/PLACE_HOLDER_IP/$(ip a show dev eth0 | grep -oP 'inet \K[\d.]+')/g" cluster.yml
 ```
-``` ./rke up ```  
-
+``` ./rke up ```    
 (spam run ./rke up if fail <= 3-attempts and use empty passphrase in key-gen command, rke notoriously fails a ton: https://github.com/rancher/rke/issues/2632#issuecomment-914315247 so my new practice will be to establish a race to an 1 node rke cluster, and then add nodes into the cluster with associated roles via uncommenting them one by one in the desired final cluster.yml with each rke up call being made per uncommented node.) Actually seems to be how they are progressing with it in rke2 as well, by adding nodes individually, perhaps to address this very issue idunno.
-((Eyyy instant 1 node cluster, can confirm this method is much more consistent install technique, especially on my given hardware :D ))        
+((Eyyy instant 1 node cluster, can confirm this method is much more consistent install technique, especially on my given hardware :D ))  
+  
+# UNINSTALL:::   
+./rke remove  ((make sure all nodes are connected to master))    
+=== OR ===  
+jmux connect pi@pi-1.jabl3s pi@pi-2.jabl3s pi@pi-3.jabl3s pi@pi-4.jabl3s   
+``` bash
+docker stop $(docker ps -aq) && docker rm -f $(docker ps -aq) && docker volume prune
+```
+``` bash
+rm ~/.kube/config ~/cluster.rkestate ~/kube_config_cluster.yml
+```
+``` bash
+sudo apt purge -y docker-engine docker docker.io docker-ce docker-ce-cli docker-compose-plugin
+sudo apt-get autoremove
+```        
   
 ## Kubectl cluster management tool (rancher cli at some point too maybe)         
 https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/  
@@ -129,22 +143,6 @@ helm install nginx-ingress ingress-nginx/ingress-nginx --namespace default --set
 helm upgrade nginx-ingress ingress-nginx/ingress-nginx --namespace default --set controller.configMapName=jnginx-configmap 
   
 ## End initial cluster and package installation, now apply my own .yml files for my own apps to run :D    
-  
-# UNINSTALL:::   
-  
-./rke remove  ((make sure all nodes are connected to master))    
-=== OR ===  
-jmux connect pi@pi-1.jabl3s pi@pi-2.jabl3s pi@pi-3.jabl3s pi@pi-4.jabl3s   
-``` bash
-docker stop $(docker ps -aq) && docker rm -f $(docker ps -aq) && docker volume prune
-```
-``` bash
-rm ~/.kube/config ~/cluster.rkestate ~/kube_config_cluster.yml
-```
-``` bash
-sudo apt purge -y docker-engine docker docker.io docker-ce docker-ce-cli docker-compose-plugin
-sudo apt-get autoremove
-```  
   
 =====  
   
