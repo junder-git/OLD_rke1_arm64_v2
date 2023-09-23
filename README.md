@@ -29,7 +29,7 @@ DOCKER INSTALL SPECIFIC VERSION SEE:
 2)=> https://docs.docker.com/engine/install/ubuntu/ list versions with => ```apt-cache madison docker-ce | awk '{ print $3 }'```  
 In my case:  
 ``` bash
-sudo apt install docker-ce=5:20.10.24~3-0~ubuntu-jammy docker-ce-cli=5:20.10.24~3-0~ubuntu-jammy containerd.io docker-buildx-plugin  
+sudo apt install docker-ce=5:23.0.6-1~ubuntu.22.04~jammy docker-ce-cli=5:23.0.6-1~ubuntu.22.04~jammy containerd.io docker-buildx-plugin  
 ``` 
 ==> change between versions by apt removing and reinstall in use with pin file mod method listed below...        
 ``` bash
@@ -37,11 +37,11 @@ sudo nano /etc/apt/preferences.d/docker-pin
 ```
 ``` text
 Package: docker-ce  
-Pin: version 5:20.10.24~3-0~ubuntu-jammy     
+Pin: version 5:23.0.6-1~ubuntu.22.04~jammy    
 Pin-Priority: 1000  
   
 Package: docker-ce-cli  
-Pin: version 5:20.10.24~3-0~ubuntu-jammy    
+Pin: version 5:23.0.6-1~ubuntu.22.04~jammy   
 Pin-Priority: 1000
 ```
 ==> Ctrl+o  
