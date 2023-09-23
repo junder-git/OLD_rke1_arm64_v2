@@ -136,12 +136,12 @@ jmux connect pi@pi-1.jabl3s pi@pi-2.jabl3s pi@pi-3.jabl3s pi@pi-4.jabl3s
 docker stop $(docker ps -aq) && docker rm -f $(docker ps -aq) && docker volume prune
 ```
 ``` bash
+rm ~/.kube/config ~/cluster.rkestate ~/kube_config_cluster.yml
+```
+``` bash
 sudo apt purge -y docker-engine docker docker.io docker-ce docker-ce-cli docker-compose-plugin
 sudo apt-get autoremove
-```
-  
-=== AND ===  
-./cluster.rkestate ==> Delete this file    
+```  
   
 =====  
   
