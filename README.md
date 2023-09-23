@@ -61,6 +61,7 @@ Node race to master:
 ``` bash
 sed -i "s/PLACE_HOLDER_IP/$(ip a show dev eth0 | grep -oP 'inet \K[\d.]+')/g" config.yml
 ```
+``` ./rke up ```
 On master node:  
 ``` bash
 ssh-keygen -t rsa -b 4096   
