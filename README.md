@@ -74,9 +74,10 @@ ssh-copy-id pi@pi-4.jabl3s
 ## Kubectl cluster management tool (rancher cli at some point too maybe)         
 https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/  
 ==> see package manager walk-through then do addtional two steps below:  
-###  
+``` bash
 mkdir -p ~/.kube  
-cp kube_config_cluster.yml ~/.kube/config  
+cp kube_config_cluster.yml ~/.kube/config
+```  
 ## Helm package manager tool and approach to install further initial cluster resources   
 curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null   
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/  
