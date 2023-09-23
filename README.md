@@ -1,4 +1,4 @@
-# rke1-arm64 INSTALL       
+# rke1-arm64 install         
 - Uses rke-v1.3.23 and docker 20.10...  ((latest and greatest seem to go bust, might be fixed per node add revised method))  
 - Check for harvester arm releases in the coming future    
 ## Pre-requisites  
