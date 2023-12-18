@@ -1,23 +1,33 @@
-# rke1-arm64 setup guide        
+# rke1-arm64 install         
+- Uses rke-v1.3.23 and docker 20.10...  ((latest and greatest seem to go bust, might be fixed per node add revised method))  
 - Check for harvester arm releases in the coming future    
-## Pre-requisites   
-- Assumes home dns is already running with remote machine root ssh access to all node types, (needs dns wildcard setup at some point)
-- raspberry pi imager flash 32gb-fat san disk sd && 32gb-fat san disk usb-3.0 speeds type UHS-I only available with Ubuntu-22.04.03(64-bit), potential nixos to replace ubuntu to aid os state management via saltstack/ansible.  
+## Pre-requisites  
+- Hardware: rpi-4b-8Gbram *X, sd card *X, usb *X, poe capable router, poe-usb-c splitter *X; where X=4 in my case => (4devices * 5volts * 3amps = 20watts total which is a third of your typical filament light bulb at 60watts.  
+- Network: Home router internal dns is already running with domain to subnet/vlan for all node hostnames ((my-case: 192.168.3.0/24 vlan: X)), (needs dns wildcard setup at some point as well as access from public dns)  
+- Storage: Using rpi imager to flash 32gb san disk sd with raspbian-os && 32gb san disk usb-3.0 speeds type UHS-I with Ubuntu-22.04.03(64-bit) server. Both storage devices are to be configured with ssh user-pass, locale/timezone (gb) and hostnames pi-sd and pi-X respectively. Now poe power on from router settings page and check the boot priorities with ```sudo rpi-eeprom-config --edit``` if hostname on jmux connect dont match pi-X formatting.  
+  
+If in doubt, wipe all storage devices partitions and data to best of ability with zeros before using rpi-imager: ((usb/ssd performance gets obliterated on excessive re-writes and can not defrag either so minimise this))     
+``` bash
+sudo gdisk /dev/sda  ==> o ==> w
+```
+``` bash
+sudo dd if=/dev/zero of=/dev/sda bs=4M status=progress
+```
+Note, ive installed fibre/raid in the past too, to use with hypervisor from vmware with lvm flags. lvm for /var/lib/docker, /var/lib/rancher, seperate from root. I added the /var/log to have lvm of its own too, cus I noticed it was polluting the vm storage space for root, preventing the install and config of further critical system packages like saltstack...      
   
 ## Start kubernetes cluster intitialization with cluster wide packages    
 ``` bash
 jmux connect pi@pi-1.jabl3s pi@pi-2.jabl3s pi@pi-3.jabl3s pi@pi-4.jabl3s
 ```
-((Perhaps eeprom default on pi hardware before rpi-imager here for ubuntu usb was correct see; ```sudo rpi-eeprom-config --edit```))  
 ``` bash
 sudo apt update
 sudo apt upgrade
-sudo apt install apt-transport-https ca-certificates curl software-properties-common gnupg  
+sudo apt install apt-transport-https ca-certificates curl software-properties-common gnupg sshpass   
 ```
 DOCKER INSTALL SPECIFIC VERSION SEE:  
-1)=> https://www.suse.com/suse-rke1/support-matrix/all-supported-versions/rke1-v1-26/  
+1)=> https://www.suse.com/suse-rke1/support-matrix/all-supported-versions/rke1-v1-25/  
 2)=> https://docs.docker.com/engine/install/ubuntu/ list versions with => ```apt-cache madison docker-ce | awk '{ print $3 }'```  
-In my case:  
+In my case, 5:20.10.24~3-0:  
 ``` bash
 sudo apt install docker-ce=5:20.10.24~3-0~ubuntu-jammy docker-ce-cli=5:20.10.24~3-0~ubuntu-jammy containerd.io docker-buildx-plugin  
 ``` 
@@ -37,14 +47,16 @@ Pin-Priority: 1000
 ==> Ctrl+o  
 ==> Ctrl+x   
 ``` bash  
-sudo usermod -aG docker pi && su - pi && exit  
+sudo usermod -aG docker pi
+su - pi
+docker --version   
 ```
 ``` bash
-curl -o ~/rke https://raw.githubusercontent.com/jabl3s/rke1-arm64/main/rke_linux-arm64 && chmod +x rke
+curl -o ~/rke https://raw.githubusercontent.com/jabl3s/rke1-arm64/main/rke_linux-arm64-v1.4.10 && chmod +x rke
 curl -o ~/cluster.yml https://raw.githubusercontent.com/jabl3s/rke1-arm64/main/jcluster.yml
 curl -o ~/jclusterissuer.yml https://raw.githubusercontent.com/jabl3s/rke1-arm64/main/jclusterissuer.yml
 curl -o ~/jnginx-configmap.yaml https://raw.githubusercontent.com/jabl3s/rke1-arm64/main/jnginx-configmap.yaml
-```      
+```  
 ``` bash
 ssh-keygen -t rsa -b 4096   
 ssh-copy-id pi@192.168.2.21    
@@ -53,16 +65,44 @@ ssh-copy-id pi@192.168.2.23
 ssh-copy-id pi@192.168.2.24     
 ```
 ``` bash
-./rke up
+for i in {1..4}; do
+  sshpass -p "CHANGE_HERE_your_password" ssh-copy-id -o StrictHostKeyChecking=no pi@pi-$i.jabl3s <<< "yes"
+done
 ```
-(spam run ./rke up if fail <= 3-attempts and empty passphrase used in key-gen)  
+Node race to master:  
+``` bash
+sed -i "s/PLACE_HOLDER_IP/$(ip a show dev eth0 | grep -oP 'inet \K[\d.]+')/g" cluster.yml
+```
+``` ./rke up ```    
+(spam run ./rke up if fail <= 3-attempts and use empty passphrase in key-gen command, rke notoriously fails a ton: https://github.com/rancher/rke/issues/2632#issuecomment-914315247 so my new practice will be to establish a race to an 1 node rke cluster, and then add nodes into the cluster with associated roles via uncommenting them one by one in the desired final cluster.yml with each rke up call being made per uncommented node.) Actually seems to be how they are progressing with it in rke2 as well, by adding nodes individually, perhaps to address this very issue idunno.
+((Eyyy instant 1 node cluster, seems this method is much more consistent install technique on my given hardware :D ))  
+  
+# UNINSTALL:::   
+./rke remove  ((make sure all nodes are connected to master)) ((Maybe running rke from remote machine x86_64 yeilds better results...))      
+=== OR ===  
+jmux connect pi@pi-1.jabl3s pi@pi-2.jabl3s pi@pi-3.jabl3s pi@pi-4.jabl3s   
+``` bash
+docker rm -f $(docker ps -qa) && docker rmi -f $(docker images -q) && docker volume rm $(docker volume ls -q)
+```
+```
+for mount in $(mount | grep tmpfs | grep '/var/lib/kubelet' | awk '{ print $3 }') /var/lib/kubelet /var/lib/rancher; do umount $mount; done
+cleanupdirs="/etc/ceph /etc/cni /etc/kubernetes /opt/cni /opt/rke /run/secrets/kubernetes.io /run/calico /run/flannel /var/lib/calico /var/lib/etcd /var/lib/cni /var/lib/kubelet /var/lib/rancher/rke/log /var/log/containers /var/log/pods /var/run/calico"
+```
+``` bash
+rm ~/.kube/config ~/cluster.rkestate ~/kube_config_cluster.yml
+```
+``` bash
+sudo apt purge -y docker-engine docker docker.io docker-ce docker-ce-cli docker-compose-plugin
+sudo apt-get autoremove
+```        
   
 ## Kubectl cluster management tool (rancher cli at some point too maybe)         
 https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/  
 ==> see package manager walk-through then do addtional two steps below:  
-###  
+``` bash
 mkdir -p ~/.kube  
-cp kube_config_cluster.yml ~/.kube/config  
+cp kube_config_cluster.yml ~/.kube/config
+```  
 ## Helm package manager tool and approach to install further initial cluster resources   
 curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null   
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/  
@@ -112,30 +152,17 @@ helm upgrade nginx-ingress ingress-nginx/ingress-nginx --namespace default --set
   
 ## End initial cluster and package installation, now apply my own .yml files for my own apps to run :D    
   
-# UNINSTALL:::   
-  
-./rke remove  ((make sure all nodes are connected to master))    
-=== OR ===  
-jmux connect pi@pi-1.jabl3s pi@pi-2.jabl3s pi@pi-3.jabl3s pi@pi-4.jabl3s   
-``` bash
-docker stop $(docker ps -aq) && docker rm -f $(docker ps -aq) && docker volume prune
-```
-``` bash
-sudo apt purge -y docker-engine docker docker.io docker-ce docker-ce-cli docker-compose-plugin
-sudo apt autoremove -y --purge docker-engine docker docker.io docker-ce docker-compose-plugin
-sudo rm -rf /var/lib/docker /etc/docker
-sudo rm /etc/apparmor.d/docker
-sudo groupdel docker
-sudo rm -rf /var/run/docker.sock
-```
-  
-=== AND ===  
-./cluster.rkestate ==> Delete this file    
-  
 =====  
   
 ## Aditional non-sense  
-  
+Clear dns/curl cache:  
+``` bash
+sudo systemctl restart systemd-resolved
+```
+Restart kubernetes master after reboot if not auto accepted:  
+``` bash
+docker restart $(docker ps -q)
+```
 jmux connect pi@pi-1.jabl3s pi@pi-2.jabl3s pi@pi-3.jabl3s pi@pi-4.jabl3s  
 curl -o ~/filename.ext -LJO https://raw.githubusercontent.com/jabl3s/rke/main/jnginx.conf     
 docker run --name jnginx-container -v ~/jnginx.conf:/etc/nginx/nginx.conf:ro -d -p 80:80 --cpus 0.5 --memory 512m nginx  
@@ -144,8 +171,7 @@ kubectl get svc -n <namespace>
 
 docker stop jnginx-container && docker rm jnginx-container
   
-########## ADDITINAL commands    
-``` dd if=/dev/zero of=/dev/sda2 bs=512 count=1```
+########## ADDITIONAL commands  
 docker ps -a -q | awk '{print $1}' | xargs docker stop 
 docker ps -a  
 docker ps -a --filter "name=jnginx-container"  
