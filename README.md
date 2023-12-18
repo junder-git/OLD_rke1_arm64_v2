@@ -66,7 +66,7 @@ ssh-copy-id pi@192.168.2.24
 ```
 ``` bash
 for i in {1..4}; do
-  sshpass -p "CHANGE_HERE_your_password" ssh-copy-id -o StrictHostKeyChecking=no pi@pi-$i.jabl3s <<< "yes"
+  sshpass -p "CHANGE_HERE_your_password" ssh-copy-id -o StrictHostKeyChecking=no pi@pi-$i.junder.uk <<< "yes"
 done
 ```
 Node race to master:  
