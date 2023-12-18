@@ -17,7 +17,7 @@ Note, ive installed fibre/raid in the past too, to use with hypervisor from vmwa
   
 ## Start kubernetes cluster intitialization with cluster wide packages    
 ``` bash
-jmux connect pi@pi-1.jabl3s pi@pi-2.jabl3s pi@pi-3.jabl3s pi@pi-4.jabl3s
+jmux connect pi@pi-1.junder.uk pi@pi-2.junder.uk pi@pi-3.junder.uk pi@pi-4.junder.uk
 ```
 ``` bash
 sudo apt update
@@ -52,10 +52,10 @@ su - pi
 docker --version   
 ```
 ``` bash
-curl -o ~/rke https://raw.githubusercontent.com/jabl3s/OLD_rke1_arm64_v2/main/rke_linux-arm64-v1.4.10 && chmod +x rke
+curl -o ~/rke https://raw.githubusercontent.com/junder-git/OLD_rke1_arm64_v2/main/rke_linux-arm64-v1.4.10 && chmod +x rke
 curl -o ~/cluster.yml https://raw.githubusercontent.com/junder-git/OLD_rke1_arm64_v2/main/jcluster.yml
-curl -o ~/jclusterissuer.yml https://raw.githubusercontent.com/jabl3s/OLD_rke1_arm64_v2/main/jclusterissuer.yml
-curl -o ~/jnginx-configmap.yaml https://raw.githubusercontent.com/jabl3s/OLD_rke1_arm64_v2/main/jnginx-configmap.yaml
+curl -o ~/jclusterissuer.yml https://raw.githubusercontent.com/junder-git/OLD_rke1_arm64_v2/main/jclusterissuer.yml
+curl -o ~/jnginx-configmap.yaml https://raw.githubusercontent.com/junder-git/OLD_rke1_arm64_v2/main/jnginx-configmap.yaml
 ```  
 ``` bash
 ssh-keygen -t rsa -b 4096   
@@ -79,7 +79,7 @@ sed -i "s/PLACE_HOLDER_IP/$(ip a show dev eth0 | grep -oP 'inet \K[\d.]+')/g" cl
 # UNINSTALL:::   
 ./rke remove  ((make sure all nodes are connected to master)) ((Maybe running rke from remote machine x86_64 yeilds better results...))      
 === OR ===  
-jmux connect pi@pi-1.jabl3s pi@pi-2.jabl3s pi@pi-3.jabl3s pi@pi-4.jabl3s   
+jmux connect pi@pi-1.junder.uk pi@pi-2.junder.uk pi@pi-3.junder.uk pi@pi-4.junder.uk   
 ``` bash
 docker rm -f $(docker ps -qa) && docker rmi -f $(docker images -q) && docker volume rm $(docker volume ls -q)
 ```
@@ -123,7 +123,7 @@ helm install \
 kubectl apply -f ~/jclusterissuer.yml  
 
 ## Rancher package  
-helm install rancher rancher-stable/rancher --namespace cattle-system --create-namespace --set hostname=pi-1.jabl3s --set bootstrapPassword=admin --set ingress.tls.source=letsEncrypt --set letsEncrypt.email=j@jabl3s --set letsEncrypt.ingress.class=nginx    
+helm install rancher rancher-stable/rancher --namespace cattle-system --create-namespace --set hostname=pi-1.junder.uk --set bootstrapPassword=admin --set ingress.tls.source=letsEncrypt --set letsEncrypt.email=j@junder.uk --set letsEncrypt.ingress.class=nginx    
   
 kubectl get svc -n cattle-system  
   
@@ -141,7 +141,7 @@ kubectl delete clusterrole nginx-ingress -n default
 kubectl delete clusterrolebinding nginx-ingress -n default  
   
   
-kubectl apply -f https://raw.githubusercontent.com/jabl3s/rke/main/jnginx-configmap.yaml  
+kubectl apply -f https://raw.githubusercontent.com/junder-git/rke/main/jnginx-configmap.yaml  
   
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx  
 helm repo update  
@@ -162,8 +162,8 @@ Restart kubernetes master after reboot if not auto accepted:
 ``` bash
 docker restart $(docker ps -q)
 ```
-jmux connect pi@pi-1.jabl3s pi@pi-2.jabl3s pi@pi-3.jabl3s pi@pi-4.jabl3s  
-curl -o ~/filename.ext -LJO https://raw.githubusercontent.com/jabl3s/rke/main/jnginx.conf     
+jmux connect pi@pi-1.junder.uk pi@pi-2.junder.uk pi@pi-3.junder.uk pi@pi-4.junder.uk  
+curl -o ~/filename.ext -LJO https://raw.githubusercontent.com/junder-git/rke/main/jnginx.conf     
 docker run --name jnginx-container -v ~/jnginx.conf:/etc/nginx/nginx.conf:ro -d -p 80:80 --cpus 0.5 --memory 512m nginx  
 
 kubectl get svc -n <namespace>
