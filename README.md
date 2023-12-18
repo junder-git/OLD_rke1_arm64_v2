@@ -53,9 +53,9 @@ docker --version
 ```
 ``` bash
 curl -o ~/rke https://raw.githubusercontent.com/jabl3s/rke1-arm64/main/rke_linux-arm64-v1.4.10 && chmod +x rke
-curl -o ~/cluster.yml https://raw.githubusercontent.com/jabl3s/rke1-arm64/main/jcluster.yml
-curl -o ~/jclusterissuer.yml https://raw.githubusercontent.com/jabl3s/rke1-arm64/main/jclusterissuer.yml
-curl -o ~/jnginx-configmap.yaml https://raw.githubusercontent.com/jabl3s/rke1-arm64/main/jnginx-configmap.yaml
+curl -o ~/cluster.yml https://raw.githubusercontent.com/junder-git/OLD_rke1_arm64_v2/main/jcluster.yml
+curl -o ~/jclusterissuer.yml https://raw.githubusercontent.com/jabl3s/OLD_rke1_arm64_v2/main/jclusterissuer.yml
+curl -o ~/jnginx-configmap.yaml https://raw.githubusercontent.com/jabl3s/OLD_rke1_arm64_v2/main/jnginx-configmap.yaml
 ```  
 ``` bash
 ssh-keygen -t rsa -b 4096   
