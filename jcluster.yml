@@ -1,25 +1,21 @@
 cluster_name: jcluster
 kubernetes_version: v1.24.16-rancher1-1
 ssh_key_path: ~/.ssh/id_rsa
-network:
-  plugin: weave
 nodes:
-  - address: pi-1.jabl3 #REPLACE WITH INTERNAL IPs
+  - address: 192.168.2.21
     user: pi
     role:
       - controlplane
       - etcd
-  - address: pi-2.jabl3s #REPLACE WITH INTERNAL IPs
+  - address: 192.168.2.22
     user: pi
     role:
-      - controlplane
-      - etcd
-  - address: pi-3.jabl3s #REPLACE WITH INTERNAL IPs
-    user: pi
-    role:
-      - etcd
       - worker
-  - address: pi-4.jabl3s #REPLACE WITH INTERNAL IPs
+  - address: 192.168.2.23
+    user: pi
+    role:
+      - worker
+  - address: 192.168.2.24
     user: pi
     role:
       - worker
