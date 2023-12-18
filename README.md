@@ -52,7 +52,7 @@ su - pi
 docker --version   
 ```
 ``` bash
-curl -o ~/rke https://raw.githubusercontent.com/junder-git/OLD_rke1_arm64_v2/main/rke_linux-arm64-v1.4.10 && chmod +x rke
+curl -Lo ~/rke https://github.com/rancher/rke/releases/download/v1.5.0/rke_linux-arm64 && chmod +x rke
 curl -o ~/cluster.yml https://raw.githubusercontent.com/junder-git/OLD_rke1_arm64_v2/main/jcluster.yml
 curl -o ~/jclusterissuer.yml https://raw.githubusercontent.com/junder-git/OLD_rke1_arm64_v2/main/jclusterissuer.yml
 curl -o ~/jnginx-configmap.yaml https://raw.githubusercontent.com/junder-git/OLD_rke1_arm64_v2/main/jnginx-configmap.yaml
