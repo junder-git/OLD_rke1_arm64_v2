@@ -103,18 +103,11 @@ mkdir -p ~/.kube
 cp kube_config_cluster.yml ~/.kube/config
 ```  
 ## Helm package manager tool and approach to install further initial cluster resources   
-https://helm.sh/docs/intro/install/
+https://helm.sh/docs/intro/install/  
    
 ###  
 ## Cert-manager package    
-helm repo add jetstack https://charts.jetstack.io  
-helm repo update  
-kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.12.0/cert-manager.crds.yaml  
-helm install \  
-  cert-manager jetstack/cert-manager \  
-  --namespace cert-manager \  
-  --create-namespace \  
-  --version v1.12.0  
+https://cert-manager.io/docs/installation/helm/  
   
 kubectl apply -f ~/jclusterissuer.yml  
 
